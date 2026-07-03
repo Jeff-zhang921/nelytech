@@ -1,0 +1,237 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "NELYTECH" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation "Main navigation" [ref=e5]:
+        - list [ref=e6]:
+          - listitem [ref=e7]:
+            - link "Home" [ref=e8] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e9]:
+            - link "About Us" [ref=e10] [cursor=pointer]:
+              - /url: "#about-us"
+          - listitem [ref=e11]:
+            - button "Products" [ref=e12]: Productsv
+          - listitem [ref=e13]:
+            - link "Careers" [ref=e14] [cursor=pointer]:
+              - /url: "#careers"
+          - listitem [ref=e15]:
+            - link "Contact" [ref=e16] [cursor=pointer]:
+              - /url: "#contact"
+  - region "NELYTECH" [ref=e17]:
+    - img "LCD and LCM display modules on an electronics engineering bench" [ref=e18]
+    - generic [ref=e21]:
+      - paragraph [ref=e22]: LCD & LCM Solutions
+      - heading "NELYTECH" [level=1] [ref=e23]
+      - paragraph [ref=e24]: Sir, what are you looking for? Lcd & lcms? Ok, just take a seat and have a cup of tea. To calm down and to reach far...... now let's talk about LCD & LCM Solutions. NELYTECH is very famous for its R&D ability, prices, services and speed. Tell us your requirement, your troubles or just your ideas, NELYTECH will give you the best solutions.
+  - main [ref=e25]:
+    - region "NELYTECH'S Advantages" [ref=e26]:
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - paragraph [ref=e29]: Capability
+          - heading "NELYTECH'S Advantages" [level=2] [ref=e30]
+        - list [ref=e31]:
+          - listitem [ref=e32]:
+            - article [ref=e33]:
+              - generic [ref=e34]:
+                - img "Macro view of a printed circuit board and microchip traces" [ref=e35]
+                - generic [ref=e37]: "01"
+              - heading "Custom LCD Controller / software development" [level=3] [ref=e39]
+          - listitem [ref=e40]:
+            - article [ref=e41]:
+              - generic [ref=e42]:
+                - img "Precision manufacturing equipment inside an industrial production facility" [ref=e43]
+                - generic [ref=e45]: "02"
+              - heading "Low tooling charge and quick tooling process" [level=3] [ref=e47]
+          - listitem [ref=e48]:
+            - article [ref=e49]:
+              - generic [ref=e50]:
+                - img "Close-up of illuminated electronics and circuit components" [ref=e51]
+                - generic [ref=e53]: "03"
+              - heading "Multi-color TN/STNS" [level=3] [ref=e55]
+          - listitem [ref=e56]:
+            - article [ref=e57]:
+              - generic [ref=e58]:
+                - img "Detailed semiconductor chip and low-voltage electronic board components" [ref=e59]
+                - generic [ref=e61]: "04"
+              - heading "Very low current / low voltage series" [level=3] [ref=e63]
+          - listitem [ref=e64]:
+            - article [ref=e65]:
+              - generic [ref=e66]:
+                - img "Macro electronics assembly with dense PCB traces and mounted components" [ref=e67]
+                - generic [ref=e69]: "05"
+              - heading "Excellent/flexible PCBA" [level=3] [ref=e71]
+    - region "Target Industries" [ref=e72]:
+      - generic [ref=e73]:
+        - heading "Target Industries" [level=2] [ref=e74]
+        - generic [ref=e75]:
+          - button "Show previous industry" [ref=e76]:
+            - img [ref=e77]
+          - tablist "Target industries" [ref=e79]:
+            - tab "01 Industrial & Instruments" [selected] [ref=e80]:
+              - generic [ref=e81]: "01"
+              - generic [ref=e82]: Industrial & Instruments
+            - tab "02 Automotive Electronics" [ref=e83]:
+              - generic [ref=e84]: "02"
+              - generic [ref=e85]: Automotive Electronics
+            - tab "03 Medical Devices" [ref=e86]:
+              - generic [ref=e87]: "03"
+              - generic [ref=e88]: Medical Devices
+            - tab "04 Smart Home & Appliances" [ref=e89]:
+              - generic [ref=e90]: "04"
+              - generic [ref=e91]: Smart Home & Appliances
+            - tab "05 Consumer Electronics" [ref=e92]:
+              - generic [ref=e93]: "05"
+              - generic [ref=e94]: Consumer Electronics
+          - button "Show next industry" [ref=e95]:
+            - img [ref=e96]
+        - tabpanel "01 Industrial & Instruments" [ref=e98]:
+          - img "Robotic manufacturing equipment working inside a modern industrial facility" [ref=e100]
+          - article [ref=e103]:
+            - paragraph [ref=e104]: 01 / 05
+            - heading "Industrial & Instruments" [level=3] [ref=e105]
+            - paragraph [ref=e106]: Display solutions for meters, testing equipment, factory interfaces, and industrial control panels that need clear status feedback in demanding environments.
+            - img [ref=e108]
+    - region "Trusted by Industry Leaders" [ref=e110]:
+      - generic [ref=e111]:
+        - heading "Trusted by Industry Leaders" [level=2] [ref=e112]
+        - generic [ref=e114]:
+          - list [ref=e115]:
+            - listitem [ref=e116]:
+              - img "Siemens logo" [ref=e117]:
+                - img [ref=e119]:
+                  - generic [ref=e120]: SIEMENS
+            - listitem [ref=e121]:
+              - img "Honeywell logo" [ref=e122]:
+                - img [ref=e124]:
+                  - generic [ref=e125]: Honeywell
+            - listitem [ref=e126]:
+              - img "ABB logo" [ref=e127]:
+                - img [ref=e129]:
+                  - generic [ref=e130]: ABB
+            - listitem [ref=e131]:
+              - img "Bosch logo" [ref=e132]:
+                - img [ref=e134]:
+                  - generic [ref=e135]: BOSCH
+            - listitem [ref=e136]:
+              - img "Panasonic logo" [ref=e137]:
+                - img [ref=e139]:
+                  - generic [ref=e140]: Panasonic
+            - listitem [ref=e141]:
+              - img "Continental logo" [ref=e142]:
+                - img [ref=e144]:
+                  - generic [ref=e145]: Continental
+            - listitem [ref=e146]:
+              - img "Philips logo" [ref=e147]:
+                - img [ref=e149]:
+                  - generic [ref=e150]: PHILIPS
+          - list [ref=e151]:
+            - listitem [ref=e152]:
+              - img [ref=e153]:
+                - img [ref=e155]:
+                  - generic [ref=e156]: SIEMENS
+            - listitem [ref=e157]:
+              - img [ref=e158]:
+                - img [ref=e160]:
+                  - generic [ref=e161]: Honeywell
+            - listitem [ref=e162]:
+              - img [ref=e163]:
+                - img [ref=e165]:
+                  - generic [ref=e166]: ABB
+            - listitem [ref=e167]:
+              - img [ref=e168]:
+                - img [ref=e170]:
+                  - generic [ref=e171]: BOSCH
+            - listitem [ref=e172]:
+              - img [ref=e173]:
+                - img [ref=e175]:
+                  - generic [ref=e176]: Panasonic
+            - listitem [ref=e177]:
+              - img [ref=e178]:
+                - img [ref=e180]:
+                  - generic [ref=e181]: Continental
+            - listitem [ref=e182]:
+              - img [ref=e183]:
+                - img [ref=e185]:
+                  - generic [ref=e186]: PHILIPS
+    - region "Ready to Start Your Custom Display Project?" [ref=e187]:
+      - generic [ref=e188]:
+        - heading "Ready to Start Your Custom Display Project?" [level=2] [ref=e189]
+        - paragraph [ref=e190]: Get a quote within 24 hours. Our R&D team is ready to assist you with custom LCD, LCM, and PCBA solutions.
+        - link "Contact Our Engineers Today" [ref=e191] [cursor=pointer]:
+          - /url: mailto:contact@nelytech.com
+          - img [ref=e192]
+          - text: Contact Our Engineers Today
+  - contentinfo [ref=e195]:
+    - generic [ref=e196]:
+      - generic [ref=e197]:
+        - region "NELYTECH brand" [ref=e198]:
+          - link "NELYTECH" [ref=e199] [cursor=pointer]:
+            - /url: /
+          - paragraph [ref=e200]: LCD and LCM solutions built around responsive engineering, flexible PCBA, and reliable display manufacturing support.
+        - region "CHINA OFFICE" [ref=e201]:
+          - heading "CHINA OFFICE" [level=2] [ref=e202]
+          - generic [ref=e203]:
+            - generic [ref=e204]:
+              - img [ref=e205]
+              - generic [ref=e208]: Room 303, Building D, New Retail Digital Industrial Park, Nanchang, Xixiang, Bao'an, Shenzhen, China
+            - generic [ref=e209]:
+              - img [ref=e210]
+              - generic [ref=e212]:
+                - paragraph [ref=e213]: Telephone
+                - list [ref=e214]:
+                  - listitem [ref=e215]:
+                    - link "86-755-29640281" [ref=e216] [cursor=pointer]:
+                      - /url: tel:+8675529640281
+                  - listitem [ref=e217]:
+                    - link "86-755-29640221" [ref=e218] [cursor=pointer]:
+                      - /url: tel:+8675529640221
+                  - listitem [ref=e219]:
+                    - link "86-755-29640231" [ref=e220] [cursor=pointer]:
+                      - /url: tel:+8675529640231
+        - region "COMPANY" [ref=e221]:
+          - heading "COMPANY" [level=2] [ref=e222]
+          - list [ref=e223]:
+            - listitem [ref=e224]:
+              - link "Browse Products" [ref=e225] [cursor=pointer]:
+                - /url: "#products"
+            - listitem [ref=e226]:
+              - link "Knowledge Center" [ref=e227] [cursor=pointer]:
+                - /url: "#knowledge-center"
+            - listitem [ref=e228]:
+              - link "About Us" [ref=e229] [cursor=pointer]:
+                - /url: "#about-us"
+            - listitem [ref=e230]:
+              - link "Contact Us" [ref=e231] [cursor=pointer]:
+                - /url: "#contact"
+          - generic [ref=e232]:
+            - paragraph [ref=e233]: "Sales & Inquiries:"
+            - link "contact@nelytech.com" [ref=e234] [cursor=pointer]:
+              - /url: mailto:contact@nelytech.com
+              - img [ref=e235]
+              - text: contact@nelytech.com
+          - generic [ref=e238]:
+            - paragraph [ref=e239]: "Product Catalogue:"
+            - img "Product catalogue QR code placeholder" [ref=e240]
+        - region "PRODUCTS" [ref=e308]:
+          - heading "PRODUCTS" [level=2] [ref=e309]
+          - list [ref=e310]:
+            - listitem [ref=e311]:
+              - link "LCD Panels" [ref=e312] [cursor=pointer]:
+                - /url: "#products-lcd-panels"
+            - listitem [ref=e313]:
+              - link "LCD Modules" [ref=e314] [cursor=pointer]:
+                - /url: "#products-lcd-modules"
+            - listitem [ref=e315]:
+              - link "Assembly Technologies" [ref=e316] [cursor=pointer]:
+                - /url: "#products-assembly"
+            - listitem [ref=e317]:
+              - link "Custom PCBA & MCU" [ref=e318] [cursor=pointer]:
+                - /url: "#products-custom-pcba-mcu-development"
+            - listitem [ref=e319]:
+              - link "Touch Panels" [ref=e320] [cursor=pointer]:
+                - /url: "#products-touch-panels"
+      - paragraph [ref=e322]: Copyright © 2026 NELYTECH. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e328] [cursor=pointer]:
+    - img [ref=e329]

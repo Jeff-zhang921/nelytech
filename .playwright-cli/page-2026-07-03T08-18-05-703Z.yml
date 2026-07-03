@@ -1,0 +1,182 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "NELYTECH" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation "Main navigation" [ref=e5]:
+        - list [ref=e6]:
+          - listitem [ref=e7]:
+            - link "Home" [ref=e8] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e9]:
+            - link "About Us" [ref=e10] [cursor=pointer]:
+              - /url: "#about-us"
+          - listitem [ref=e11]:
+            - button "Products" [ref=e12]: Productsv
+          - listitem [ref=e13]:
+            - button "Industries" [ref=e14]: Industriesv
+          - listitem [ref=e15]:
+            - link "Careers" [ref=e16] [cursor=pointer]:
+              - /url: "#careers"
+          - listitem [ref=e17]:
+            - link "Contact" [ref=e18] [cursor=pointer]:
+              - /url: "#contact"
+  - region "NELYTECH" [ref=e19]:
+    - img "LCD and LCM display modules on an electronics engineering bench" [ref=e20]
+    - generic [ref=e23]:
+      - paragraph [ref=e24]: LCD & LCM Solutions
+      - heading "NELYTECH" [level=1] [ref=e25]
+      - paragraph [ref=e26]: Sir, what are you looking for? Lcd & lcms? Ok, just take a seat and have a cup of tea. To calm down and to reach far...... now let's talk about LCD & LCM Solutions. NELYTECH is very famous for its R&D ability, prices, services and speed. Tell us your requirement, your troubles or just your ideas, NELYTECH will give you the best solutions.
+  - main [ref=e27]:
+    - region "NELYTECH'S Advantages" [ref=e28]:
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - paragraph [ref=e31]: Capability
+          - heading "NELYTECH'S Advantages" [level=2] [ref=e32]
+        - list [ref=e33]:
+          - listitem [ref=e34]:
+            - article [ref=e35]:
+              - generic [ref=e36]:
+                - img "Custom LCD Controller / software development visual" [ref=e37]
+                - generic [ref=e46]: "01"
+              - heading "Custom LCD Controller / software development" [level=3] [ref=e48]
+          - listitem [ref=e49]:
+            - article [ref=e50]:
+              - generic [ref=e51]:
+                - img "Low tooling charge and quick tooling process visual" [ref=e52]
+                - generic [ref=e61]: "02"
+              - heading "Low tooling charge and quick tooling process" [level=3] [ref=e63]
+          - listitem [ref=e64]:
+            - article [ref=e65]:
+              - generic [ref=e66]:
+                - img "Multi-color TN/STNS visual" [ref=e67]
+                - generic [ref=e76]: "03"
+              - heading "Multi-color TN/STNS" [level=3] [ref=e78]
+          - listitem [ref=e79]:
+            - article [ref=e80]:
+              - generic [ref=e81]:
+                - img "Very low current / low voltage series visual" [ref=e82]
+                - generic [ref=e92]: "04"
+              - heading "Very low current / low voltage series" [level=3] [ref=e94]
+          - listitem [ref=e95]:
+            - article [ref=e96]:
+              - generic [ref=e97]:
+                - img "Excellent/flexible PCBA visual" [ref=e98]
+                - generic [ref=e109]: "05"
+              - heading "Excellent/flexible PCBA" [level=3] [ref=e111]
+    - region "Technical Specifications" [ref=e112]:
+      - generic [ref=e114]:
+        - generic [ref=e115]:
+          - paragraph [ref=e116]: Technical range
+          - heading "Technical Specifications" [level=2] [ref=e117]
+        - generic [ref=e118]:
+          - generic [ref=e119]:
+            - term [ref=e120]: Display modes
+            - definition [ref=e121]:
+              - generic [ref=e122]: TN
+              - generic [ref=e123]: STN
+              - generic [ref=e124]: FSTN
+              - generic [ref=e125]: Positive
+              - generic [ref=e126]: Negative
+          - generic [ref=e127]:
+            - term [ref=e128]: Assembly technology
+            - definition [ref=e129]:
+              - generic [ref=e130]: COB
+              - generic [ref=e131]: TAB
+              - generic [ref=e132]: COG
+              - generic [ref=e133]: COF
+    - region "Target Industries" [ref=e134]:
+      - generic [ref=e135]:
+        - heading "Target Industries" [level=2] [ref=e136]
+        - generic [ref=e137]:
+          - button "Show previous industry" [ref=e138]:
+            - img [ref=e139]
+          - tablist "Target industries" [ref=e141]:
+            - tab "01 Industrial & Instruments" [selected] [ref=e142]:
+              - generic [ref=e143]: "01"
+              - generic [ref=e144]: Industrial & Instruments
+            - tab "02 Automotive Electronics" [ref=e145]:
+              - generic [ref=e146]: "02"
+              - generic [ref=e147]: Automotive Electronics
+            - tab "03 Medical Devices" [ref=e148]:
+              - generic [ref=e149]: "03"
+              - generic [ref=e150]: Medical Devices
+            - tab "04 Smart Home & Appliances" [ref=e151]:
+              - generic [ref=e152]: "04"
+              - generic [ref=e153]: Smart Home & Appliances
+            - tab "05 Consumer Electronics" [ref=e154]:
+              - generic [ref=e155]: "05"
+              - generic [ref=e156]: Consumer Electronics
+          - button "Show next industry" [ref=e157]:
+            - img [ref=e158]
+        - tabpanel "01 Industrial & Instruments" [ref=e160]:
+          - img "Industrial & Instruments application visual" [ref=e162]
+          - article [ref=e174]:
+            - paragraph [ref=e175]: 01 / 05
+            - heading "Industrial & Instruments" [level=3] [ref=e176]
+            - paragraph [ref=e177]: Display solutions for meters, testing equipment, factory interfaces, and industrial control panels that need clear status feedback in demanding environments.
+            - img [ref=e179]
+    - region "Trusted by Industry Leaders" [ref=e181]:
+      - generic [ref=e182]:
+        - heading "Trusted by Industry Leaders" [level=2] [ref=e183]
+        - generic [ref=e185]:
+          - list [ref=e186]:
+            - listitem [ref=e187]:
+              - img "Siemens logo" [ref=e188]:
+                - img [ref=e190]:
+                  - generic [ref=e191]: SIEMENS
+            - listitem [ref=e192]:
+              - img "Honeywell logo" [ref=e193]:
+                - img [ref=e195]:
+                  - generic [ref=e196]: Honeywell
+            - listitem [ref=e197]:
+              - img "ABB logo" [ref=e198]:
+                - img [ref=e200]:
+                  - generic [ref=e201]: ABB
+            - listitem [ref=e202]:
+              - img "Bosch logo" [ref=e203]:
+                - img [ref=e205]:
+                  - generic [ref=e206]: BOSCH
+            - listitem [ref=e207]:
+              - img "Panasonic logo" [ref=e208]:
+                - img [ref=e210]:
+                  - generic [ref=e211]: Panasonic
+            - listitem [ref=e212]:
+              - img "Continental logo" [ref=e213]:
+                - img [ref=e215]:
+                  - generic [ref=e216]: Continental
+            - listitem [ref=e217]:
+              - img "Philips logo" [ref=e218]:
+                - img [ref=e220]:
+                  - generic [ref=e221]: PHILIPS
+          - list [ref=e222]:
+            - listitem [ref=e223]:
+              - img [ref=e224]:
+                - img [ref=e226]:
+                  - generic [ref=e227]: SIEMENS
+            - listitem [ref=e228]:
+              - img [ref=e229]:
+                - img [ref=e231]:
+                  - generic [ref=e232]: Honeywell
+            - listitem [ref=e233]:
+              - img [ref=e234]:
+                - img [ref=e236]:
+                  - generic [ref=e237]: ABB
+            - listitem [ref=e238]:
+              - img [ref=e239]:
+                - img [ref=e241]:
+                  - generic [ref=e242]: BOSCH
+            - listitem [ref=e243]:
+              - img [ref=e244]:
+                - img [ref=e246]:
+                  - generic [ref=e247]: Panasonic
+            - listitem [ref=e248]:
+              - img [ref=e249]:
+                - img [ref=e251]:
+                  - generic [ref=e252]: Continental
+            - listitem [ref=e253]:
+              - img [ref=e254]:
+                - img [ref=e256]:
+                  - generic [ref=e257]: PHILIPS
+  - button "Open Next.js Dev Tools" [ref=e263] [cursor=pointer]:
+    - img [ref=e264]
