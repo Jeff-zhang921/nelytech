@@ -6,18 +6,18 @@ interface FooterLink {
 }
 
 const companyLinks = [
-  { label: "Browse Products", href: "#products" },
+  { label: "Browse Products", href: "/products" },
   { label: "Knowledge Center", href: "#knowledge-center" },
-  { label: "About Us", href: "#about-us" },
-  { label: "Contact Us", href: "#contact" },
+  { label: "About Us", href: "/#about-us" },
+  { label: "Contact Us", href: "/contact" },
 ] as const satisfies readonly FooterLink[];
 
 const productLinks = [
-  { label: "LCD Panels", href: "#products-lcd-panels" },
-  { label: "LCD Modules", href: "#products-lcd-modules" },
-  { label: "Assembly Technologies", href: "#products-assembly" },
-  { label: "Custom PCBA & MCU", href: "#products-custom-pcba-mcu-development" },
-  { label: "Touch Panels", href: "#products-touch-panels" },
+  { label: "LCD Panels", href: "/products#products-lcd-panels" },
+  { label: "LCD Modules", href: "/products#products-lcd-modules" },
+  { label: "Assembly Technologies", href: "/products#products-assembly" },
+  { label: "Custom PCBA & MCU", href: "/products#products-custom-pcba-mcu-development" },
+  { label: "Touch Panels", href: "/products#products-touch-panels" },
 ] as const satisfies readonly FooterLink[];
 
 const phoneNumbers = ["86-755-29640281", "86-755-29640221", "86-755-29640231"] as const;

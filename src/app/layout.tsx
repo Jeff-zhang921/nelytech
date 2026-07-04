@@ -25,7 +25,9 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
       <body>
         <Navbar />
         {children}
-        <Footer />
+        <div className="relative z-20">
+          <Footer />
+        </div>
       </body>
     </html>
   );

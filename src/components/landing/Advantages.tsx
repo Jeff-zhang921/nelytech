@@ -54,10 +54,11 @@ const advantages = [
 export function Advantages() {
   return (
     <section
+      id="advantages"
       aria-labelledby="advantages-title"
-      className="border-b border-slate-200 bg-white px-5 py-10 sm:px-8 lg:px-12"
+      className="scroll-mt-32 border-b border-slate-200 bg-white px-5 py-10 sm:px-8 lg:px-12"
     >
-          <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-semibold tracking-[0.16em] text-teal-700 uppercase">
             Capability
@@ -74,7 +75,10 @@ export function Advantages() {
           {advantages.map((advantage) => (
             <li key={advantage.index}>
               <article className="group h-full overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl">
-                <div className="relative h-28 overflow-hidden bg-slate-200">
+                <div
+                  className="relative h-28 overflow-hidden bg-slate-200"
+                  style={{ position: "relative" }}
+                >
                   <Image
                     src={advantage.imageSrc}
                     alt={advantage.imageAlt}

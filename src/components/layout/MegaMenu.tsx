@@ -11,29 +11,45 @@ interface MegaMenuProps {
 
 export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
   const menu = megaMenus[menuKey];
+  const isProductsMenu = menuKey === "products";
   const sectionGridClassName =
     menu.sections.length === 4
       ? "grid gap-7 sm:grid-cols-2 lg:grid-cols-4"
       : "grid gap-7 sm:grid-cols-2 xl:grid-cols-5";
-  const techPattern =
-    "url(\"data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%230f766e' stroke-width='1'%3E%3Cpath d='M0 16h32M16 0v32'/%3E%3Cpath d='M8 8h4v4H8zM20 20h4v4h-4z'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='1.5' fill='%230f766e'/%3E%3C/svg%3E\")";
+  const engineeringLineArtPattern =
+    "url(\"data:image/svg+xml,%3Csvg width='300' height='210' viewBox='0 0 300 210' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M0 52H300M0 104H300M0 156H300M60 0V210M120 0V210M180 0V210M240 0V210' stroke='%2394a3b8' stroke-opacity='0.11' stroke-width='1.4'/%3E%3Cpath d='M24 158H84V122H132V86H190V50H270' stroke='%232563eb' stroke-opacity='0.18' stroke-width='3.2'/%3E%3Cpath d='M32 36H86L116 66H170L200 96H260' stroke='%230f766e' stroke-opacity='0.13' stroke-width='3'/%3E%3Cpath d='M44 184C80 138 114 138 148 184S216 224 276 146' stroke='%231e293b' stroke-opacity='0.1' stroke-width='2.8'/%3E%3Cpath d='M216 22l28 28-28 28-28-28 28-28Z' stroke='%232563eb' stroke-opacity='0.12' stroke-width='3'/%3E%3Cpath d='M52 72l20-20 20 20-20 20-20-20Z' stroke='%230f766e' stroke-opacity='0.1' stroke-width='2.6'/%3E%3Ccircle cx='84' cy='158' r='6' stroke='%232563eb' stroke-opacity='0.2' stroke-width='2.4'/%3E%3Ccircle cx='132' cy='122' r='6' stroke='%232563eb' stroke-opacity='0.2' stroke-width='2.4'/%3E%3Ccircle cx='190' cy='86' r='6' stroke='%232563eb' stroke-opacity='0.2' stroke-width='2.4'/%3E%3Ccircle cx='200' cy='96' r='5' stroke='%230f766e' stroke-opacity='0.16' stroke-width='2.2'/%3E%3C/g%3E%3C/svg%3E\")";
 
   return (
     <div
       id={id}
       aria-hidden={!isOpen}
       className={[
-        "absolute left-0 right-0 top-full overflow-hidden border-t border-slate-200 bg-white shadow-2xl shadow-slate-900/15 transition-all duration-200 ease-out",
+        "absolute left-0 right-0 top-full overflow-hidden transition-all duration-200 ease-out",
+        isProductsMenu
+          ? "border border-slate-200 bg-white/95 shadow-2xl shadow-slate-200/70 backdrop-blur-md"
+          : "border-t border-slate-200 bg-white shadow-2xl shadow-slate-900/15",
         isOpen
           ? "visible translate-y-0 opacity-100"
           : "invisible -translate-y-2 opacity-0",
       ].join(" ")}
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-repeat opacity-[0.035]"
-        style={{ backgroundImage: techPattern }}
-      />
+      {isProductsMenu ? (
+        <>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-0 bg-slate-50/70"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-0 bg-repeat opacity-40"
+            style={{ backgroundImage: engineeringLineArtPattern, backgroundSize: "300px 210px" }}
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_18%_10%,rgba(59,130,246,0.08),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.88),rgba(248,250,252,0.92))]"
+          />
+        </>
+      ) : null}
       <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 px-6 py-9 sm:px-8 lg:grid-cols-[0.8fr_2fr] lg:px-12">
         <div>
           <p className="text-sm font-semibold tracking-[0.18em] text-teal-700 uppercase">
@@ -45,43 +61,91 @@ export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
         </div>
 
         <div className={sectionGridClassName}>
-          {menu.sections.map((section) => (
-            <section key={section.heading} aria-labelledby={`${id}-${slugify(section.heading)}`}>
-              <h3
-                id={`${id}-${slugify(section.heading)}`}
-                className="text-sm font-semibold tracking-[0.14em] text-slate-950 uppercase"
+          {menu.sections.map((section) => {
+            const sectionId = `${id}-${slugify(section.heading)}`;
+            const isFeaturedProductSection =
+              menuKey === "products" && section.heading === "Advanced & Custom Solutions";
+
+            return (
+              <section
+                key={section.heading}
+                aria-labelledby={sectionId}
+                className={[
+                  isFeaturedProductSection
+                    ? "-mx-4 -my-3 rounded-2xl bg-[linear-gradient(135deg,rgba(239,246,255,0.84),rgba(248,250,252,0.76))] px-4 py-3 backdrop-blur-sm"
+                    : "",
+                ].join(" ")}
               >
-                {section.heading}
-              </h3>
-              {section.summary ? (
-                <p className="mt-3 text-sm leading-6 text-slate-500">
-                  {section.summary}
-                </p>
-              ) : null}
-              {section.links.length > 0 ? (
-                <ul className="mt-5 space-y-3">
-                  {section.links.map((link) => (
-                    <li key={link.title}>
-                      <Link
-                        href={link.href}
-                        onClick={onLinkClick}
-                        className="group block rounded-md outline-none transition-colors hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
-                      >
-                        <span className="block text-sm font-semibold text-slate-900 group-hover:text-teal-700">
-                          {link.title}
-                        </span>
-                        {link.description ? (
-                          <span className="mt-1 block text-sm leading-5 text-slate-500">
-                            {link.description}
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3
+                    id={sectionId}
+                    className={[
+                      "text-sm tracking-[0.14em] uppercase",
+                      isFeaturedProductSection
+                        ? "font-semibold text-blue-700"
+                        : "font-semibold text-slate-950",
+                    ].join(" ")}
+                  >
+                    {section.heading}
+                  </h3>
+                  {isFeaturedProductSection ? (
+                    <span className="ml-1 rounded-full bg-blue-100/80 px-2 py-0.5 text-[10px] font-semibold tracking-[0.08em] text-blue-800 uppercase">
+                      Featured
+                    </span>
+                  ) : null}
+                </div>
+                {section.summary ? (
+                  <p
+                    className={[
+                      "mt-3 text-sm leading-6",
+                      isFeaturedProductSection ? "text-slate-600" : "text-slate-500",
+                    ].join(" ")}
+                  >
+                    {section.summary}
+                  </p>
+                ) : null}
+                {section.links.length > 0 ? (
+                  <ul className="mt-5 space-y-3">
+                    {section.links.map((link) => (
+                      <li key={link.title}>
+                        <Link
+                          href={link.href}
+                          onClick={onLinkClick}
+                          className={[
+                            "group block rounded-md outline-none transition-colors focus-visible:ring-2 focus-visible:ring-offset-2",
+                            isFeaturedProductSection
+                              ? "hover:text-blue-800 focus-visible:ring-blue-600"
+                              : "hover:text-teal-700 focus-visible:ring-teal-600",
+                          ].join(" ")}
+                        >
+                          <span
+                            className={[
+                              "block text-sm font-semibold transition duration-200",
+                              isFeaturedProductSection
+                                ? "text-slate-950 group-hover:translate-x-1 group-hover:text-blue-700"
+                                : "text-slate-900 group-hover:text-teal-700",
+                            ].join(" ")}
+                          >
+                            {link.title}
                           </span>
-                        ) : null}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-            </section>
-          ))}
+                          {link.description ? (
+                            <span
+                              className={[
+                                "mt-1 block text-sm leading-5",
+                                isFeaturedProductSection ? "text-slate-600" : "text-slate-500",
+                              ].join(" ")}
+                            >
+                              {link.description}
+                            </span>
+                          ) : null}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </section>
+            );
+          })}
         </div>
       </div>
 

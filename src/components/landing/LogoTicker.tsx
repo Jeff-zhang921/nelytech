@@ -13,8 +13,9 @@ const logoHoverColorClassNames: Record<string, string> = {
 export function LogoTicker() {
   return (
     <section
+      id="trusted"
       aria-labelledby="trusted-by-title"
-      className="overflow-hidden border-t border-slate-200 bg-white px-6 py-16 sm:px-8 lg:px-12"
+      className="scroll-mt-32 overflow-hidden border-t border-slate-200 bg-white px-6 py-16 sm:px-8 lg:px-12"
     >
       <div className="mx-auto max-w-7xl">
         <h2

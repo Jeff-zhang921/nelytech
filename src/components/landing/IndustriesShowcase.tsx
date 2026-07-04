@@ -67,8 +67,9 @@ export function IndustriesShowcase() {
 
   return (
     <section
+      id="industries"
       aria-labelledby="industries-showcase-title"
-      className="overflow-hidden bg-[#1a365d] px-6 py-12 text-white sm:px-8 lg:px-12"
+      className="scroll-mt-32 overflow-hidden bg-[#1a365d] px-6 py-12 text-white sm:px-8 lg:px-12"
     >
       <div className="mx-auto max-w-7xl">
         <h2
@@ -127,7 +128,10 @@ export function IndustriesShowcase() {
           aria-labelledby={`industry-tab-${activeIndex}`}
           className="relative mt-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.44fr)] lg:items-center"
         >
-          <div className="relative min-h-[260px] overflow-hidden rounded-sm bg-[#102747] shadow-2xl shadow-black/25 sm:min-h-[320px] lg:min-h-[350px]">
+          <div
+            className="relative min-h-[260px] overflow-hidden rounded-sm bg-[#102747] shadow-2xl shadow-black/25 sm:min-h-[320px] lg:min-h-[350px]"
+            style={{ position: "relative" }}
+          >
             <Image
               key={activeIndustry.imageSrc}
               src={activeIndustry.imageSrc}

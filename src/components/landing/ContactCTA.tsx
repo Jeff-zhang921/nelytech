@@ -3,7 +3,7 @@ export function ContactCTA() {
     <section
       id="contact"
       aria-labelledby="contact-cta-title"
-      className="relative overflow-hidden bg-gradient-to-br from-[#1a365d] via-[#102747] to-[#061525] px-6 py-20 text-white sm:px-8 lg:px-12"
+      className="relative scroll-mt-32 overflow-hidden bg-gradient-to-br from-[#1a365d] via-[#102747] to-[#061525] px-6 py-20 text-white sm:px-8 lg:px-12"
     >
       <div
         aria-hidden="true"

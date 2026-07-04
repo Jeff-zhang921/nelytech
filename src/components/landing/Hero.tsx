@@ -16,8 +16,10 @@ export function Hero({
 }: HeroProps) {
   return (
     <section
+      id="about-us"
       aria-labelledby="hero-title"
-      className="relative isolate flex min-h-[76svh] overflow-hidden bg-slate-950 text-white"
+      className="relative isolate flex min-h-[76svh] scroll-mt-32 overflow-hidden bg-slate-950 text-white"
+      style={{ position: "relative" }}
     >
       <Image
         src="/images/lcd-lcm-hero.png"

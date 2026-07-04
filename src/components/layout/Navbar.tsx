@@ -14,8 +14,8 @@ interface NavLink {
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "About Us", href: "#about-us" },
-  { label: "Contact", href: "#contact" },
+  { label: "About Us", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ] as const satisfies readonly NavLink[];
 
 const desktopMegaMenuKeys = ["products"] as const satisfies readonly MegaMenuKey[];
@@ -72,7 +72,7 @@ export function Navbar() {
             </li>
             <li>
               <Link
-                href="#about-us"
+                href="/about"
                 onMouseEnter={closeActiveMenu}
                 onFocus={closeActiveMenu}
                 onClick={closeActiveMenu}
@@ -114,7 +114,7 @@ export function Navbar() {
             })}
             <li>
               <Link
-                href="#contact"
+                href="/contact"
                 onMouseEnter={closeActiveMenu}
                 onFocus={closeActiveMenu}
                 onClick={closeActiveMenu}
