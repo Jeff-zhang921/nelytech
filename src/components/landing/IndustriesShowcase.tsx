@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 import { useI18n } from "@/context/I18nContext";
 
@@ -46,162 +47,76 @@ const industries = [
 
 export function IndustriesShowcase() {
   const { t } = useI18n();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeIndustry = industries[activeIndex];
-
-  function showPreviousIndustry() {
-    setActiveIndex((current) => (current === 0 ? industries.length - 1 : current - 1));
-  }
-
-  function showNextIndustry() {
-    setActiveIndex((current) => (current + 1) % industries.length);
-  }
 
   return (
     <section
       id="industries"
       aria-labelledby="industries-showcase-title"
-      className="scroll-mt-32 overflow-hidden bg-[#1a365d] px-6 py-12 text-white sm:px-8 lg:px-12"
+      className="scroll-mt-28 overflow-hidden bg-[#1a365d] px-6 py-8 text-white sm:px-8 lg:px-12 lg:py-10"
     >
       <div className="mx-auto max-w-7xl">
-        <h2
-          id="industries-showcase-title"
-          className="text-center text-3xl font-semibold tracking-normal lg:text-4xl"
-        >
-          {t("industry.title")}
-        </h2>
-
-        <div className="mt-7 flex items-center gap-3 lg:gap-5">
-          <ArrowButton
-            label={t("industry.previousLabel")}
-            direction="left"
-            onClick={showPreviousIndustry}
-          />
-
-          <div
-            role="tablist"
-            aria-label={t("industry.title")}
-            className="grid min-w-0 flex-1 grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4"
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-xs font-semibold tracking-[0.18em] text-[#90e0ef] uppercase">
+            {t("industry.eyebrow")}
+          </p>
+          <h2
+            id="industries-showcase-title"
+            className="mt-3 text-2xl font-semibold tracking-normal lg:text-3xl"
           >
-            {industries.map((industry, index) => {
-              const isActive = index === activeIndex;
-
-              return (
-                <button
-                  key={industry.translationKey}
-                  type="button"
-                  role="tab"
-                  id={`industry-tab-${index}`}
-                  aria-selected={isActive}
-                  aria-controls="industry-panel"
-                  onClick={() => setActiveIndex(index)}
-                  className={[
-                    "rounded-md px-2 py-2 text-center outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#f8d64e] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a365d]",
-                    isActive ? "text-[#f8d64e]" : "text-slate-300 hover:text-white",
-                  ].join(" ")}
-                >
-                  <span className="block text-sm font-semibold leading-none">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="mt-2 block text-sm font-semibold leading-5 lg:text-base">
-                    {t(`industry.items.${industry.translationKey}.title`)}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          <ArrowButton label={t("industry.nextLabel")} direction="right" onClick={showNextIndustry} />
+            {t("industry.title")}
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-blue-100/75">
+            {t("industry.subtitle")}
+          </p>
         </div>
 
-        <div
-          id="industry-panel"
-          role="tabpanel"
-          aria-labelledby={`industry-tab-${activeIndex}`}
-          className="relative mt-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.44fr)] lg:items-center"
-        >
-          <div
-            className="relative min-h-[260px] overflow-hidden rounded-sm bg-[#102747] shadow-2xl shadow-black/25 sm:min-h-[320px] lg:min-h-[350px]"
-            style={{ position: "relative" }}
-          >
-            <Image
-              key={activeIndustry.imageSrc}
-              src={activeIndustry.imageSrc}
-              alt={activeIndustry.imageAlt}
-              unoptimized
-              fill
-              sizes="(max-width: 1024px) 100vw, 60vw"
-              className="object-cover transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#102747]/55 via-[#102747]/20 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#102747]/80 to-transparent" />
-          </div>
-
-          <article className="relative z-10 -mt-8 rounded-l-2xl rounded-r-md bg-[#90e0ef] p-7 text-[#102747] shadow-2xl shadow-black/20 sm:p-8 lg:-ml-16 lg:mt-0 lg:min-h-[270px] lg:p-9">
-            <p className="text-xs font-semibold tracking-[0.18em]">
-              {String(activeIndex + 1).padStart(2, "0")} /{" "}
-              {String(industries.length).padStart(2, "0")}
-            </p>
-            <h3 className="mt-4 text-3xl font-semibold leading-tight tracking-normal lg:text-[2rem]">
-              {t(`industry.items.${activeIndustry.translationKey}.title`)}
-            </h3>
-            <p className="mt-4 text-base leading-7 text-[#163d63]">
-              {t(`industry.items.${activeIndustry.translationKey}.description`)}
-            </p>
-            <span
-              aria-hidden="true"
-              className="mt-6 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#102747]/25 text-[#102747]"
+        <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {industries.map((industry, index) => (
+            <article
+              key={industry.translationKey}
+              className="group overflow-hidden rounded-xl bg-white/[0.06] ring-1 ring-white/10 backdrop-blur-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:bg-white/[0.09] hover:shadow-xl hover:shadow-black/20"
             >
-              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-                <path
-                  d="M5 12h13m-5-5 5 5-5 5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+              <div className="relative h-24 overflow-hidden bg-[#102747] lg:h-28">
+                <Image
+                  src={industry.imageSrc}
+                  alt={industry.imageAlt}
+                  unoptimized
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                  className="object-cover grayscale-[15%] transition-transform duration-700 ease-out group-hover:scale-105"
                 />
-              </svg>
-            </span>
-          </article>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#102747]/80 via-[#102747]/20 to-transparent" />
+                <span className="absolute bottom-2.5 left-3.5 text-[11px] font-semibold tracking-[0.18em] text-[#f8d64e]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+
+              <div className="p-4">
+                <h3 className="text-sm font-semibold leading-5 text-white">
+                  {t(`industry.items.${industry.translationKey}.title`)}
+                </h3>
+                <p className="mt-2 line-clamp-4 text-xs leading-5 text-blue-100/70">
+                  {t(`industry.items.${industry.translationKey}.description`)}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/industries"
+            className="group inline-flex items-center justify-center gap-3 rounded-full border border-white/25 bg-white/5 px-7 py-2.5 text-sm font-medium text-white backdrop-blur-md transition-all duration-500 ease-out hover:border-white hover:bg-white hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f8d64e] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a365d]"
+          >
+            {t("industry.viewAll")}
+            <ArrowRight
+              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
+          </Link>
         </div>
       </div>
     </section>
-  );
-}
-
-interface ArrowButtonProps {
-  label: string;
-  direction: "left" | "right";
-  onClick: () => void;
-}
-
-function ArrowButton({ label, direction, onClick }: ArrowButtonProps) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      onClick={onClick}
-      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/30 text-white outline-none transition-colors hover:border-[#f8d64e] hover:text-[#f8d64e] focus-visible:ring-2 focus-visible:ring-[#f8d64e] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1a365d] lg:h-11 lg:w-11"
-    >
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
-        {direction === "left" ? (
-          <path
-            d="M19 12H6m5 5-5-5 5-5"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        ) : (
-          <path
-            d="M5 12h13m-5-5 5 5-5 5"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        )}
-      </svg>
-    </button>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import { I18nProvider } from "@/context/I18nContext";
+import { BackToTop } from "@/components/BackToTop";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
           <div className="relative z-20">
             <Footer />
           </div>
+          <BackToTop />
         </I18nProvider>
       </body>
     </html>

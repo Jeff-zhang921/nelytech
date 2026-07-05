@@ -11,7 +11,7 @@ interface FooterLink {
 
 const companyLinks = [
   { labelKey: "footer.browseProducts", href: "/products" },
-  { labelKey: "footer.knowledgeCenter", href: "#knowledge-center" },
+  { labelKey: "footer.knowledgeCenter", href: "/contact#knowledge-center" },
   { labelKey: "footer.aboutUs", href: "/about" },
   { labelKey: "footer.contactUs", href: "/contact" },
 ] as const satisfies readonly FooterLink[];
@@ -59,8 +59,7 @@ export function Footer() {
               <div className="flex gap-3">
                 <MapPinIcon className="mt-1 h-5 w-5 shrink-0 text-teal-700" />
                 <address className="not-italic">
-                  Room 303, Building D, New Retail Digital Industrial Park, Nanchang, Xixiang,
-                  Bao&apos;an, Shenzhen, China
+                  {t("footer.address")}
                 </address>
               </div>
               <div className="flex gap-3">

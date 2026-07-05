@@ -1,9 +1,11 @@
 "use client";
 
 import type { ChangeEvent, FormEvent, KeyboardEvent, ReactNode } from "react";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
+import { Toaster, toast } from "sonner";
 
+import { sendContactEmail } from "@/actions/sendEmail";
 import { useI18n } from "@/context/I18nContext";
 
 const countryOptionKeys = [
@@ -111,6 +113,8 @@ interface ContactFormContentProps extends ContactFormProps {
 
 function ContactFormContent({ variant = "section", productFromUrl }: ContactFormContentProps) {
   const { t } = useI18n();
+  const [isPending, startTransition] = useTransition();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ContactFormState>(() => ({
     ...initialFormState,
     productInterest: productFromUrl,
@@ -120,6 +124,7 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
   const productInterestValue = isProductInterestLocked
     ? productFromUrl
     : formData.productInterest;
+  const isSubmitDisabled = isPending || isSubmitting;
   const countryOptions = useMemo(
     () => countryOptionKeys.map((key) => t(`contactForm.countries.${key}`)),
     [t],
@@ -138,32 +143,35 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const submissionData = new FormData(event.currentTarget);
 
-    const subject = `${t("contactForm.mailSubjectPrefix")} - ${
-      productInterestValue || t("contactForm.productOptions.generalInquiry")
-    }`;
-    const bodyLines = [
-      `${t("contactForm.emailBody.name")}: ${formData.name}`,
-      `${t("contactForm.emailBody.workEmail")}: ${formData.workEmail}`,
-      formData.company ? `${t("contactForm.emailBody.company")}: ${formData.company}` : null,
-      formData.countryRegion
-        ? `${t("contactForm.emailBody.countryRegion")}: ${formData.countryRegion}`
-        : null,
-      productInterestValue
-        ? `${t("contactForm.emailBody.productInterest")}: ${productInterestValue}`
-        : null,
-      "",
-      `${t("contactForm.emailBody.projectDetails")}:`,
-      formData.message,
-    ].filter((line): line is string => line !== null);
+    setIsSubmitting(true);
 
-    window.location.href = `mailto:contact@nelytech.com?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+    startTransition(() => {
+      void (async () => {
+        try {
+          const result = await sendContactEmail(submissionData);
+
+          if ("error" in result) {
+            toast.error(result.error);
+            return;
+          }
+
+          toast.success("Inquiry sent successfully. Our engineering team will follow up shortly.");
+          setFormData({
+            ...initialFormState,
+            productInterest: productFromUrl,
+          });
+        } finally {
+          setIsSubmitting(false);
+        }
+      })();
+    });
   }
 
   const content = (
     <div className={isEmbedded ? "" : "mx-auto max-w-5xl"}>
+      <Toaster position="top-center" />
       <div className="mb-8">
         <p className="text-sm font-semibold tracking-[0.16em] text-blue-700 uppercase">
           {t("contactForm.eyebrow")}
@@ -204,7 +212,7 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
         >
           <input
             id="contact-work-email"
-            name="workEmail"
+            name="email"
             type="email"
             autoComplete="email"
             required
@@ -230,7 +238,7 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
 
         <SearchableDropdown
           id="contact-country-region"
-          name="countryRegion"
+          name="country"
           label={t("contactForm.fields.countryRegion.label")}
           value={formData.countryRegion}
           options={countryOptions}
@@ -249,7 +257,7 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
             <div className="relative">
               <input
                 id="contact-product-interest"
-                name="productInterest"
+                name="interest"
                 type="text"
                 readOnly
                 value={productFromUrl}
@@ -267,7 +275,7 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
         ) : (
           <SearchableDropdown
             id="contact-product-interest"
-            name="productInterest"
+            name="interest"
             label={t("contactForm.fields.productInterest.label")}
             value={formData.productInterest}
             options={productOptions}
@@ -300,9 +308,15 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
         <div className="md:col-span-2">
           <button
             type="submit"
-            className="inline-flex h-14 w-full items-center justify-center rounded-xl bg-blue-600 px-8 text-base font-semibold text-white transition duration-200 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/20 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 sm:w-auto"
+            disabled={isSubmitDisabled}
+            className={[
+              "inline-flex h-14 w-full items-center justify-center rounded-xl bg-blue-600 px-8 text-base font-semibold text-white transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 sm:w-auto",
+              isSubmitDisabled
+                ? "cursor-not-allowed opacity-50"
+                : "hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/20",
+            ].join(" ")}
           >
-            {t("contactForm.submit")}
+            {isSubmitDisabled ? "Sending..." : t("contactForm.submit")}
           </button>
         </div>
       </form>

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useI18n } from "@/context/I18nContext";
 
 export function ContactCTA() {
@@ -32,13 +34,13 @@ export function ContactCTA() {
           {t("contactCta.subtitle")}
         </p>
 
-        <a
-          href="mailto:contact@nelytech.com"
+        <Link
+          href="/contact"
           className="mt-9 inline-flex items-center justify-center gap-3 rounded-md bg-yellow-400 px-7 py-4 text-base font-semibold text-slate-950 shadow-lg shadow-yellow-400/20 outline-none transition duration-200 hover:scale-105 hover:bg-yellow-300 hover:shadow-xl hover:shadow-yellow-400/30 focus-visible:ring-2 focus-visible:ring-yellow-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#102747]"
         >
           <EnvelopeIcon className="h-5 w-5" />
           {t("contactCta.button")}
-        </a>
+        </Link>
       </div>
     </section>
   );

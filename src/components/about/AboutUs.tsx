@@ -5,20 +5,43 @@ import { useEffect, useState } from "react";
 import { useI18n } from "@/context/I18nContext";
 
 const leadTimes = [
-  { labelKey: "about.leadTimes.lcdPanelPrototype", duration: "2 Weeks" },
-  { labelKey: "about.leadTimes.lcdModulePrototype", duration: "3 Weeks" },
-  { labelKey: "about.leadTimes.mcuDesignPrototype", duration: "3-5 Weeks" },
-  { labelKey: "about.leadTimes.lcdPanelMassProduction", duration: "3 Weeks" },
-  { labelKey: "about.leadTimes.lcdModuleMassProduction", duration: "3-4 Weeks" },
+  {
+    labelKey: "about.leadTimes.lcdPanelPrototype",
+    durationKey: "about.leadTimeDurations.twoWeeks",
+  },
+  {
+    labelKey: "about.leadTimes.lcdModulePrototype",
+    durationKey: "about.leadTimeDurations.threeWeeks",
+  },
+  {
+    labelKey: "about.leadTimes.mcuDesignPrototype",
+    durationKey: "about.leadTimeDurations.threeToFiveWeeks",
+  },
+  {
+    labelKey: "about.leadTimes.lcdPanelMassProduction",
+    durationKey: "about.leadTimeDurations.threeWeeks",
+  },
+  {
+    labelKey: "about.leadTimes.lcdModuleMassProduction",
+    durationKey: "about.leadTimeDurations.threeToFourWeeks",
+  },
 ] as const;
 
 const marketShares = [
-  { region: "Europe", percentage: "30%", widthClassName: "w-[30%]" },
-  { region: "Asia", percentage: "20%", widthClassName: "w-[20%]" },
-  { region: "North America", percentage: "20%", widthClassName: "w-[20%]" },
-  { region: "South America", percentage: "20%", widthClassName: "w-[20%]" },
-  { region: "Australia", percentage: "5%", widthClassName: "w-[5%]" },
-  { region: "Africa", percentage: "5%", widthClassName: "w-[5%]" },
+  { labelKey: "about.markets.europe", percentage: "30%", widthClassName: "w-[30%]" },
+  { labelKey: "about.markets.asia", percentage: "20%", widthClassName: "w-[20%]" },
+  {
+    labelKey: "about.markets.northAmerica",
+    percentage: "20%",
+    widthClassName: "w-[20%]",
+  },
+  {
+    labelKey: "about.markets.southAmerica",
+    percentage: "20%",
+    widthClassName: "w-[20%]",
+  },
+  { labelKey: "about.markets.australia", percentage: "5%", widthClassName: "w-[5%]" },
+  { labelKey: "about.markets.africa", percentage: "5%", widthClassName: "w-[5%]" },
 ] as const;
 
 export function AboutUs() {
@@ -115,7 +138,7 @@ export function AboutUs() {
                       {t(item.labelKey)}
                     </span>
                     <span className="text-2xl font-semibold tracking-normal text-slate-500">
-                      {item.duration}
+                      {t(item.durationKey)}
                     </span>
                   </div>
                 </li>
@@ -141,9 +164,11 @@ export function AboutUs() {
 
             <div className="mt-16 space-y-8">
               {marketShares.map((market) => (
-                <div key={market.region}>
+                <div key={market.labelKey}>
                   <div className="mb-3 flex items-center justify-between gap-6">
-                    <span className="text-lg font-semibold text-slate-900">{market.region}</span>
+                    <span className="text-lg font-semibold text-slate-900">
+                      {t(market.labelKey)}
+                    </span>
                     <span className="text-lg font-semibold text-blue-700">{market.percentage}</span>
                   </div>
                   <div className="h-3 rounded-full bg-slate-100">

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { useI18n } from "@/context/I18nContext";
 
@@ -103,7 +104,40 @@ export function Advantages() {
             </li>
           ))}
         </ul>
+
+        <div className="mt-12 flex justify-center">
+          <Link
+            href="/advantages"
+            className="group inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 px-8 py-3 text-sm font-medium text-slate-900 outline-none transition-all duration-300 hover:bg-slate-900 hover:text-white focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-4"
+          >
+            {translateWithFallback(t, "advantage.cta", "See why we can bring you the best")}
+            <svg
+              viewBox="0 0 20 20"
+              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 10h11m-4-4 4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+        </div>
       </div>
     </section>
   );
+}
+
+function translateWithFallback(
+  t: (key: string) => string,
+  key: string,
+  fallback: string,
+) {
+  const translatedValue = t(key);
+
+  return translatedValue === key ? fallback : translatedValue;
 }
