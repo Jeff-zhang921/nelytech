@@ -1,4 +1,7 @@
+"use client";
+
 import { companyLogos } from "@/constants/logos";
+import { useI18n } from "@/context/I18nContext";
 
 const logoHoverColorClassNames: Record<string, string> = {
   siemens: "group-hover/logo:text-[#009999]",
@@ -11,6 +14,8 @@ const logoHoverColorClassNames: Record<string, string> = {
 };
 
 export function LogoTicker() {
+  const { t } = useI18n();
+
   return (
     <section
       id="trusted"
@@ -22,8 +27,11 @@ export function LogoTicker() {
           id="trusted-by-title"
           className="text-center text-3xl font-semibold tracking-normal text-slate-950 sm:text-4xl"
         >
-          Trusted by Industry Leaders
+          {t("trustedBy.title")}
         </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-center text-sm leading-6 text-slate-600 sm:text-base">
+          {t("trustedBy.subtitle")}
+        </p>
 
         <div
           data-logo-marquee
@@ -33,8 +41,8 @@ export function LogoTicker() {
             data-logo-track
             className="flex w-max animate-logo-marquee [animation-duration:42s] group-hover:[animation-play-state:paused] motion-reduce:animate-none sm:[animation-duration:34s]"
           >
-            <LogoRow />
-            <LogoRow aria-hidden="true" />
+            <LogoRow logoAltPrefix={t("trustedBy.logoAltPrefix")} />
+            <LogoRow logoAltPrefix={t("trustedBy.logoAltPrefix")} aria-hidden="true" />
           </div>
         </div>
       </div>
@@ -43,10 +51,11 @@ export function LogoTicker() {
 }
 
 interface LogoRowProps {
+  logoAltPrefix: string;
   "aria-hidden"?: "true";
 }
 
-function LogoRow(props: LogoRowProps) {
+function LogoRow({ logoAltPrefix, ...props }: LogoRowProps) {
   return (
     <ul className="flex shrink-0 gap-4 pr-4 sm:gap-5 sm:pr-5" {...props}>
       {companyLogos.map((logo) => (
@@ -54,7 +63,7 @@ function LogoRow(props: LogoRowProps) {
           <div
             className={`group/logo flex min-w-44 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 px-6 py-5 text-gray-400 opacity-50 transition duration-200 hover:border-teal-200 hover:bg-white hover:opacity-100 sm:min-w-56 ${logoHoverColorClassNames[logo.id] ?? "group-hover/logo:text-slate-950"}`}
             role="img"
-            aria-label={`${logo.name} logo`}
+            aria-label={`${logoAltPrefix} ${logo.name}`}
             title={logo.name}
           >
             <span aria-hidden="true" className="flex h-9 items-center">

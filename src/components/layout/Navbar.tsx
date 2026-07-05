@@ -3,24 +3,26 @@
 import Link from "next/link";
 import { useState } from "react";
 
-import { megaMenus, type MegaMenuKey } from "@/constants/navigation";
-import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import type { MegaMenuKey } from "@/constants/navigation";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useI18n } from "@/context/I18nContext";
 import { MegaMenu, MobileMegaMenu } from "@/components/layout/MegaMenu";
 
 interface NavLink {
-  label: string;
+  labelKey: string;
   href: string;
 }
 
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { labelKey: "nav.home", href: "/" },
+  { labelKey: "nav.about", href: "/about" },
+  { labelKey: "nav.contact", href: "/contact" },
 ] as const satisfies readonly NavLink[];
 
 const desktopMegaMenuKeys = ["products"] as const satisfies readonly MegaMenuKey[];
 
 export function Navbar() {
+  const { t } = useI18n();
   const [activeMenu, setActiveMenu] = useState<MegaMenuKey | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [openMobileMenu, setOpenMobileMenu] = useState<MegaMenuKey | null>(null);
@@ -67,7 +69,7 @@ export function Navbar() {
                 onClick={closeActiveMenu}
                 className="rounded-sm text-slate-700 underline-offset-4 outline-none transition-colors hover:text-teal-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
               >
-                Home
+                {t("nav.home")}
               </Link>
             </li>
             <li>
@@ -78,11 +80,10 @@ export function Navbar() {
                 onClick={closeActiveMenu}
                 className="rounded-sm text-slate-700 underline-offset-4 outline-none transition-colors hover:text-teal-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
               >
-                About Us
+                {t("nav.about")}
               </Link>
             </li>
             {desktopMegaMenuKeys.map((menuKey) => {
-              const menu = megaMenus[menuKey];
               const panelId = `${menuKey}-mega-menu`;
               const isOpen = activeMenu === menuKey;
 
@@ -98,7 +99,7 @@ export function Navbar() {
                     onClick={() => setActiveMenu(isOpen ? null : menuKey)}
                     className="rounded-sm text-slate-700 underline-offset-4 outline-none transition-colors hover:text-teal-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
                   >
-                    {menu.label}
+                    {t(`nav.${menuKey}`)}
                     <span aria-hidden="true" className="ml-1 text-xs">
                       v
                     </span>
@@ -120,11 +121,11 @@ export function Navbar() {
                 onClick={closeActiveMenu}
                 className="rounded-sm text-slate-700 underline-offset-4 outline-none transition-colors hover:text-teal-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
               >
-                Contact
+                {t("nav.contact")}
               </Link>
             </li>
             <li onMouseEnter={closeActiveMenu} onFocus={closeActiveMenu}>
-              <LanguageSwitcher />
+              <LanguageToggle />
             </li>
           </ul>
         </nav>
@@ -133,7 +134,7 @@ export function Navbar() {
           type="button"
           aria-expanded={isMobileOpen}
           aria-controls="mobile-navigation"
-          aria-label={isMobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={isMobileOpen ? t("nav.closeMenu") : t("nav.openMenu")}
           onClick={() => {
             setIsMobileOpen((current) => !current);
             setActiveMenu(null);
@@ -156,13 +157,13 @@ export function Navbar() {
         >
           <ul className="mx-auto max-w-7xl">
             {navLinks.slice(0, 2).map((link) => (
-              <li key={link.label} className="border-t border-slate-200 first:border-t-0">
+              <li key={link.labelKey} className="border-t border-slate-200 first:border-t-0">
                 <Link
                   href={link.href}
                   onClick={closeMenus}
                   className="block py-4 text-base font-semibold text-slate-950 outline-none transition-colors hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                 </Link>
               </li>
             ))}
@@ -181,18 +182,18 @@ export function Navbar() {
               </li>
             ))}
             {navLinks.slice(2).map((link) => (
-              <li key={link.label} className="border-t border-slate-200">
+              <li key={link.labelKey} className="border-t border-slate-200">
                 <Link
                   href={link.href}
                   onClick={closeMenus}
                   className="block py-4 text-base font-semibold text-slate-950 outline-none transition-colors hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                 </Link>
               </li>
             ))}
             <li className="border-t border-slate-200 py-4">
-              <LanguageSwitcher />
+              <LanguageToggle />
             </li>
           </ul>
         </nav>

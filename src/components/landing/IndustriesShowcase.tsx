@@ -3,50 +3,41 @@
 import Image from "next/image";
 import { useState } from "react";
 
+import { useI18n } from "@/context/I18nContext";
+
 interface Industry {
-  title: string;
-  description: string;
+  translationKey: string;
   imageSrc: string;
   imageAlt: string;
 }
 
 const industries = [
   {
-    title: "Industrial & Instruments",
-    description:
-      "Display solutions for meters, testing equipment, factory interfaces, and industrial control panels that need clear status feedback in demanding environments.",
+    translationKey: "industrial",
     imageSrc:
       "https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&w=1400&q=80",
     imageAlt: "Robotic manufacturing equipment working inside a modern industrial facility",
   },
   {
-    title: "Automotive Electronics",
-    description:
-      "LCD and LCM modules for car dashboards, audio-visual systems, HUD interfaces, and vehicle control displays where reliability and readability matter.",
+    translationKey: "automotive",
     imageSrc:
       "https://images.unsplash.com/photo-1668283764349-86c3f955d40a?auto=format&fit=crop&w=1400&q=80",
     imageAlt: "Modern car dashboard with a digital cockpit display",
   },
   {
-    title: "Medical Devices",
-    description:
-      "Precision display modules for patient monitors, medical instruments, and portable healthcare equipment with stable contrast and efficient power use.",
+    translationKey: "medical",
     imageSrc:
       "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1400&q=80",
     imageAlt: "Clinical hospital room with patient monitoring equipment",
   },
   {
-    title: "Smart Home & Appliances",
-    description:
-      "Readable display and touch interfaces for white goods, thermostats, appliance controls, and connected home products.",
+    translationKey: "smartHome",
     imageSrc:
       "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1400&q=80",
     imageAlt: "Smart home technology interface in a modern residential interior",
   },
   {
-    title: "Consumer Electronics",
-    description:
-      "Compact display solutions for audio-visual products, wearable devices, calculators, and consumer interfaces that need clear information at a glance.",
+    translationKey: "consumerElectronics",
     imageSrc:
       "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1400&q=80",
     imageAlt: "Close-up of a modern smartphone display and consumer electronics hardware",
@@ -54,6 +45,7 @@ const industries = [
 ] as const satisfies readonly Industry[];
 
 export function IndustriesShowcase() {
+  const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const activeIndustry = industries[activeIndex];
 
@@ -76,19 +68,19 @@ export function IndustriesShowcase() {
           id="industries-showcase-title"
           className="text-center text-3xl font-semibold tracking-normal lg:text-4xl"
         >
-          Target Industries
+          {t("industry.title")}
         </h2>
 
         <div className="mt-7 flex items-center gap-3 lg:gap-5">
           <ArrowButton
-            label="Show previous industry"
+            label={t("industry.previousLabel")}
             direction="left"
             onClick={showPreviousIndustry}
           />
 
           <div
             role="tablist"
-            aria-label="Target industries"
+            aria-label={t("industry.title")}
             className="grid min-w-0 flex-1 grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4"
           >
             {industries.map((industry, index) => {
@@ -96,7 +88,7 @@ export function IndustriesShowcase() {
 
               return (
                 <button
-                  key={industry.title}
+                  key={industry.translationKey}
                   type="button"
                   role="tab"
                   id={`industry-tab-${index}`}
@@ -112,14 +104,14 @@ export function IndustriesShowcase() {
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="mt-2 block text-sm font-semibold leading-5 lg:text-base">
-                    {industry.title}
+                    {t(`industry.items.${industry.translationKey}.title`)}
                   </span>
                 </button>
               );
             })}
           </div>
 
-          <ArrowButton label="Show next industry" direction="right" onClick={showNextIndustry} />
+          <ArrowButton label={t("industry.nextLabel")} direction="right" onClick={showNextIndustry} />
         </div>
 
         <div
@@ -151,9 +143,11 @@ export function IndustriesShowcase() {
               {String(industries.length).padStart(2, "0")}
             </p>
             <h3 className="mt-4 text-3xl font-semibold leading-tight tracking-normal lg:text-[2rem]">
-              {activeIndustry.title}
+              {t(`industry.items.${activeIndustry.translationKey}.title`)}
             </h3>
-            <p className="mt-4 text-base leading-7 text-[#163d63]">{activeIndustry.description}</p>
+            <p className="mt-4 text-base leading-7 text-[#163d63]">
+              {t(`industry.items.${activeIndustry.translationKey}.description`)}
+            </p>
             <span
               aria-hidden="true"
               className="mt-6 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#102747]/25 text-[#102747]"

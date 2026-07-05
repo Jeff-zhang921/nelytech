@@ -1,4 +1,10 @@
+"use client";
+
+import { useI18n } from "@/context/I18nContext";
+
 export function ContactCTA() {
+  const { t } = useI18n();
+
   return (
     <section
       id="contact"
@@ -20,11 +26,10 @@ export function ContactCTA() {
           id="contact-cta-title"
           className="text-3xl font-semibold leading-tight tracking-normal sm:text-4xl lg:text-5xl"
         >
-          Ready to Start Your Custom Display Project?
+          {t("contactCta.title")}
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-blue-100">
-          Get a quote within 24 hours. Our R&amp;D team is ready to assist you with custom LCD,
-          LCM, and PCBA solutions.
+          {t("contactCta.subtitle")}
         </p>
 
         <a
@@ -32,7 +37,7 @@ export function ContactCTA() {
           className="mt-9 inline-flex items-center justify-center gap-3 rounded-md bg-yellow-400 px-7 py-4 text-base font-semibold text-slate-950 shadow-lg shadow-yellow-400/20 outline-none transition duration-200 hover:scale-105 hover:bg-yellow-300 hover:shadow-xl hover:shadow-yellow-400/30 focus-visible:ring-2 focus-visible:ring-yellow-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#102747]"
         >
           <EnvelopeIcon className="h-5 w-5" />
-          Contact Our Engineers Today
+          {t("contactCta.button")}
         </a>
       </div>
     </section>

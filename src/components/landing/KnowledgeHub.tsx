@@ -3,58 +3,35 @@
 import Link from "next/link";
 import { useState } from "react";
 
+import { useI18n } from "@/context/I18nContext";
+
 interface DisplayGuide {
-  title: string;
-  whatItDoes: string;
-  whyChoose: string;
-  applications: readonly string[];
+  translationKey: string;
 }
 
 const displayGuides = [
   {
-    title: "Segment LCD Panels",
-    whatItDoes:
-      'Displays pre-designed, fixed segments like the number "8" or battery icons. No custom graphics.',
-    whyChoose:
-      "Absolute lowest power consumption, extremely durable, and most cost-effective.",
-    applications: ["Calculators", "Digital thermometers", "Gas/water meters", "Electronic scales"],
+    translationKey: "segment",
   },
   {
-    title: "Character & Graphic LCDs",
-    whatItDoes:
-      "A grid of pixels. Character LCDs show standard text; Graphic LCDs can draw custom shapes and basic charts in single colors.",
-    whyChoose: "Perfect for dynamic data and simple menus without the cost of full color.",
-    applications: [
-      "Industrial control panels",
-      "Factory automation",
-      "Heavy-duty printers",
-      "Basic medical monitors",
-    ],
+    translationKey: "characterGraphic",
   },
   {
-    title: "TFT Color Modules",
-    whatItDoes:
-      "Full-color, high-resolution screens, often with touch, that can show any image, video, or complex UI.",
-    whyChoose: "For a modern, smartphone-like experience and rich interactive graphics.",
-    applications: ["Smart home hubs", "EV charging stations", "Advanced medical ventilators"],
+    translationKey: "tftColor",
   },
   {
-    title: "PCBA Integration",
-    whatItDoes: "The custom Printed Circuit Board Assembly, or motherboard, that drives the display.",
-    whyChoose:
-      'For clients seeking a complete "plug-and-play" hardware solution rather than just raw screen components.',
-    applications: [
-      "Custom controllers",
-      "Display driver boards",
-      "Integrated HMI hardware",
-      "Production-ready assemblies",
-    ],
+    translationKey: "pcbaIntegration",
   },
 ] as const satisfies readonly DisplayGuide[];
 
 export function KnowledgeHub() {
+  const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const activeGuide = displayGuides[activeIndex];
+  const activeGuideKey = activeGuide.translationKey;
+  const applications = splitApplications(
+    t(`productGuide.items.${activeGuideKey}.applications`),
+  );
 
   return (
     <section
@@ -65,17 +42,16 @@ export function KnowledgeHub() {
       <div className="mx-auto max-w-7xl">
         <div className="max-w-3xl">
           <p className="text-sm font-semibold tracking-[0.16em] text-blue-700 uppercase">
-            Product Guide
+            {t("productGuide.eyebrow")}
           </p>
           <h2
             id="knowledge-hub-title"
             className="mt-3 text-3xl font-semibold tracking-normal text-slate-950 sm:text-4xl"
           >
-            Which Display Do I Need?
+            {t("productGuide.title")}
           </h2>
           <p className="mt-4 text-base leading-7 text-slate-600">
-            Compare the main display technologies NELYTECH manufactures and match each option to
-            real-world product requirements.
+            {t("productGuide.subtitle")}
           </p>
         </div>
 
@@ -83,7 +59,7 @@ export function KnowledgeHub() {
           <div className="grid grid-cols-1 lg:grid-cols-[0.36fr_0.64fr]">
             <div
               role="tablist"
-              aria-label="Display technology guide"
+              aria-label={t("productGuide.title")}
               className="border-b border-slate-200 bg-slate-100/70 p-2 lg:border-b-0 lg:border-r"
             >
               {displayGuides.map((guide, index) => {
@@ -91,7 +67,7 @@ export function KnowledgeHub() {
 
                 return (
                   <button
-                    key={guide.title}
+                    key={guide.translationKey}
                     type="button"
                     role="tab"
                     id={`display-guide-tab-${index}`}
@@ -105,7 +81,9 @@ export function KnowledgeHub() {
                         : "border-transparent bg-slate-50/70 text-slate-600 hover:bg-white hover:text-slate-950",
                     ].join(" ")}
                   >
-                    <span className="text-sm font-semibold leading-6">{guide.title}</span>
+                    <span className="text-sm font-semibold leading-6">
+                      {t(`productGuide.items.${guide.translationKey}.title`)}
+                    </span>
                   </button>
                 );
               })}
@@ -122,20 +100,26 @@ export function KnowledgeHub() {
                 {String(displayGuides.length).padStart(2, "0")}
               </p>
               <h3 className="mt-3 text-2xl font-semibold tracking-normal text-slate-950">
-                {activeGuide.title}
+                {t(`productGuide.items.${activeGuideKey}.title`)}
               </h3>
 
               <div className="mt-7 grid gap-6 md:grid-cols-2">
-                <InfoBlock title="What it does" body={activeGuide.whatItDoes} />
-                <InfoBlock title="Why choose it" body={activeGuide.whyChoose} />
+                <InfoBlock
+                  title={t("productGuide.labels.whatItDoes")}
+                  body={t(`productGuide.items.${activeGuideKey}.whatItDoes`)}
+                />
+                <InfoBlock
+                  title={t("productGuide.labels.whyChooseIt")}
+                  body={t(`productGuide.items.${activeGuideKey}.whyChooseIt`)}
+                />
               </div>
 
               <div className="mt-8">
                 <h4 className="text-sm font-semibold tracking-[0.14em] text-slate-950 uppercase">
-                  Applications
+                  {t("productGuide.labels.applications")}
                 </h4>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {activeGuide.applications.map((application) => (
+                  {applications.map((application) => (
                     <span
                       key={application}
                       className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700"
@@ -151,18 +135,25 @@ export function KnowledgeHub() {
 
         <div className="mt-8 flex flex-col items-center justify-center gap-4 rounded-2xl bg-white px-6 py-6 text-center shadow-sm ring-1 ring-slate-200 sm:flex-row sm:text-left">
           <p className="text-base font-semibold text-slate-800">
-            Still not sure? Let our engineers help you choose.
+            {t("productGuide.ctaLead")}
           </p>
           <Link
             href="/contact"
             className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            Ask an Engineer
+            {t("productGuide.ctaButton")}
           </Link>
         </div>
       </div>
     </section>
   );
+}
+
+function splitApplications(applications: string) {
+  return applications
+    .split(/[,、]/)
+    .map((application) => application.trim())
+    .filter(Boolean);
 }
 
 interface InfoBlockProps {

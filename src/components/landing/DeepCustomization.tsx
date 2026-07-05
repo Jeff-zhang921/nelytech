@@ -1,58 +1,53 @@
+"use client";
+
 import Link from "next/link";
 
+import { useI18n } from "@/context/I18nContext";
+
 interface CustomCapability {
-  title: string;
-  description: string;
+  translationKey: string;
 }
 
 interface EngineeringOutcome {
-  title: string;
-  description: string;
+  translationKey: string;
 }
 
 const customCapabilities = [
   {
-    title: "Mechanical Dimensions",
-    description: "Custom glass shapes, specific FPC lengths, and tailored bezels.",
+    translationKey: "mechanical",
   },
   {
-    title: "Optical Adjustments",
-    description: "Sunlight-readable backlights (1000+ nits) and custom viewing angles.",
+    translationKey: "optical",
   },
   {
-    title: "Bespoke PCBA",
-    description: "Complete motherboard design with tailored interfaces (SPI, RGB, MIPI).",
+    translationKey: "pcba",
   },
   {
-    title: "Extreme Environments",
-    description: "Wide-temperature fluids (-30\u00B0C to 80\u00B0C) and anti-UV glass.",
+    translationKey: "extremeEnvironments",
   },
   {
-    title: "EMI Shielding",
-    description: "Advanced anti-interference designs for strict medical and industrial certs.",
+    translationKey: "emiShielding",
   },
   {
-    title: "Low NRE & Fast Samples",
-    description: "Highly affordable tooling costs and rapid prototype delivery.",
+    translationKey: "lowNre",
   },
 ] as const satisfies readonly CustomCapability[];
 
 const engineeringOutcomes = [
   {
-    title: "EV Charger",
-    description: "1000-nits FSTN engineered for high-readability outdoor charging interfaces.",
+    translationKey: "evCharger",
   },
   {
-    title: "Medical Ventilator UI",
-    description: "Custom PCBA with strict EMI shielding, passing rigorous healthcare certs.",
+    translationKey: "medicalVentilator",
   },
   {
-    title: "Smart Meter",
-    description: "Low-power custom FPC design for compact industrial metering hardware.",
+    translationKey: "smartMeter",
   },
 ] as const satisfies readonly EngineeringOutcome[];
 
 export function DeepCustomization() {
+  const { t } = useI18n();
+
   return (
     <section
       id="deep-customization"
@@ -67,30 +62,28 @@ export function DeepCustomization() {
       <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-8">
           <p className="mb-4 text-sm font-semibold tracking-[0.18em] text-blue-700 uppercase">
-            Custom Engineering
+            {t("customEngineering.eyebrow")}
           </p>
           <h2
             id="deep-customization-title"
             className="mb-4 max-w-4xl text-4xl font-extrabold tracking-tight text-slate-900 lg:text-5xl"
           >
-            Deep Customization. Engineered to Your Specs.
+            {t("customEngineering.title")}
           </h2>
           <p className="mb-10 max-w-3xl text-lg leading-relaxed text-slate-600">
-            We don&apos;t just sell standard panels. We resolve your toughest hardware challenges
-            with complete end-to-end customization, turning raw concepts into mass-produced
-            reality.
+            {t("customEngineering.subtitle")}
           </p>
 
           <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
             {customCapabilities.map((capability) => (
-              <article key={capability.title} className="flex gap-3">
+              <article key={capability.translationKey} className="flex gap-3">
                 <CheckIcon />
                 <div>
                   <h3 className="mb-1 text-base font-bold tracking-normal text-slate-800">
-                    {capability.title}
+                    {t(`customEngineering.capabilities.${capability.translationKey}.title`)}
                   </h3>
                   <p className="text-sm leading-relaxed text-slate-500">
-                    {capability.description}
+                    {t(`customEngineering.capabilities.${capability.translationKey}.description`)}
                   </p>
                 </div>
               </article>
@@ -101,13 +94,13 @@ export function DeepCustomization() {
         <aside className="flex flex-col justify-center rounded-2xl border border-slate-200 bg-white p-8 shadow-lg shadow-slate-200/50 lg:col-span-4">
           <div className="mb-6 flex items-center justify-between gap-4">
             <h3 className="text-lg font-bold tracking-normal text-slate-900">
-              Recent Engineering Outcomes
+              {t("customEngineering.outcomes.title")}
             </h3>
             <Link
               href="/solutions"
               className="group inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 transition hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              View All
+              {t("customEngineering.viewAll")}
               <svg
                 viewBox="0 0 20 20"
                 className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
@@ -127,11 +120,13 @@ export function DeepCustomization() {
 
           <div className="space-y-6">
             {engineeringOutcomes.map((outcome) => (
-              <article key={outcome.title}>
+              <article key={outcome.translationKey}>
                 <h4 className="mb-1 text-sm font-bold tracking-normal text-slate-800">
-                  {outcome.title}
+                  {t(`customEngineering.outcomes.${outcome.translationKey}.title`)}
                 </h4>
-                <p className="text-sm leading-relaxed text-slate-500">{outcome.description}</p>
+                <p className="text-sm leading-relaxed text-slate-500">
+                  {t(`customEngineering.outcomes.${outcome.translationKey}.result`)}
+                </p>
               </article>
             ))}
           </div>

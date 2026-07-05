@@ -4,66 +4,68 @@ import type { ChangeEvent, FormEvent, KeyboardEvent, ReactNode } from "react";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-const countryOptions = [
-  "United States",
-  "Canada",
-  "Mexico",
-  "Brazil",
-  "Argentina",
-  "Chile",
-  "Colombia",
-  "Germany",
-  "United Kingdom",
-  "France",
-  "Italy",
-  "Spain",
-  "Netherlands",
-  "Belgium",
-  "Switzerland",
-  "Austria",
-  "Sweden",
-  "Norway",
-  "Denmark",
-  "Finland",
-  "Poland",
-  "Czech Republic",
-  "Hungary",
-  "Romania",
-  "Turkey",
-  "United Arab Emirates",
-  "Saudi Arabia",
-  "South Africa",
-  "China",
-  "Hong Kong",
-  "Taiwan",
-  "Japan",
-  "South Korea",
-  "India",
-  "Singapore",
-  "Malaysia",
-  "Thailand",
-  "Vietnam",
-  "Indonesia",
-  "Philippines",
-  "Australia",
-  "New Zealand",
-  "Israel",
-  "Ireland",
-  "Portugal",
-  "Greece",
-  "Russia",
-  "Ukraine",
-  "Egypt",
-  "Morocco",
-  "Other",
+import { useI18n } from "@/context/I18nContext";
+
+const countryOptionKeys = [
+  "unitedStates",
+  "canada",
+  "mexico",
+  "brazil",
+  "argentina",
+  "chile",
+  "colombia",
+  "germany",
+  "unitedKingdom",
+  "france",
+  "italy",
+  "spain",
+  "netherlands",
+  "belgium",
+  "switzerland",
+  "austria",
+  "sweden",
+  "norway",
+  "denmark",
+  "finland",
+  "poland",
+  "czechRepublic",
+  "hungary",
+  "romania",
+  "turkey",
+  "unitedArabEmirates",
+  "saudiArabia",
+  "southAfrica",
+  "china",
+  "hongKong",
+  "taiwan",
+  "japan",
+  "southKorea",
+  "india",
+  "singapore",
+  "malaysia",
+  "thailand",
+  "vietnam",
+  "indonesia",
+  "philippines",
+  "australia",
+  "newZealand",
+  "israel",
+  "ireland",
+  "portugal",
+  "greece",
+  "russia",
+  "ukraine",
+  "egypt",
+  "morocco",
+  "other",
 ] as const;
 
-const productOptions = [
-  "General Inquiry",
-  "Custom TN/STN Display",
-  "TFT Color Module",
-  "Bespoke PCBA Solution",
-  "Touch Panel Integration",
+const productOptionKeys = [
+  "generalInquiry",
+  "customTnStnDisplay",
+  "tftColorModule",
+  "bespokePcbaSolution",
+  "touchPanelIntegration",
 ] as const;
 
 interface ContactFormState {
@@ -108,6 +110,7 @@ interface ContactFormContentProps extends ContactFormProps {
 }
 
 function ContactFormContent({ variant = "section", productFromUrl }: ContactFormContentProps) {
+  const { t } = useI18n();
   const [formData, setFormData] = useState<ContactFormState>(() => ({
     ...initialFormState,
     productInterest: productFromUrl,
@@ -117,6 +120,14 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
   const productInterestValue = isProductInterestLocked
     ? productFromUrl
     : formData.productInterest;
+  const countryOptions = useMemo(
+    () => countryOptionKeys.map((key) => t(`contactForm.countries.${key}`)),
+    [t],
+  );
+  const productOptions = useMemo(
+    () => productOptionKeys.map((key) => t(`contactForm.productOptions.${key}`)),
+    [t],
+  );
 
   function updateField<Field extends keyof ContactFormState>(
     field: Field,
@@ -128,15 +139,21 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const subject = `NELYTECH Inquiry - ${productInterestValue || "General Inquiry"}`;
+    const subject = `${t("contactForm.mailSubjectPrefix")} - ${
+      productInterestValue || t("contactForm.productOptions.generalInquiry")
+    }`;
     const bodyLines = [
-      `Name: ${formData.name}`,
-      `Work Email: ${formData.workEmail}`,
-      formData.company ? `Company: ${formData.company}` : null,
-      formData.countryRegion ? `Country / Region: ${formData.countryRegion}` : null,
-      productInterestValue ? `Product Interest: ${productInterestValue}` : null,
+      `${t("contactForm.emailBody.name")}: ${formData.name}`,
+      `${t("contactForm.emailBody.workEmail")}: ${formData.workEmail}`,
+      formData.company ? `${t("contactForm.emailBody.company")}: ${formData.company}` : null,
+      formData.countryRegion
+        ? `${t("contactForm.emailBody.countryRegion")}: ${formData.countryRegion}`
+        : null,
+      productInterestValue
+        ? `${t("contactForm.emailBody.productInterest")}: ${productInterestValue}`
+        : null,
       "",
-      "Project Details:",
+      `${t("contactForm.emailBody.projectDetails")}:`,
       formData.message,
     ].filter((line): line is string => line !== null);
 
@@ -148,15 +165,17 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
   const content = (
     <div className={isEmbedded ? "" : "mx-auto max-w-5xl"}>
       <div className="mb-8">
-        <p className="text-sm font-semibold tracking-[0.16em] text-blue-700 uppercase">Contact</p>
+        <p className="text-sm font-semibold tracking-[0.16em] text-blue-700 uppercase">
+          {t("contactForm.eyebrow")}
+        </p>
         <h2
           id="contact-form-title"
           className="mt-3 text-3xl font-semibold tracking-normal text-slate-950"
         >
-          Tell us what you are building.
+          {t("contactForm.title")}
         </h2>
         <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
-          Share the essentials and our engineering team will follow up through contact@nelytech.com.
+          {t("contactForm.subtitle")}
         </p>
       </div>
 
@@ -164,7 +183,7 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
         onSubmit={handleSubmit}
         className="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2"
       >
-        <FormField label="Name" htmlFor="contact-name" required>
+        <FormField label={t("contactForm.fields.name.label")} htmlFor="contact-name" required>
           <input
             id="contact-name"
             name="name"
@@ -174,11 +193,15 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
             value={formData.name}
             onChange={(event) => updateField("name", event.target.value)}
             className={inputClassName}
-            placeholder="Your name"
+            placeholder={t("contactForm.fields.name.placeholder")}
           />
         </FormField>
 
-        <FormField label="Work Email" htmlFor="contact-work-email" required>
+        <FormField
+          label={t("contactForm.fields.workEmail.label")}
+          htmlFor="contact-work-email"
+          required
+        >
           <input
             id="contact-work-email"
             name="workEmail"
@@ -188,11 +211,11 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
             value={formData.workEmail}
             onChange={(event) => updateField("workEmail", event.target.value)}
             className={inputClassName}
-            placeholder="name@company.com"
+            placeholder={t("contactForm.fields.workEmail.placeholder")}
           />
         </FormField>
 
-        <FormField label="Company" htmlFor="contact-company">
+        <FormField label={t("contactForm.fields.company.label")} htmlFor="contact-company">
           <input
             id="contact-company"
             name="company"
@@ -201,23 +224,25 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
             value={formData.company}
             onChange={(event) => updateField("company", event.target.value)}
             className={inputClassName}
-            placeholder="Company name"
+            placeholder={t("contactForm.fields.company.placeholder")}
           />
         </FormField>
 
         <SearchableDropdown
           id="contact-country-region"
           name="countryRegion"
-          label="Country / Region"
+          label={t("contactForm.fields.countryRegion.label")}
           value={formData.countryRegion}
           options={countryOptions}
-          placeholder="Search country"
+          placeholder={t("contactForm.fields.countryRegion.placeholder")}
+          noMatchesLabel={t("contactForm.noMatches")}
+          openOptionsLabel={t("contactForm.openOptions")}
           onChange={(value) => updateField("countryRegion", value)}
         />
 
         {isProductInterestLocked ? (
           <FormField
-            label="Product Interest"
+            label={t("contactForm.fields.productInterest.label")}
             htmlFor="contact-product-interest"
             className="md:col-span-2"
           >
@@ -236,24 +261,26 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
               </span>
             </div>
             <p id="contact-product-interest-note" className="mt-2 text-xs text-slate-500">
-              Captured from the product page.
+              {t("contactForm.lockedNote")}
             </p>
           </FormField>
         ) : (
           <SearchableDropdown
             id="contact-product-interest"
             name="productInterest"
-            label="Product Interest"
+            label={t("contactForm.fields.productInterest.label")}
             value={formData.productInterest}
             options={productOptions}
-            placeholder="Search product interest"
+            placeholder={t("contactForm.fields.productInterest.placeholder")}
+            noMatchesLabel={t("contactForm.noMatches")}
+            openOptionsLabel={t("contactForm.openOptions")}
             onChange={(value) => updateField("productInterest", value)}
             className="md:col-span-2"
           />
         )}
 
         <FormField
-          label="Message"
+          label={t("contactForm.fields.message.label")}
           htmlFor="contact-message"
           className="md:col-span-2"
           required
@@ -266,7 +293,7 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
             value={formData.message}
             onChange={(event) => updateField("message", event.target.value)}
             className={`${inputClassName} min-h-36 resize-y py-4`}
-            placeholder="Display size, application, quantities, schedule, or technical requirements."
+            placeholder={t("contactForm.fields.message.placeholder")}
           />
         </FormField>
 
@@ -275,7 +302,7 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
             type="submit"
             className="inline-flex h-14 w-full items-center justify-center rounded-xl bg-blue-600 px-8 text-base font-semibold text-white transition duration-200 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/20 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 sm:w-auto"
           >
-            Send Inquiry
+            {t("contactForm.submit")}
           </button>
         </div>
       </form>
@@ -303,6 +330,8 @@ interface SearchableDropdownProps {
   value: string;
   options: readonly string[];
   placeholder: string;
+  noMatchesLabel: string;
+  openOptionsLabel: string;
   onChange: (value: string) => void;
   className?: string;
 }
@@ -314,6 +343,8 @@ function SearchableDropdown({
   value,
   options,
   placeholder,
+  noMatchesLabel,
+  openOptionsLabel,
   onChange,
   className = "",
 }: SearchableDropdownProps) {
@@ -408,7 +439,7 @@ function SearchableDropdown({
         />
         <button
           type="button"
-          aria-label={`Open ${label} options`}
+          aria-label={openOptionsLabel}
           onClick={() => setIsOpen((current) => !current)}
           className="absolute inset-y-0 right-3 flex items-center text-slate-400 transition hover:text-slate-700 focus:outline-none"
         >
@@ -442,7 +473,7 @@ function SearchableDropdown({
                 </button>
               ))
             ) : (
-              <div className="px-4 py-3 text-sm text-slate-500">No matches found</div>
+              <div className="px-4 py-3 text-sm text-slate-500">{noMatchesLabel}</div>
             )}
           </div>
         ) : null}
