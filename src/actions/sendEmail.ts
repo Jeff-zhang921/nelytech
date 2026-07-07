@@ -110,7 +110,7 @@ export async function sendContactEmail(formData: FormData): Promise<SendContactE
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS;
   const smtpSecure = process.env.SMTP_SECURE === "true" || smtpPort === 465;
-  const smtpFrom = process.env.SMTP_FROM ?? CONTACT_EMAIL;
+  const smtpFrom = process.env.SMTP_FROM ?? smtpUser ?? CONTACT_EMAIL;
 
   if (!smtpHost || !smtpUser || !smtpPass) {
     return { error: "Email service is not configured. Please contact us directly at contact@nelytech.com." };

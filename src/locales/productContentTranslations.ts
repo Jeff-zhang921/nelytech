@@ -16,6 +16,7 @@ export const productContentTranslations = {
         description:
           "Click any product category to learn more about the technologies and solutions we offer.",
         featuredBadge: "Featured",
+        coreExpertise: "Core Expertise",
         viewAll: "View All Products",
         sections: {
           lcdPanels: {
@@ -67,6 +68,7 @@ export const productContentTranslations = {
         label: "产品",
         description: "点击任一产品类别，了解我们可提供的显示技术与解决方案。",
         featuredBadge: "重点",
+        coreExpertise: "核心能力",
         viewAll: "查看全部产品",
         sections: {
           lcdPanels: {
@@ -119,6 +121,7 @@ export const productContentTranslations = {
         description:
           "Wählen Sie eine Produktkategorie, um mehr über unsere Technologien und Lösungen zu erfahren.",
         featuredBadge: "Fokus",
+        coreExpertise: "Kernkompetenz",
         viewAll: "Alle Produkte ansehen",
         sections: {
           lcdPanels: {
@@ -171,6 +174,7 @@ export const productContentTranslations = {
         description:
           "Seleccione una categoría para conocer las tecnologías y soluciones que ofrecemos.",
         featuredBadge: "Destacado",
+        coreExpertise: "Experiencia clave",
         viewAll: "Ver todos los productos",
         sections: {
           lcdPanels: {
@@ -223,6 +227,7 @@ export const productContentTranslations = {
         description:
           "Sélectionnez une catégorie pour découvrir les technologies et solutions que nous proposons.",
         featuredBadge: "Clé",
+        coreExpertise: "Expertise clé",
         viewAll: "Voir tous les produits",
         sections: {
           lcdPanels: {
@@ -275,6 +280,7 @@ export const productContentTranslations = {
         description:
           "Seleziona una categoria per scoprire le tecnologie e le soluzioni che offriamo.",
         featuredBadge: "Focus",
+        coreExpertise: "Competenza core",
         viewAll: "Vedi tutti i prodotti",
         sections: {
           lcdPanels: {
@@ -326,6 +332,7 @@ export const productContentTranslations = {
         label: "製品",
         description: "各製品カテゴリを選択して、当社の技術とソリューションをご確認ください。",
         featuredBadge: "注目",
+        coreExpertise: "中核技術",
         viewAll: "すべての製品を見る",
         sections: {
           lcdPanels: {
@@ -377,6 +384,7 @@ export const productContentTranslations = {
         label: "제품",
         description: "제품 카테고리를 선택하여 제공 가능한 기술과 솔루션을 확인하세요.",
         featuredBadge: "핵심",
+        coreExpertise: "핵심 역량",
         viewAll: "전체 제품 보기",
         sections: {
           lcdPanels: {

@@ -1,9 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import {
+  ArrowRight,
+  Cpu,
+  Layers,
+  Settings,
+  type LucideIcon,
+} from "lucide-react";
 
-import { megaMenus, type MegaMenuKey } from "@/constants/navigation";
+import { megaMenus, type MegaMenuKey, type ProductMenuLinkKey } from "@/constants/navigation";
 import { useI18n } from "@/context/I18nContext";
+
+const featuredProductLinkIcons: Partial<Record<ProductMenuLinkKey, LucideIcon>> = {
+  tftModules: Layers,
+  customPcbaMcu: Cpu,
+  touchPanels: Settings,
+};
 
 interface MegaMenuProps {
   menuKey: MegaMenuKey;
@@ -18,8 +31,8 @@ export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
   const isProductsMenu = menuKey === "products";
   const sectionGridClassName =
     menu.sections.length === 4
-      ? "grid gap-7 sm:grid-cols-2 lg:grid-cols-4"
-      : "grid gap-7 sm:grid-cols-2 xl:grid-cols-5";
+      ? "grid gap-8 sm:grid-cols-2 lg:grid-cols-4"
+      : "grid gap-8 sm:grid-cols-2 xl:grid-cols-5";
 
   return (
     <div
@@ -81,81 +94,98 @@ export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
                 key={section.translationKey}
                 aria-labelledby={sectionId}
                 className={[
+                  "min-w-0",
                   isFeaturedProductSection
-                    ? "-mx-4 -my-3 rounded-2xl bg-[linear-gradient(135deg,rgba(239,246,255,0.84),rgba(248,250,252,0.76))] px-4 py-3 backdrop-blur-sm"
+                    ? "border-l border-blue-100 bg-gradient-to-b from-blue-50/50 via-indigo-50/20 to-transparent pl-5"
                     : "",
                 ].join(" ")}
               >
-                <div className="flex flex-wrap items-center gap-2">
-                  <h3
-                    id={sectionId}
-                    className={[
-                      "text-sm tracking-[0.14em] uppercase",
-                      isFeaturedProductSection
-                        ? "font-semibold text-blue-700"
-                        : "font-semibold text-slate-950",
-                    ].join(" ")}
-                  >
-                    {translatedHeading}
-                  </h3>
+                <div className="mb-2 h-3.5">
                   {isFeaturedProductSection ? (
-                    <span className="ml-1 rounded-full bg-blue-100/80 px-2 py-0.5 text-[10px] font-semibold tracking-[0.08em] text-blue-800 uppercase">
-                      {translateWithFallback(t, `megaMenu.${menuKey}.featuredBadge`, "Featured")}
+                    <span className="block font-mono text-[10px] leading-3.5 font-medium tracking-[0.2em] text-blue-500/80 uppercase">
+                      {translateWithFallback(
+                        t,
+                        `megaMenu.${menuKey}.coreExpertise`,
+                        "Core Expertise",
+                      )}
                     </span>
-                  ) : null}
+                  ) : (
+                    <span aria-hidden="true" className="block h-full" />
+                  )}
                 </div>
+                <h3
+                  id={sectionId}
+                  className={[
+                    "min-h-10 text-sm leading-5 font-semibold tracking-[0.14em] uppercase",
+                    isFeaturedProductSection
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text font-medium text-transparent"
+                      : "text-slate-950",
+                  ].join(" ")}
+                >
+                  {translatedHeading}
+                </h3>
                 {translatedSummary ? (
                   <p
                     className={[
                       "mt-3 text-sm leading-6",
-                      isFeaturedProductSection ? "text-slate-600" : "text-slate-500",
+                      isFeaturedProductSection ? "text-slate-500" : "text-slate-500",
                     ].join(" ")}
                   >
                     {translatedSummary}
                   </p>
                 ) : null}
                 {section.links.length > 0 ? (
-                  <ul className="mt-5 space-y-3">
+                  <ul className="mt-5 space-y-4">
                     {section.links.map((link) => {
                       const translatedLinkTitle = translateWithFallback(
                         t,
                         `megaMenu.${menuKey}.links.${link.translationKey}`,
                         link.title,
                       );
+                      const FeaturedIcon = isFeaturedProductSection
+                        ? featuredProductLinkIcons[link.translationKey]
+                        : undefined;
 
                       return (
                         <li key={link.translationKey}>
-                          <Link
-                            href={link.href}
-                            onClick={onLinkClick}
-                            className={[
-                              "group block rounded-md outline-none transition-colors focus-visible:ring-2 focus-visible:ring-offset-2",
-                              isFeaturedProductSection
-                                ? "hover:text-blue-800 focus-visible:ring-blue-600"
-                                : "hover:text-teal-700 focus-visible:ring-teal-600",
-                            ].join(" ")}
-                          >
-                            <span
-                              className={[
-                                "block text-sm font-semibold transition duration-200",
-                                isFeaturedProductSection
-                                  ? "text-slate-950 group-hover:translate-x-1 group-hover:text-blue-700"
-                                  : "text-slate-900 group-hover:text-teal-700",
-                              ].join(" ")}
+                          {isFeaturedProductSection ? (
+                            <Link
+                              href={link.href}
+                              onClick={onLinkClick}
+                              className="group flex min-h-5 items-start gap-2.5 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
                             >
-                              {translatedLinkTitle}
-                            </span>
-                            {link.description ? (
-                              <span
-                                className={[
-                                  "mt-1 block text-sm leading-5",
-                                  isFeaturedProductSection ? "text-slate-600" : "text-slate-500",
-                                ].join(" ")}
-                              >
-                                {link.description}
+                              {FeaturedIcon ? (
+                                <FeaturedIcon
+                                  className="mt-0.5 h-4 w-4 shrink-0 text-blue-200 transition-colors duration-300 ease-out group-hover:text-blue-600"
+                                  strokeWidth={1.4}
+                                  aria-hidden="true"
+                                />
+                              ) : null}
+                              <span className="leading-5 font-semibold text-slate-600 transition-colors duration-300 ease-out group-hover:text-blue-600">
+                                {translatedLinkTitle}
                               </span>
-                            ) : null}
-                          </Link>
+                              <ArrowRight
+                                className="mt-0.5 h-3.5 w-3.5 shrink-0 -translate-x-2 text-blue-600 opacity-0 transition-all duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100"
+                                strokeWidth={1.5}
+                                aria-hidden="true"
+                              />
+                            </Link>
+                          ) : (
+                            <Link
+                              href={link.href}
+                              onClick={onLinkClick}
+                              className="group block rounded-md outline-none transition-colors hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+                            >
+                              <span className="block text-sm font-semibold text-slate-900 transition duration-200 group-hover:text-teal-700">
+                                {translatedLinkTitle}
+                              </span>
+                              {link.description ? (
+                                <span className="mt-1 block text-sm leading-5 text-slate-500">
+                                  {link.description}
+                                </span>
+                              ) : null}
+                            </Link>
+                          )}
                         </li>
                       );
                     })}
