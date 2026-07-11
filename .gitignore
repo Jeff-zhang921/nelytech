@@ -3,6 +3,7 @@ node_modules/
 
 # Next.js
 .next/
+.open-next/
 out/
 
 # production
@@ -27,3 +28,4 @@ playwright/.cache/
 
 # hosting
 .vercel/
+.wrangler/
