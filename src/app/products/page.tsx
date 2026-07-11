@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-import { ProductsPageContent } from "@/components/products/ProductsPageContent";
+import { ProductCataloguePage } from "@/components/products/ProductCataloguePage";
+import { allProductsPageConfig } from "@/data/productCatalogue";
 
 export const metadata: Metadata = {
   title: "Products | NELYTECH",
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function ProductsPage() {
-  return <ProductsPageContent />;
+  return <ProductCataloguePage config={allProductsPageConfig} />;
 }

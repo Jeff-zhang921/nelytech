@@ -1,14 +1,11 @@
 "use client";
 
-import { megaMenus, type MegaMenuSection } from "@/constants/navigation";
+import {
+  megaMenus,
+  productSectionAnchors,
+  type MegaMenuSection,
+} from "@/constants/navigation";
 import { useI18n } from "@/context/I18nContext";
-
-const sectionAnchors = {
-  lcdPanels: "products-lcd-panels",
-  lcdModules: "products-lcd-modules",
-  assemblyTechnologies: "products-assembly",
-  customSolutions: "products-custom-solutions",
-} as const satisfies Record<MegaMenuSection["translationKey"], string>;
 
 export function ProductsPageContent() {
   const { t } = useI18n();
@@ -55,7 +52,7 @@ interface ProductSectionProps {
 
 function ProductSection({ section }: ProductSectionProps) {
   const { t } = useI18n();
-  const sectionAnchor = sectionAnchors[section.translationKey];
+  const sectionAnchor = productSectionAnchors[section.translationKey];
   const sectionKey = `megaMenu.products.sections.${section.translationKey}`;
   const translatedHeading = translateWithFallback(
     t,

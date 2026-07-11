@@ -109,6 +109,7 @@ export function Navbar() {
                     menuKey={menuKey}
                     isOpen={isOpen}
                     onLinkClick={() => setActiveMenu(null)}
+                    onMouseLeave={() => setActiveMenu(null)}
                   />
                 </li>
               );

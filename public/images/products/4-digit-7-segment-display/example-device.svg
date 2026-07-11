@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
+  <title id="title">4-digit 7-segment display in an example device</title>
+  <desc id="desc">A product placeholder showing the display integrated into a simple control panel device.</desc>
+  <rect width="960" height="720" fill="#f8fafc"/>
+  <rect x="168" y="134" width="624" height="452" rx="44" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="214" y="188" width="532" height="120" rx="22" fill="#111827"/>
+  <rect x="250" y="216" width="460" height="64" rx="12" fill="#030712"/>
+  <g fill="#f43f5e" transform="translate(284 226) scale(.22)">
+    <path d="M0 0h78l14 14-14 14H0l-14-14z"/>
+    <path d="M-8 36 6 22l14 14v74L6 124-8 110z"/>
+    <path d="M92 36 106 22l14 14v74l-14 14-14-14z"/>
+    <path d="M0 124h78l14 14-14 14H0l-14-14z"/>
+    <path d="M-8 166 6 152l14 14v74L6 254-8 240z"/>
+    <path d="M92 166 106 152l14 14v74l-14 14-14-14z"/>
+    <path d="M0 252h78l14 14-14 14H0l-14-14z"/>
+    <g transform="translate(210)">
+      <path d="M0 0h78l14 14-14 14H0l-14-14z"/>
+      <path d="M92 36 106 22l14 14v74l-14 14-14-14z"/>
+      <path d="M0 124h78l14 14-14 14H0l-14-14z"/>
+      <path d="M-8 166 6 152l14 14v74L6 254-8 240z"/>
+      <path d="M92 166 106 152l14 14v74l-14 14-14-14z"/>
+      <path d="M0 252h78l14 14-14 14H0l-14-14z"/>
+    </g>
+    <g transform="translate(420)">
+      <path d="M0 0h78l14 14-14 14H0l-14-14z"/>
+      <path d="M-8 36 6 22l14 14v74L6 124-8 110z"/>
+      <path d="M92 36 106 22l14 14v74l-14 14-14-14z"/>
+      <path d="M0 124h78l14 14-14 14H0l-14-14z"/>
+      <path d="M92 166 106 152l14 14v74l-14 14-14-14z"/>
+      <path d="M0 252h78l14 14-14 14H0l-14-14z"/>
+    </g>
+    <g transform="translate(630)">
+      <path d="M0 0h78l14 14-14 14H0l-14-14z"/>
+      <path d="M92 36 106 22l14 14v74l-14 14-14-14z"/>
+      <path d="M0 124h78l14 14-14 14H0l-14-14z"/>
+      <path d="M-8 166 6 152l14 14v74L6 254-8 240z"/>
+      <path d="M92 166 106 152l14 14v74l-14 14-14-14z"/>
+      <path d="M0 252h78l14 14-14 14H0l-14-14z"/>
+    </g>
+  </g>
+  <g>
+    <circle cx="300" cy="420" r="46" fill="#f8fafc" stroke="#cbd5e1" stroke-width="4"/>
+    <circle cx="480" cy="420" r="46" fill="#f8fafc" stroke="#cbd5e1" stroke-width="4"/>
+    <circle cx="660" cy="420" r="46" fill="#f8fafc" stroke="#cbd5e1" stroke-width="4"/>
+    <rect x="258" y="508" width="444" height="18" rx="9" fill="#cbd5e1"/>
+  </g>
+</svg>

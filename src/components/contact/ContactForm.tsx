@@ -7,6 +7,7 @@ import { Toaster, toast } from "sonner";
 
 import { sendContactEmail } from "@/actions/sendEmail";
 import { useI18n } from "@/context/I18nContext";
+import { getProductDetailBySlug } from "@/data/productDetails";
 
 const countryOptionKeys = [
   "unitedStates",
@@ -94,7 +95,7 @@ interface ContactFormProps {
 
 export function ContactForm({ variant = "section" }: ContactFormProps) {
   return (
-    <Suspense fallback={<ContactFormContent variant={variant} productFromUrl="" />}>
+    <Suspense fallback={<ContactFormContent variant={variant} productInterestFromUrl="" />}>
       <ContactFormWithSearchParams variant={variant} />
     </Suspense>
   );
@@ -102,28 +103,37 @@ export function ContactForm({ variant = "section" }: ContactFormProps) {
 
 function ContactFormWithSearchParams({ variant = "section" }: ContactFormProps) {
   const searchParams = useSearchParams();
-  const productFromUrl = searchParams.get("product")?.trim() ?? "";
+  const productSlugFromUrl = searchParams.get("product")?.trim() ?? "";
+  const productInterestFromUrl = productSlugFromUrl
+    ? getProductDetailBySlug(productSlugFromUrl)?.name ?? productSlugFromUrl
+    : "";
 
-  return <ContactFormContent variant={variant} productFromUrl={productFromUrl} />;
+  return (
+    <ContactFormContent
+      key={productInterestFromUrl}
+      variant={variant}
+      productInterestFromUrl={productInterestFromUrl}
+    />
+  );
 }
 
 interface ContactFormContentProps extends ContactFormProps {
-  productFromUrl: string;
+  productInterestFromUrl: string;
 }
 
-function ContactFormContent({ variant = "section", productFromUrl }: ContactFormContentProps) {
+function ContactFormContent({
+  variant = "section",
+  productInterestFromUrl,
+}: ContactFormContentProps) {
   const { t } = useI18n();
   const [isPending, startTransition] = useTransition();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ContactFormState>(() => ({
     ...initialFormState,
-    productInterest: productFromUrl,
+    productInterest: productInterestFromUrl,
   }));
   const isEmbedded = variant === "embedded";
-  const isProductInterestLocked = productFromUrl.length > 0;
-  const productInterestValue = isProductInterestLocked
-    ? productFromUrl
-    : formData.productInterest;
+  const isProductInterestLocked = productInterestFromUrl.length > 0;
   const isSubmitDisabled = isPending || isSubmitting;
   const countryOptions = useMemo(
     () => countryOptionKeys.map((key) => t(`contactForm.countries.${key}`)),
@@ -160,7 +170,7 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
           toast.success("Inquiry sent successfully. Our engineering team will follow up shortly.");
           setFormData({
             ...initialFormState,
-            productInterest: productFromUrl,
+            productInterest: productInterestFromUrl,
           });
         } finally {
           setIsSubmitting(false);
@@ -260,7 +270,7 @@ function ContactFormContent({ variant = "section", productFromUrl }: ContactForm
                 name="interest"
                 type="text"
                 readOnly
-                value={productFromUrl}
+                value={productInterestFromUrl}
                 className={`${lockedInputClassName} pr-12`}
                 aria-describedby="contact-product-interest-note"
               />

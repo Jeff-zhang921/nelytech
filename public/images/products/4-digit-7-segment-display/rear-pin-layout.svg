@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
+  <title id="title">Rear pin layout view of a 4-digit 7-segment display</title>
+  <desc id="desc">A product placeholder showing rear pins and solder pads for the display module.</desc>
+  <rect width="960" height="720" fill="#f8fafc"/>
+  <rect x="178" y="150" width="604" height="420" rx="30" fill="#e5e7eb" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="224" y="206" width="512" height="252" rx="20" fill="#d1d5db" stroke="#94a3b8" stroke-width="2"/>
+  <g fill="#64748b">
+    <rect x="278" y="242" width="64" height="180" rx="8"/>
+    <rect x="394" y="242" width="64" height="180" rx="8"/>
+    <rect x="510" y="242" width="64" height="180" rx="8"/>
+    <rect x="626" y="242" width="64" height="180" rx="8"/>
+  </g>
+  <g fill="#f8fafc" stroke="#94a3b8" stroke-width="2">
+    <circle cx="262" cy="500" r="12"/>
+    <circle cx="306" cy="500" r="12"/>
+    <circle cx="350" cy="500" r="12"/>
+    <circle cx="394" cy="500" r="12"/>
+    <circle cx="438" cy="500" r="12"/>
+    <circle cx="522" cy="500" r="12"/>
+    <circle cx="566" cy="500" r="12"/>
+    <circle cx="610" cy="500" r="12"/>
+    <circle cx="654" cy="500" r="12"/>
+    <circle cx="698" cy="500" r="12"/>
+  </g>
+  <g stroke="#94a3b8" stroke-linecap="round" stroke-width="5">
+    <path d="M262 512v50"/>
+    <path d="M306 512v50"/>
+    <path d="M350 512v50"/>
+    <path d="M394 512v50"/>
+    <path d="M438 512v50"/>
+    <path d="M522 512v50"/>
+    <path d="M566 512v50"/>
+    <path d="M610 512v50"/>
+    <path d="M654 512v50"/>
+    <path d="M698 512v50"/>
+  </g>
+</svg>

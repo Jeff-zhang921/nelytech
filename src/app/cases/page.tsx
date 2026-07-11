@@ -301,7 +301,7 @@ function TestimonialsSection() {
                 ))}
               </div>
               <blockquote className="text-xl leading-9 tracking-normal text-slate-500">
-                "{testimonial.quote}"
+                &ldquo;{testimonial.quote}&rdquo;
               </blockquote>
               <figcaption className="mt-8">
                 <p className="text-base font-semibold text-slate-950">

@@ -41,6 +41,20 @@ export interface MegaMenuContent {
   sections: readonly MegaMenuSection[];
 }
 
+export const productSectionAnchors = {
+  lcdPanels: "products-lcd-panels",
+  lcdModules: "products-lcd-modules",
+  assemblyTechnologies: "products-assembly",
+  customSolutions: "products-custom-solutions",
+} as const satisfies Record<ProductMenuSectionKey, string>;
+
+export const productSectionRoutes = {
+  lcdPanels: "/products/lcd-panels",
+  lcdModules: "/products/lcd-modules",
+  assemblyTechnologies: "/products/assembly-technologies",
+  customSolutions: "/products/custom-solutions",
+} as const satisfies Record<ProductMenuSectionKey, string>;
+
 export const megaMenus: Record<MegaMenuKey, MegaMenuContent> = {
   products: {
     label: "Products",
@@ -52,15 +66,15 @@ export const megaMenus: Record<MegaMenuKey, MegaMenuContent> = {
         heading: "LCD Panels (Monochrome)",
         summary: "Core monochrome LCD panel technologies.",
         links: [
-          { translationKey: "tn", title: "TN (Twisted Nematic)", href: "/products#products-tn" },
-          { translationKey: "htn", title: "HTN (High Twisted Nematic)", href: "/products#products-htn" },
-          { translationKey: "stn", title: "STN (Super Twisted Nematic)", href: "/products#products-stn" },
+          { translationKey: "tn", title: "TN (Twisted Nematic)", href: "/products/tn" },
+          { translationKey: "htn", title: "HTN (High Twisted Nematic)", href: "/products/htn" },
+          { translationKey: "stn", title: "STN (Super Twisted Nematic)", href: "/products/stn" },
           {
             translationKey: "fstn",
             title: "FSTN (Film Compensated STN)",
-            href: "/products#products-fstn",
+            href: "/products/fstn",
           },
-          { translationKey: "va", title: "VA (Vertical Alignment)", href: "/products#products-va" },
+          { translationKey: "va", title: "VA (Vertical Alignment)", href: "/products/va" },
         ],
       },
       {
@@ -71,17 +85,17 @@ export const megaMenus: Record<MegaMenuKey, MegaMenuContent> = {
           {
             translationKey: "characterModules",
             title: "Character LCD Modules",
-            href: "/products#products-character-lcd-modules",
+            href: "/products/character-modules",
           },
           {
             translationKey: "graphicModules",
             title: "Graphic LCD Modules",
-            href: "/products#products-graphic-lcd-modules",
+            href: "/products/graphic-modules",
           },
           {
             translationKey: "customSegment",
             title: "Custom Segment LCDs",
-            href: "/products#products-custom-segment-lcds",
+            href: "/products/custom-segment",
           },
         ],
       },
@@ -90,10 +104,10 @@ export const megaMenus: Record<MegaMenuKey, MegaMenuContent> = {
         heading: "Assembly Technologies",
         summary: "Packaging and bonding methods for LCD and LCM production.",
         links: [
-          { translationKey: "cob", title: "COB (Chip On Board)", href: "/products#products-cob" },
-          { translationKey: "cog", title: "COG (Chip On Glass)", href: "/products#products-cog" },
-          { translationKey: "tab", title: "TAB (Tape Automated Bonding)", href: "/products#products-tab" },
-          { translationKey: "cof", title: "COF (Chip On Film)", href: "/products#products-cof" },
+          { translationKey: "cob", title: "COB (Chip On Board)", href: "/products/cob" },
+          { translationKey: "cog", title: "COG (Chip On Glass)", href: "/products/cog" },
+          { translationKey: "tab", title: "TAB (Tape Automated Bonding)", href: "/products/tab" },
+          { translationKey: "cof", title: "COF (Chip On Film)", href: "/products/cof" },
         ],
       },
       {
@@ -101,13 +115,13 @@ export const megaMenus: Record<MegaMenuKey, MegaMenuContent> = {
         heading: "Advanced & Custom Solutions",
         summary: "Engineering support for advanced display assemblies.",
         links: [
-          { translationKey: "tftModules", title: "TFT LCD Modules", href: "/products#products-tft-lcd-modules" },
+          { translationKey: "tftModules", title: "TFT LCD Modules", href: "/products/tft-modules" },
           {
             translationKey: "customPcbaMcu",
             title: "Custom PCBA & MCU Development",
-            href: "/products#products-custom-pcba-mcu-development",
+            href: "/products/custom-pcba-mcu",
           },
-          { translationKey: "touchPanels", title: "Touch Panels (CTP/RTP)", href: "/products#products-touch-panels" },
+          { translationKey: "touchPanels", title: "Touch Panels (CTP/RTP)", href: "/products/touch-panels" },
         ],
       },
     ],

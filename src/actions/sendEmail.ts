@@ -105,6 +105,16 @@ export async function sendContactEmail(formData: FormData): Promise<SendContactE
     return { error: "Please enter a valid work email address." };
   }
 
+  if (process.env.E2E_CONTACT_EMAIL_MOCK === "true") {
+    const delayMs = Number(process.env.E2E_CONTACT_EMAIL_MOCK_DELAY_MS ?? "0");
+
+    if (delayMs > 0) {
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
+
+    return { success: true };
+  }
+
   const smtpHost = process.env.SMTP_HOST;
   const smtpPort = Number(process.env.SMTP_PORT ?? "587");
   const smtpUser = process.env.SMTP_USER;

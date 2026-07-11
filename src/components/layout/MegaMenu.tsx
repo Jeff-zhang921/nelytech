@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import {
   ArrowRight,
   Cpu,
@@ -9,7 +10,12 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { megaMenus, type MegaMenuKey, type ProductMenuLinkKey } from "@/constants/navigation";
+import {
+  megaMenus,
+  productSectionRoutes,
+  type MegaMenuKey,
+  type ProductMenuLinkKey,
+} from "@/constants/navigation";
 import { useI18n } from "@/context/I18nContext";
 
 const featuredProductLinkIcons: Partial<Record<ProductMenuLinkKey, LucideIcon>> = {
@@ -23,29 +29,52 @@ interface MegaMenuProps {
   id: string;
   isOpen: boolean;
   onLinkClick?: () => void;
+  onMouseLeave?: () => void;
 }
 
-export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
+export function MegaMenu({
+  menuKey,
+  id,
+  isOpen,
+  onLinkClick,
+  onMouseLeave,
+}: MegaMenuProps) {
   const { t } = useI18n();
+  const hasPointerEnteredPanel = useRef(false);
   const menu = megaMenus[menuKey];
   const isProductsMenu = menuKey === "products";
   const sectionGridClassName =
     menu.sections.length === 4
-      ? "grid gap-8 sm:grid-cols-2 lg:grid-cols-4"
-      : "grid gap-8 sm:grid-cols-2 xl:grid-cols-5";
+      ? "grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+      : "grid gap-4 sm:grid-cols-2 xl:grid-cols-5";
+
+  useEffect(() => {
+    if (!isOpen) {
+      hasPointerEnteredPanel.current = false;
+    }
+  }, [isOpen]);
 
   return (
     <div
       id={id}
       aria-hidden={!isOpen}
+      onMouseEnter={() => {
+        hasPointerEnteredPanel.current = true;
+      }}
+      onMouseLeave={() => {
+        if (hasPointerEnteredPanel.current) {
+          hasPointerEnteredPanel.current = false;
+          onMouseLeave?.();
+        }
+      }}
       className={[
-        "absolute left-0 right-0 top-full overflow-hidden transition-all duration-200 ease-out",
+        "absolute top-full right-0 left-0 overflow-hidden transition-all duration-200 ease-out",
         isProductsMenu
-          ? "border border-slate-200 bg-white/95 shadow-2xl shadow-slate-200/70 backdrop-blur-md"
-          : "border-t border-slate-200 bg-white shadow-2xl shadow-slate-900/15",
+          ? "border border-slate-200 bg-white/95 shadow-xl shadow-slate-200/70 backdrop-blur-md"
+          : "border border-slate-200 bg-white shadow-xl shadow-slate-900/15",
         isOpen
           ? "visible translate-y-0 opacity-100"
-          : "invisible -translate-y-2 opacity-0",
+          : "invisible -translate-y-1 opacity-0",
       ].join(" ")}
     >
       {isProductsMenu ? (
@@ -64,12 +93,12 @@ export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
           />
         </>
       ) : null}
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 px-6 py-9 sm:px-8 lg:grid-cols-[0.8fr_2fr] lg:px-12">
+      <div className="relative z-10 mx-auto grid w-full gap-6 px-5 py-5 lg:grid-cols-[0.72fr_2fr] lg:px-6">
         <div>
-          <p className="text-sm font-semibold tracking-[0.18em] text-teal-700 uppercase">
+          <p className="text-xs font-semibold tracking-[0.16em] text-teal-700 uppercase">
             {translateWithFallback(t, `megaMenu.${menuKey}.label`, menu.label)}
           </p>
-          <p className="mt-4 max-w-sm text-sm leading-6 text-slate-600">
+          <p className="mt-3 max-w-xs text-sm leading-6 text-slate-600">
             {translateWithFallback(t, `megaMenu.${menuKey}.description`, menu.description)}
           </p>
         </div>
@@ -80,6 +109,9 @@ export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
             const isFeaturedProductSection =
               menuKey === "products" && section.translationKey === "customSolutions";
             const sectionKey = `megaMenu.${menuKey}.sections.${section.translationKey}`;
+            const sectionHref = isProductsMenu
+              ? productSectionRoutes[section.translationKey]
+              : undefined;
             const translatedHeading = translateWithFallback(
               t,
               `${sectionKey}.heading`,
@@ -100,7 +132,7 @@ export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
                     : "",
                 ].join(" ")}
               >
-                <div className="mb-2 h-3.5">
+                <div className="mb-1 h-3.5">
                   {isFeaturedProductSection ? (
                     <span className="block font-mono text-[10px] leading-3.5 font-medium tracking-[0.2em] text-blue-500/80 uppercase">
                       {translateWithFallback(
@@ -113,29 +145,66 @@ export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
                     <span aria-hidden="true" className="block h-full" />
                   )}
                 </div>
-                <h3
-                  id={sectionId}
-                  className={[
-                    "min-h-10 text-sm leading-5 font-semibold tracking-[0.14em] uppercase",
-                    isFeaturedProductSection
-                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text font-medium text-transparent"
-                      : "text-slate-950",
-                  ].join(" ")}
-                >
-                  {translatedHeading}
-                </h3>
-                {translatedSummary ? (
-                  <p
+                {sectionHref ? (
+                  <Link
+                    href={sectionHref}
+                    onClick={onLinkClick}
                     className={[
-                      "mt-3 text-sm leading-6",
-                      isFeaturedProductSection ? "text-slate-500" : "text-slate-500",
+                      "group/category -mx-2 block rounded-md border border-transparent px-2 py-1.5 outline-none transition-all duration-200 ease-out",
+                      "hover:-translate-y-0.5 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-offset-2",
+                      isFeaturedProductSection
+                        ? "hover:border-blue-200 hover:bg-blue-50/80 focus-visible:ring-blue-600"
+                        : "hover:border-teal-200 hover:bg-teal-50/80 focus-visible:ring-teal-600",
                     ].join(" ")}
                   >
-                    {translatedSummary}
-                  </p>
-                ) : null}
+                    <h3 id={sectionId} className="flex min-h-6 items-start justify-between gap-3">
+                      <span
+                        className={[
+                          "text-sm leading-5 font-semibold tracking-[0.14em] uppercase transition-colors duration-200",
+                          isFeaturedProductSection
+                            ? "bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text font-medium text-transparent"
+                            : "text-slate-950 group-hover/category:text-teal-700",
+                        ].join(" ")}
+                      >
+                        {translatedHeading}
+                      </span>
+                      <ArrowRight
+                        className={[
+                          "mt-0.5 h-4 w-4 shrink-0 -translate-x-1 opacity-0 transition-all duration-200 group-hover/category:translate-x-0 group-hover/category:opacity-100 group-focus-visible/category:translate-x-0 group-focus-visible/category:opacity-100",
+                          isFeaturedProductSection ? "text-blue-600" : "text-teal-700",
+                        ].join(" ")}
+                        strokeWidth={1.7}
+                        aria-hidden="true"
+                      />
+                    </h3>
+                    {translatedSummary ? (
+                      <span className="mt-1.5 block text-xs leading-5 text-slate-500">
+                        {translatedSummary}
+                      </span>
+                    ) : null}
+                  </Link>
+                ) : (
+                  <>
+                    <h3
+                      id={sectionId}
+                      className={[
+                        "min-h-10 text-sm leading-5 font-semibold tracking-[0.14em] uppercase",
+                        isFeaturedProductSection
+                          ? "bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text font-medium text-transparent"
+                          : "text-slate-950",
+                      ].join(" ")}
+                    >
+                      {translatedHeading}
+                    </h3>
+                    {translatedSummary ? (
+                      <p className="mt-3 text-sm leading-6 text-slate-500">
+                        {translatedSummary}
+                      </p>
+                    ) : null}
+                  </>
+                )}
                 {section.links.length > 0 ? (
-                  <ul className="mt-5 space-y-4">
+                  <ul className="mt-2 space-y-1">
                     {section.links.map((link) => {
                       const translatedLinkTitle = translateWithFallback(
                         t,
@@ -152,20 +221,20 @@ export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
                             <Link
                               href={link.href}
                               onClick={onLinkClick}
-                              className="group flex min-h-5 items-start gap-2.5 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
+                              className="group flex min-h-8 items-start gap-2 rounded-md border border-transparent px-2 py-1.5 text-sm outline-none transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50/80 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
                             >
                               {FeaturedIcon ? (
                                 <FeaturedIcon
-                                  className="mt-0.5 h-4 w-4 shrink-0 text-blue-200 transition-colors duration-300 ease-out group-hover:text-blue-600"
+                                  className="mt-0.5 h-4 w-4 shrink-0 text-blue-300 transition-colors duration-200 ease-out group-hover:text-blue-600"
                                   strokeWidth={1.4}
                                   aria-hidden="true"
                                 />
                               ) : null}
-                              <span className="leading-5 font-semibold text-slate-600 transition-colors duration-300 ease-out group-hover:text-blue-600">
+                              <span className="leading-5 font-semibold text-slate-700 transition-colors duration-200 ease-out group-hover:text-blue-700">
                                 {translatedLinkTitle}
                               </span>
                               <ArrowRight
-                                className="mt-0.5 h-3.5 w-3.5 shrink-0 -translate-x-2 text-blue-600 opacity-0 transition-all duration-300 ease-out group-hover:translate-x-0 group-hover:opacity-100"
+                                className="mt-0.5 ml-auto h-3.5 w-3.5 shrink-0 -translate-x-1 text-blue-600 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
                                 strokeWidth={1.5}
                                 aria-hidden="true"
                               />
@@ -174,16 +243,23 @@ export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
                             <Link
                               href={link.href}
                               onClick={onLinkClick}
-                              className="group block rounded-md outline-none transition-colors hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+                              className="group flex items-start justify-between gap-2 rounded-md border border-transparent px-2 py-1.5 outline-none transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-teal-200 hover:bg-teal-50/80 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
                             >
-                              <span className="block text-sm font-semibold text-slate-900 transition duration-200 group-hover:text-teal-700">
-                                {translatedLinkTitle}
-                              </span>
-                              {link.description ? (
-                                <span className="mt-1 block text-sm leading-5 text-slate-500">
-                                  {link.description}
+                              <span>
+                                <span className="block text-sm font-semibold text-slate-900 transition duration-200 group-hover:text-teal-700">
+                                  {translatedLinkTitle}
                                 </span>
-                              ) : null}
+                                {link.description ? (
+                                  <span className="mt-1 block text-sm leading-5 text-slate-500">
+                                    {link.description}
+                                  </span>
+                                ) : null}
+                              </span>
+                              <ArrowRight
+                                className="mt-0.5 h-3.5 w-3.5 shrink-0 -translate-x-1 text-teal-700 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
+                                strokeWidth={1.5}
+                                aria-hidden="true"
+                              />
                             </Link>
                           )}
                         </li>
@@ -199,7 +275,7 @@ export function MegaMenu({ menuKey, id, isOpen, onLinkClick }: MegaMenuProps) {
 
       {menuKey === "products" ? (
         <div className="relative z-10 border-t border-slate-100 bg-slate-50/90">
-          <div className="mx-auto flex w-full max-w-7xl justify-end px-6 py-4 sm:px-8 lg:px-12">
+          <div className="mx-auto flex w-full justify-end px-5 py-3 lg:px-6">
             <Link
               href="/products"
               onClick={onLinkClick}
@@ -272,6 +348,8 @@ export function MobileMegaMenu({
           <div className="mt-5 space-y-6">
             {menu.sections.map((section) => {
               const sectionKey = `megaMenu.${menuKey}.sections.${section.translationKey}`;
+              const sectionId = `${panelId}-${slugify(section.heading)}`;
+              const sectionHref = productSectionRoutes[section.translationKey];
               const translatedHeading = translateWithFallback(
                 t,
                 `${sectionKey}.heading`,
@@ -284,21 +362,32 @@ export function MobileMegaMenu({
               return (
                 <section
                   key={section.translationKey}
-                  aria-labelledby={`${panelId}-${slugify(section.heading)}`}
+                  aria-labelledby={sectionId}
                 >
-                  <h3
-                    id={`${panelId}-${slugify(section.heading)}`}
-                    className="text-xs font-semibold tracking-[0.16em] text-teal-700 uppercase"
+                  <Link
+                    href={sectionHref}
+                    onClick={onLinkClick}
+                    className="group -mx-3 block rounded-lg border border-transparent px-3 py-2 outline-none transition-all duration-200 ease-out hover:border-teal-200 hover:bg-teal-50/80 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
                   >
-                    {translatedHeading}
-                  </h3>
-                  {translatedSummary ? (
-                    <p className="mt-2 text-sm leading-6 text-slate-600">
-                      {translatedSummary}
-                    </p>
-                  ) : null}
+                    <h3
+                      id={sectionId}
+                      className="flex items-start justify-between gap-3 text-xs font-semibold tracking-[0.16em] text-teal-700 uppercase"
+                    >
+                      <span>{translatedHeading}</span>
+                      <ArrowRight
+                        className="mt-0.5 h-3.5 w-3.5 shrink-0 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
+                        strokeWidth={1.6}
+                        aria-hidden="true"
+                      />
+                    </h3>
+                    {translatedSummary ? (
+                      <span className="mt-2 block text-sm leading-6 text-slate-600">
+                        {translatedSummary}
+                      </span>
+                    ) : null}
+                  </Link>
                   {section.links.length > 0 ? (
-                    <ul className="mt-3 space-y-3">
+                    <ul className="mt-2 space-y-2">
                       {section.links.map((link) => {
                         const translatedLinkTitle = translateWithFallback(
                           t,
@@ -311,9 +400,14 @@ export function MobileMegaMenu({
                             <Link
                               href={link.href}
                               onClick={onLinkClick}
-                              className="block rounded-md text-sm font-medium text-slate-800 outline-none transition-colors hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+                              className="group flex items-center justify-between gap-3 rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-slate-800 outline-none transition-all duration-200 ease-out hover:border-teal-200 hover:bg-teal-50/80 hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
                             >
-                              {translatedLinkTitle}
+                              <span>{translatedLinkTitle}</span>
+                              <ArrowRight
+                                className="h-3.5 w-3.5 shrink-0 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
+                                strokeWidth={1.5}
+                                aria-hidden="true"
+                              />
                             </Link>
                           </li>
                         );

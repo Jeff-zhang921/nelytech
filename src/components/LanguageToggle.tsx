@@ -1,8 +1,10 @@
 "use client";
 
 import { type FocusEvent, useId, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import { useI18n } from "@/context/I18nContext";
+import { isProductCataloguePathname } from "@/data/productCatalogue";
 import type { Language } from "@/locales/translations";
 
 const languageOptions = [
@@ -22,6 +24,24 @@ const languageOptions = [
 }[];
 
 export function LanguageToggle() {
+  const pathname = usePathname();
+  const isProductCatalogueRoute = isProductCataloguePathname(pathname);
+
+  return (
+    <LanguageToggleControl
+      key={pathname}
+      mode={isProductCatalogueRoute ? "english-only" : "default"}
+    />
+  );
+}
+
+type LanguageControlMode = "default" | "english-only";
+
+function LanguageToggleControl({
+  mode,
+}: {
+  mode: LanguageControlMode;
+}) {
   const { language, setLanguage, t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const menuId = useId();
@@ -33,20 +53,40 @@ export function LanguageToggle() {
     setIsOpen(false);
   }
 
+  function openLanguageMenu() {
+    if (mode === "default") {
+      setIsOpen(true);
+    }
+  }
+
+  function closeLanguageMenu() {
+    setIsOpen(false);
+  }
+
   function handleBlur(event: FocusEvent<HTMLDivElement>) {
     const nextFocusedElement = event.relatedTarget as Node | null;
 
     if (!nextFocusedElement || !event.currentTarget.contains(nextFocusedElement)) {
-      setIsOpen(false);
+      closeLanguageMenu();
     }
+  }
+
+  if (mode === "english-only") {
+    return (
+      <span
+        className="inline-flex items-center rounded-full px-1.5 py-1 text-sm font-medium tracking-[0.03em] whitespace-nowrap text-slate-600"
+      >
+        English Only
+      </span>
+    );
   }
 
   return (
     <div
       className="relative inline-flex"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-      onFocus={() => setIsOpen(true)}
+      onMouseEnter={openLanguageMenu}
+      onMouseLeave={closeLanguageMenu}
+      onFocus={openLanguageMenu}
       onBlur={handleBlur}
     >
       <button

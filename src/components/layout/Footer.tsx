@@ -17,11 +17,11 @@ const companyLinks = [
 ] as const satisfies readonly FooterLink[];
 
 const productLinks = [
-  { labelKey: "footer.lcdPanels", href: "/products#products-lcd-panels" },
-  { labelKey: "footer.lcdModules", href: "/products#products-lcd-modules" },
-  { labelKey: "footer.assemblyTechnologies", href: "/products#products-assembly" },
-  { labelKey: "footer.customPcbaMcu", href: "/products#products-custom-pcba-mcu-development" },
-  { labelKey: "footer.touchPanels", href: "/products#products-touch-panels" },
+  { labelKey: "footer.lcdPanels", href: "/products/lcd-panels" },
+  { labelKey: "footer.lcdModules", href: "/products/lcd-modules" },
+  { labelKey: "footer.assemblyTechnologies", href: "/products/assembly-technologies" },
+  { labelKey: "footer.customPcbaMcu", href: "/products/custom-pcba-mcu" },
+  { labelKey: "footer.touchPanels", href: "/products/touch-panels" },
 ] as const satisfies readonly FooterLink[];
 
 const phoneNumbers = ["86-755-29640281", "86-755-29640221", "86-755-29640231"] as const;
@@ -146,10 +146,16 @@ export function Footer() {
           </section>
         </div>
 
-        <div className="mt-12 border-t border-slate-200 pt-6 text-sm text-slate-500">
+        <div className="mt-12 flex flex-col gap-4 border-t border-slate-200 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
             Copyright &copy; {new Date().getFullYear()} NELYTECH. {t("footer.copyright")}
           </p>
+          <Link
+            href="/admin/login"
+            className="inline-flex w-fit items-center justify-center rounded-full border border-slate-300 px-4 py-2 text-xs font-medium tracking-wide text-slate-600 uppercase transition-colors hover:border-slate-400 hover:bg-white hover:text-slate-950 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 focus-visible:outline-none"
+          >
+            Admin Login
+          </Link>
         </div>
       </div>
     </footer>

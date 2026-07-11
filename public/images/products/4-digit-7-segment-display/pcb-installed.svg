@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
+  <title id="title">4-digit 7-segment display installed on a PCB</title>
+  <desc id="desc">A product placeholder showing the display mounted on a green printed circuit board.</desc>
+  <rect width="960" height="720" fill="#f8fafc"/>
+  <rect x="132" y="132" width="696" height="456" rx="34" fill="#0f766e"/>
+  <rect x="166" y="166" width="628" height="388" rx="22" fill="#0d9488"/>
+  <g stroke="#99f6e4" stroke-width="4" fill="none" opacity=".75">
+    <path d="M210 236h110v84h96"/>
+    <path d="M210 470h170v-72h82"/>
+    <path d="M746 242h-120v94h-72"/>
+    <path d="M746 482h-156v-82h-62"/>
+  </g>
+  <g fill="#ccfbf1">
+    <circle cx="210" cy="236" r="10"/>
+    <circle cx="210" cy="470" r="10"/>
+    <circle cx="746" cy="242" r="10"/>
+    <circle cx="746" cy="482" r="10"/>
+  </g>
+  <rect x="260" y="238" width="440" height="244" rx="22" fill="#111827"/>
+  <rect x="292" y="270" width="376" height="180" rx="14" fill="#030712"/>
+  <g fill="#ef4444" transform="translate(334 292) scale(.55)">
+    <path d="M0 0h78l14 14-14 14H0l-14-14z"/>
+    <path d="M-8 36 6 22l14 14v74L6 124-8 110z"/>
+    <path d="M92 36 106 22l14 14v74l-14 14-14-14z"/>
+    <path d="M0 124h78l14 14-14 14H0l-14-14z"/>
+    <path d="M-8 166 6 152l14 14v74L6 254-8 240z"/>
+    <path d="M92 166 106 152l14 14v74l-14 14-14-14z"/>
+    <path d="M0 252h78l14 14-14 14H0l-14-14z"/>
+    <g transform="translate(150)">
+      <path d="M0 0h78l14 14-14 14H0l-14-14z"/>
+      <path d="M92 36 106 22l14 14v74l-14 14-14-14z"/>
+      <path d="M0 124h78l14 14-14 14H0l-14-14z"/>
+      <path d="M-8 166 6 152l14 14v74L6 254-8 240z"/>
+      <path d="M92 166 106 152l14 14v74l-14 14-14-14z"/>
+      <path d="M0 252h78l14 14-14 14H0l-14-14z"/>
+    </g>
+    <g transform="translate(300)">
+      <path d="M0 0h78l14 14-14 14H0l-14-14z"/>
+      <path d="M-8 36 6 22l14 14v74L6 124-8 110z"/>
+      <path d="M92 36 106 22l14 14v74l-14 14-14-14z"/>
+      <path d="M0 124h78l14 14-14 14H0l-14-14z"/>
+      <path d="M92 166 106 152l14 14v74l-14 14-14-14z"/>
+      <path d="M0 252h78l14 14-14 14H0l-14-14z"/>
+    </g>
+    <g transform="translate(450)">
+      <path d="M0 0h78l14 14-14 14H0l-14-14z"/>
+      <path d="M92 36 106 22l14 14v74l-14 14-14-14z"/>
+      <path d="M0 124h78l14 14-14 14H0l-14-14z"/>
+      <path d="M-8 166 6 152l14 14v74L6 254-8 240z"/>
+      <path d="M92 166 106 152l14 14v74l-14 14-14-14z"/>
+      <path d="M0 252h78l14 14-14 14H0l-14-14z"/>
+    </g>
+  </g>
+</svg>
