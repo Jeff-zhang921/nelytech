@@ -5,6 +5,8 @@ import { ProductDetailPage } from "@/components/products/detail/ProductDetailPag
 import { getProductCategoryConfig } from "@/data/productCatalogue";
 import { getProductDetailBySlug } from "@/data/productDetails";
 
+export const runtime = "edge";
+
 interface ProductCategoryPageProps {
   params: Promise<{
     category: string;
