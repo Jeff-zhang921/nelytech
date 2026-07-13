@@ -13,6 +13,7 @@ interface ProductGridItem {
   name: string;
   description: string;
   image: string;
+  previewImage?: string;
   imageAlt?: string;
   href?: string;
 }
@@ -71,7 +72,7 @@ export function ProductGrid({
                 ? undefined
                 : getProductHref?.(product) ?? createProductDetailHref(product, returnQuery)
             }
-            image={product.image}
+            image={product.previewImage ?? product.image}
             imageAlt={product.imageAlt ?? `${product.name} product image`}
             ariaLabel={getProductAriaLabel?.(product)}
             name={product.name}

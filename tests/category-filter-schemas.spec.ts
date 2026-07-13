@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { authenticateAdmin } from "./adminTestHelpers";
 
 import { validateProductFilterValues } from "@/components/products/productFiltering";
 import {
@@ -102,6 +103,10 @@ async function getSavedProduct(page: Page, categorySlug: string, productSlug: st
 }
 
 test.describe("predefined category filter schemas", () => {
+  test.beforeEach(async ({ page }) => {
+    await authenticateAdmin(page);
+  });
+
   test("shared lookup resolves parent ownership and preserves invalid legacy values", () => {
     const lcdPanelsSchema = getFilterSchemaForCatalogueNode("lcd-panels");
     expect(getFilterSchemaForCatalogueNode("tn")).toBe(lcdPanelsSchema);
@@ -356,7 +361,7 @@ test.describe("predefined category filter schemas", () => {
 
       await page.getByRole("button", { name: "Submit Changes" }).click();
       await page
-        .getByRole("dialog", { name: "Draft saved successfully" })
+        .getByRole("dialog", { name: "Changes submitted successfully" })
         .getByRole("button", { name: "Continue Editing" })
         .click();
       const beforeEdit = await getSavedProduct(page, schemaCase.slug, productSlug);
@@ -390,7 +395,7 @@ test.describe("predefined category filter schemas", () => {
 
       await page.getByRole("button", { name: "Submit Changes" }).click();
       await page
-        .getByRole("dialog", { name: "Draft saved successfully" })
+        .getByRole("dialog", { name: "Changes submitted successfully" })
         .getByRole("button", { name: "Continue Editing" })
         .click();
       const afterEdit = await getSavedProduct(page, schemaCase.slug, productSlug);

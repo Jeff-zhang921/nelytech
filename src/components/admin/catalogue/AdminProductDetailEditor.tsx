@@ -357,7 +357,9 @@ function GalleryEditor({
     const { src } = await readImageFile(file);
     onChange({
       ...detail,
-      images: images.map((image) => (image.id === imageId ? { ...image, src } : image)),
+      images: images.map((image) =>
+        image.id === imageId ? { ...image, src, previewSrc: undefined } : image,
+      ),
     });
     setImageError("");
   }
@@ -381,7 +383,7 @@ function GalleryEditor({
         {images.map((image, index) => (
           <div key={image.id} className="grid gap-4 rounded-xl border border-slate-200 p-4 sm:grid-cols-[8rem_minmax(0,1fr)_auto]">
             <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-50">
-              {image.src ? <Image src={image.src} alt="" fill sizes="128px" className="object-contain" /> : null}
+              {image.src ? <Image src={image.previewSrc ?? image.src} alt="" fill sizes="128px" className="object-contain" /> : null}
             </div>
             <div className="space-y-3">
               <input

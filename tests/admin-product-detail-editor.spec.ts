@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { authenticateAdmin } from "./adminTestHelpers";
 
 const testPng = {
   name: "prototype-display.png",
@@ -49,6 +50,10 @@ async function addCardOnlyProduct(page: Page) {
 }
 
 test.describe("admin Product Detail editor", () => {
+  test.beforeEach(async ({ page }) => {
+    await authenticateAdmin(page);
+  });
+
   test("editing an existing product card preserves its complete detail content", async ({
     page,
   }) => {
@@ -127,7 +132,7 @@ test.describe("admin Product Detail editor", () => {
 
     await page.getByRole("button", { name: "Submit Changes" }).click();
     await page
-      .getByRole("dialog", { name: "Draft saved successfully" })
+      .getByRole("dialog", { name: "Changes submitted successfully" })
       .getByRole("button", { name: "Continue Editing" })
       .click();
 
@@ -170,7 +175,7 @@ test.describe("admin Product Detail editor", () => {
     expect(savedDraft).not.toContain("Describe the product's function");
 
     await page.reload();
-    await expect(page.getByText("Local draft restored").first()).toBeVisible();
+    await expect(page.getByText("Published Product Catalogue loaded").first()).toBeVisible();
     await expect(page.getByText("Add the main product image.")).toBeVisible();
     await expect(page.getByRole("heading", { name: "Specifications" })).toBeVisible();
 
@@ -190,7 +195,7 @@ test.describe("admin Product Detail editor", () => {
     await addCardOnlyProduct(page);
     await page.getByRole("button", { name: "Submit Changes" }).click();
     await page
-      .getByRole("dialog", { name: "Draft saved successfully" })
+      .getByRole("dialog", { name: "Changes submitted successfully" })
       .getByRole("button", { name: "Continue Editing" })
       .click();
     await page

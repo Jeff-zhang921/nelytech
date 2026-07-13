@@ -33,6 +33,9 @@ export default defineConfig({
     env: {
       E2E_CONTACT_EMAIL_MOCK: "true",
       E2E_CONTACT_EMAIL_MOCK_DELAY_MS: "500",
+      ADMIN_KEY: "playwright-admin-key",
+      SESSION_SECRET: "playwright-session-secret-with-at-least-32-characters",
+      E2E_GITHUB_MOCK_MODE: "success",
     },
   },
 });

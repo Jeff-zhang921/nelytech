@@ -11,12 +11,15 @@ import {
   type ReactNode,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { AdminApiError, publishCatalogue } from "@/admin/api/adminApi";
 import { productAdminCopy } from "@/lib/productAdminCopy";
 
 import {
   cloneCatalogueDraft,
   createPublishedCatalogueDraft,
+  localCataloguePublishMetadata,
   localCatalogueDraftRepository,
+  localPublishedCatalogueRepository,
   normalizeCatalogueDraft,
   validateCatalogueDraft,
   type CatalogueDraft,
@@ -62,21 +65,32 @@ export function AdminCatalogueProvider({ children }: { children: ReactNode }) {
   const savedDraftRef = useRef(cloneCatalogueDraft(publishedDraft));
   const bypassNavigationRef = useRef(false);
   const submitInFlightRef = useRef(false);
-  const validationErrors = useMemo(() => validateCatalogueDraft(draft), [draft]);
+  const publishedCommitShaRef = useRef<string | undefined>(undefined);
+  const [submissionErrors, setSubmissionErrors] = useState<string[]>([]);
+  const clientValidationErrors = useMemo(() => validateCatalogueDraft(draft), [draft]);
+  const validationErrors = useMemo(
+    () => [...clientValidationErrors, ...submissionErrors],
+    [clientValidationErrors, submissionErrors],
+  );
 
   useEffect(() => {
-    const savedDraft = localCatalogueDraftRepository.loadDraft();
+    const locallyPublishedDraft = localPublishedCatalogueRepository.loadDraft();
+    const baseDraft = locallyPublishedDraft ?? publishedDraft;
+    const workingDraft = localCatalogueDraftRepository.loadDraft() ?? baseDraft;
+    const hasUnsavedLocalChanges = !catalogueDraftsEqual(workingDraft, baseDraft);
 
-    if (savedDraft) {
-      const clonedDraft = cloneCatalogueDraft(savedDraft);
-      savedDraftRef.current = clonedDraft;
-      setDraft(cloneCatalogueDraft(clonedDraft));
+    savedDraftRef.current = cloneCatalogueDraft(baseDraft);
+    publishedCommitShaRef.current = localCataloguePublishMetadata.loadCommitSha();
+    setDraft(cloneCatalogueDraft(workingDraft));
+    setIsDirty(hasUnsavedLocalChanges);
+
+    if (hasUnsavedLocalChanges) {
       setStatusMessage(productAdminCopy.status.restored);
     } else {
       setStatusMessage(productAdminCopy.status.publishedLoaded);
     }
     setIsReady(true);
-  }, []);
+  }, [publishedDraft]);
 
   useEffect(() => {
     if (!isDirty) return;
@@ -144,9 +158,14 @@ export function AdminCatalogueProvider({ children }: { children: ReactNode }) {
 
   const updateDraft = useCallback(
     (updater: (current: CatalogueDraft) => CatalogueDraft) => {
-      setDraft((current) => updater(cloneCatalogueDraft(current)));
+      setDraft((current) => {
+        const nextDraft = updater(cloneCatalogueDraft(current));
+        void localCatalogueDraftRepository.saveDraft(nextDraft);
+        return nextDraft;
+      });
       setIsDirty(true);
       setSaveStatus("idle");
+      setSubmissionErrors([]);
       setStatusMessage(productAdminCopy.status.unpublished);
     },
     [],
@@ -162,6 +181,7 @@ export function AdminCatalogueProvider({ children }: { children: ReactNode }) {
 
     if (errors.length > 0) {
       setSaveStatus("error");
+      setSubmissionErrors(errors);
       setStatusMessage(errors[0]);
       return false;
     }
@@ -171,44 +191,75 @@ export function AdminCatalogueProvider({ children }: { children: ReactNode }) {
     submitInFlightRef.current = true;
 
     try {
+      await localCatalogueDraftRepository.saveDraft(normalizedDraft);
+      const publishResult = await publishCatalogue(
+        normalizedDraft,
+        publishedCommitShaRef.current,
+      );
       const submittedDraft = {
-        ...normalizedDraft,
-        updatedAt: new Date().toISOString(),
+        ...publishResult.draft,
+        updatedAt: publishResult.publishedAt,
       };
-      await localCatalogueDraftRepository.saveDraft(submittedDraft);
+      await Promise.all([
+        localCatalogueDraftRepository.saveDraft(submittedDraft),
+        localPublishedCatalogueRepository.saveDraft(submittedDraft),
+      ]);
+      localCataloguePublishMetadata.saveCommitSha(publishResult.commitSha);
+      publishedCommitShaRef.current = publishResult.commitSha;
       savedDraftRef.current = cloneCatalogueDraft(submittedDraft);
       setDraft(submittedDraft);
       setIsDirty(false);
       setSaveStatus("saved");
+      setSubmissionErrors([]);
       setStatusMessage(
         isProductDetailEditor
           ? productAdminCopy.status.detailSaved
           : productAdminCopy.status.saved,
       );
-      submitInFlightRef.current = false;
       return true;
-    } catch {
-      submitInFlightRef.current = false;
+    } catch (error) {
       setSaveStatus("error");
-      setStatusMessage(productAdminCopy.status.saveFailed);
+      if (error instanceof AdminApiError) {
+        const fieldMessages = error.fields.map(
+          (field) => `${field.message} (${field.path})`,
+        );
+        setSubmissionErrors(fieldMessages);
+        setStatusMessage(error.message);
+
+        if (error.status === 401) {
+          router.replace(
+            `/admin/login?returnTo=${encodeURIComponent(`${window.location.pathname}${window.location.search}`)}`,
+          );
+        }
+      } else {
+        setStatusMessage(productAdminCopy.status.saveFailed);
+      }
       return false;
+    } finally {
+      submitInFlightRef.current = false;
     }
-  }, [draft, isProductDetailEditor]);
+  }, [draft, isProductDetailEditor, router]);
 
   const discardUnsavedChanges = useCallback(() => {
     setDraft(cloneCatalogueDraft(savedDraftRef.current));
+    void localCatalogueDraftRepository.saveDraft(savedDraftRef.current);
     setIsDirty(false);
     setSaveStatus("idle");
+    setSubmissionErrors([]);
     setStatusMessage(productAdminCopy.status.discarded);
   }, []);
 
   const resetToPublishedData = useCallback(() => {
     const nextDraft = cloneCatalogueDraft(publishedDraft);
     localCatalogueDraftRepository.clearDraft();
+    localPublishedCatalogueRepository.clearDraft();
+    localCataloguePublishMetadata.clear();
+    publishedCommitShaRef.current = undefined;
     savedDraftRef.current = cloneCatalogueDraft(nextDraft);
     setDraft(nextDraft);
     setIsDirty(false);
     setSaveStatus("idle");
+    setSubmissionErrors([]);
     setStatusMessage(productAdminCopy.status.reset);
   }, [publishedDraft]);
 
@@ -241,8 +292,10 @@ export function AdminCatalogueProvider({ children }: { children: ReactNode }) {
     if (!pendingNavigation) return;
     const target = pendingNavigation;
     setDraft(cloneCatalogueDraft(savedDraftRef.current));
+    void localCatalogueDraftRepository.saveDraft(savedDraftRef.current);
     setIsDirty(false);
     setSaveStatus("idle");
+    setSubmissionErrors([]);
     setStatusMessage(productAdminCopy.status.discarded);
     performNavigation(target);
   }, [pendingNavigation, performNavigation]);
@@ -310,4 +363,8 @@ export function useAdminCatalogue() {
   }
 
   return context;
+}
+
+function catalogueDraftsEqual(left: CatalogueDraft, right: CatalogueDraft) {
+  return JSON.stringify(left) === JSON.stringify(right);
 }

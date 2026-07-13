@@ -1,0 +1,3244 @@
+{
+  "version": 1,
+  "allProducts": {
+    "slug": "all",
+    "name": "All Products",
+    "shortName": "All Products",
+    "description": "Explore our complete range of display products and solutions, designed for commercial, industrial, embedded, and specialised applications."
+  },
+  "categories": [
+    {
+      "id": "category-lcd-panels",
+      "slug": "lcd-panels",
+      "name": "LCD Panels",
+      "shortName": "LCD Panels",
+      "description": "Monochrome LCD panel platforms engineered for stable contrast, long lifecycle supply, and application-specific optical performance across industrial, medical, and embedded interfaces.",
+      "route": "/products/lcd-panels",
+      "products": [
+        {
+          "id": "prod_lcd_01",
+          "partNumber": "NLY-TN0420",
+          "name": "TN Segment LCD Panel",
+          "description": "Cost-efficient segment glass for numeric and icon-based displays.",
+          "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=90",
+          "imageAlt": "Macro detail of electronic display circuitry",
+          "specs": [
+            "Type: TN Segment",
+            "Glass: 42.0 x 28.0 mm",
+            "Temp: -20°C to +70°C"
+          ],
+          "filters": {
+            "application": [
+              "icon-displays",
+              "numeric-displays"
+            ],
+            "interface": [
+              "glass-only"
+            ],
+            "format": [
+              "segment"
+            ]
+          },
+          "slug": "tn-segment-lcd-panel",
+          "detail": {
+            "productTypeLabel": "LCD Panels",
+            "introduction": "Cost-efficient segment glass for numeric and icon-based displays.",
+            "suitableFor": "Suitable for icon displays, numeric displays.",
+            "specificationNote": "Catalogue product information for initial evaluation. Final specifications depend on the selected model and project requirements.",
+            "images": [
+              {
+                "id": "detail-image-1",
+                "src": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=90",
+                "alt": "Macro detail of electronic display circuitry",
+                "label": "Product",
+                "isPrimary": true,
+                "order": 0
+              }
+            ],
+            "summary": [
+              {
+                "id": "summary-1",
+                "label": "Part number",
+                "value": "NLY-TN0420",
+                "order": 0
+              },
+              {
+                "id": "summary-2",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 1
+              },
+              {
+                "id": "summary-3",
+                "label": "Format",
+                "value": "Segment",
+                "order": 2
+              }
+            ],
+            "specifications": [
+              {
+                "id": "specification-1",
+                "label": "Product name",
+                "value": "TN Segment LCD Panel",
+                "order": 0
+              },
+              {
+                "id": "specification-2",
+                "label": "Part number",
+                "value": "NLY-TN0420",
+                "order": 1
+              },
+              {
+                "id": "specification-3",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 2
+              },
+              {
+                "id": "specification-4",
+                "label": "Type",
+                "value": "TN Segment",
+                "order": 3
+              },
+              {
+                "id": "specification-5",
+                "label": "Glass",
+                "value": "42.0 x 28.0 mm",
+                "order": 4
+              },
+              {
+                "id": "specification-6",
+                "label": "Temp",
+                "value": "-20°C to +70°C",
+                "order": 5
+              },
+              {
+                "id": "specification-7",
+                "label": "Application",
+                "value": "Icon displays, Numeric displays",
+                "order": 6
+              },
+              {
+                "id": "specification-8",
+                "label": "Interface",
+                "value": "Glass only",
+                "order": 7
+              },
+              {
+                "id": "specification-9",
+                "label": "Format",
+                "value": "Segment",
+                "order": 8
+              }
+            ],
+            "descriptionParagraphs": [
+              {
+                "id": "description-1",
+                "text": "TN Segment LCD Panel is part of the NELYTECH product catalogue for display programs that need stable supply, configurable integration, and application-specific engineering support.",
+                "order": 0
+              },
+              {
+                "id": "description-2",
+                "text": "Cost-efficient segment glass for numeric and icon-based displays.",
+                "order": 1
+              },
+              {
+                "id": "description-3",
+                "text": "The configuration can be reviewed with the engineering team for dimensions, interface, optical mode, operating conditions, and production requirements.",
+                "order": 2
+              }
+            ],
+            "applications": [
+              {
+                "id": "application-1",
+                "text": "Icon displays",
+                "order": 0
+              },
+              {
+                "id": "application-2",
+                "text": "Numeric displays",
+                "order": 1
+              }
+            ],
+            "optionGroups": [
+              {
+                "id": "option-group-1",
+                "label": "Available options",
+                "order": 0,
+                "values": [
+                  {
+                    "id": "option-1-1",
+                    "text": "Glass only",
+                    "order": 0
+                  },
+                  {
+                    "id": "option-1-2",
+                    "text": "Segment",
+                    "order": 1
+                  }
+                ]
+              }
+            ],
+            "downloads": [
+              {
+                "id": "download-1",
+                "label": "Datasheet coming soon",
+                "order": 0
+              },
+              {
+                "id": "download-2",
+                "label": "Drawing coming soon",
+                "order": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": "prod_lcd_02",
+          "partNumber": "NLY-HTN5682",
+          "name": "HTN Instrument Panel",
+          "description": "Higher contrast monochrome panel for instrument interfaces.",
+          "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=90",
+          "imageAlt": "Close-up of illuminated display components",
+          "specs": [
+            "Type: HTN Panel",
+            "Duty: 1/4",
+            "View: 6 o'clock"
+          ],
+          "filters": {
+            "application": [
+              "instrument-interfaces"
+            ],
+            "interface": [
+              "glass-only"
+            ],
+            "format": [
+              "segment"
+            ]
+          },
+          "slug": "htn-instrument-panel",
+          "detail": {
+            "productTypeLabel": "LCD Panels",
+            "introduction": "Higher contrast monochrome panel for instrument interfaces.",
+            "suitableFor": "Suitable for instrument interfaces.",
+            "specificationNote": "Catalogue product information for initial evaluation. Final specifications depend on the selected model and project requirements.",
+            "images": [
+              {
+                "id": "detail-image-1",
+                "src": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=90",
+                "alt": "Close-up of illuminated display components",
+                "label": "Product",
+                "isPrimary": true,
+                "order": 0
+              }
+            ],
+            "summary": [
+              {
+                "id": "summary-1",
+                "label": "Part number",
+                "value": "NLY-HTN5682",
+                "order": 0
+              },
+              {
+                "id": "summary-2",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 1
+              },
+              {
+                "id": "summary-3",
+                "label": "Format",
+                "value": "Segment",
+                "order": 2
+              }
+            ],
+            "specifications": [
+              {
+                "id": "specification-1",
+                "label": "Product name",
+                "value": "HTN Instrument Panel",
+                "order": 0
+              },
+              {
+                "id": "specification-2",
+                "label": "Part number",
+                "value": "NLY-HTN5682",
+                "order": 1
+              },
+              {
+                "id": "specification-3",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 2
+              },
+              {
+                "id": "specification-4",
+                "label": "Type",
+                "value": "HTN Panel",
+                "order": 3
+              },
+              {
+                "id": "specification-5",
+                "label": "Duty",
+                "value": "1/4",
+                "order": 4
+              },
+              {
+                "id": "specification-6",
+                "label": "View",
+                "value": "6 o'clock",
+                "order": 5
+              },
+              {
+                "id": "specification-7",
+                "label": "Application",
+                "value": "Instrument interfaces",
+                "order": 6
+              },
+              {
+                "id": "specification-8",
+                "label": "Interface",
+                "value": "Glass only",
+                "order": 7
+              },
+              {
+                "id": "specification-9",
+                "label": "Format",
+                "value": "Segment",
+                "order": 8
+              }
+            ],
+            "descriptionParagraphs": [
+              {
+                "id": "description-1",
+                "text": "HTN Instrument Panel is part of the NELYTECH product catalogue for display programs that need stable supply, configurable integration, and application-specific engineering support.",
+                "order": 0
+              },
+              {
+                "id": "description-2",
+                "text": "Higher contrast monochrome panel for instrument interfaces.",
+                "order": 1
+              },
+              {
+                "id": "description-3",
+                "text": "The configuration can be reviewed with the engineering team for dimensions, interface, optical mode, operating conditions, and production requirements.",
+                "order": 2
+              }
+            ],
+            "applications": [
+              {
+                "id": "application-1",
+                "text": "Instrument interfaces",
+                "order": 0
+              }
+            ],
+            "optionGroups": [
+              {
+                "id": "option-group-1",
+                "label": "Available options",
+                "order": 0,
+                "values": [
+                  {
+                    "id": "option-1-1",
+                    "text": "Glass only",
+                    "order": 0
+                  },
+                  {
+                    "id": "option-1-2",
+                    "text": "Segment",
+                    "order": 1
+                  }
+                ]
+              }
+            ],
+            "downloads": [
+              {
+                "id": "download-1",
+                "label": "Datasheet coming soon",
+                "order": 0
+              },
+              {
+                "id": "download-2",
+                "label": "Drawing coming soon",
+                "order": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": "prod_lcd_03",
+          "partNumber": "NLY-STN24064",
+          "name": "STN Graphic LCD Panel",
+          "description": "Graphic monochrome panel for compact text and simple UI layouts.",
+          "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=90",
+          "imageAlt": "Macro technology image with printed circuit details",
+          "specs": [
+            "Resolution: 240x64",
+            "Mode: Transflective",
+            "Temp: -30°C to +80°C"
+          ],
+          "filters": {
+            "application": [
+              "graphic-interfaces",
+              "text-displays"
+            ],
+            "interface": [
+              "controller-ready"
+            ],
+            "format": [
+              "graphic"
+            ]
+          },
+          "slug": "stn-graphic-lcd-panel",
+          "detail": {
+            "productTypeLabel": "LCD Panels",
+            "introduction": "Graphic monochrome panel for compact text and simple UI layouts.",
+            "suitableFor": "Suitable for graphic interfaces, text displays.",
+            "specificationNote": "Catalogue product information for initial evaluation. Final specifications depend on the selected model and project requirements.",
+            "images": [
+              {
+                "id": "detail-image-1",
+                "src": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=90",
+                "alt": "Macro technology image with printed circuit details",
+                "label": "Product",
+                "isPrimary": true,
+                "order": 0
+              }
+            ],
+            "summary": [
+              {
+                "id": "summary-1",
+                "label": "Part number",
+                "value": "NLY-STN24064",
+                "order": 0
+              },
+              {
+                "id": "summary-2",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 1
+              },
+              {
+                "id": "summary-3",
+                "label": "Format",
+                "value": "Graphic",
+                "order": 2
+              }
+            ],
+            "specifications": [
+              {
+                "id": "specification-1",
+                "label": "Product name",
+                "value": "STN Graphic LCD Panel",
+                "order": 0
+              },
+              {
+                "id": "specification-2",
+                "label": "Part number",
+                "value": "NLY-STN24064",
+                "order": 1
+              },
+              {
+                "id": "specification-3",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 2
+              },
+              {
+                "id": "specification-4",
+                "label": "Resolution",
+                "value": "240x64",
+                "order": 3
+              },
+              {
+                "id": "specification-5",
+                "label": "Mode",
+                "value": "Transflective",
+                "order": 4
+              },
+              {
+                "id": "specification-6",
+                "label": "Temp",
+                "value": "-30°C to +80°C",
+                "order": 5
+              },
+              {
+                "id": "specification-7",
+                "label": "Application",
+                "value": "Graphic interfaces, Text displays",
+                "order": 6
+              },
+              {
+                "id": "specification-8",
+                "label": "Interface",
+                "value": "Controller-ready",
+                "order": 7
+              },
+              {
+                "id": "specification-9",
+                "label": "Format",
+                "value": "Graphic",
+                "order": 8
+              }
+            ],
+            "descriptionParagraphs": [
+              {
+                "id": "description-1",
+                "text": "STN Graphic LCD Panel is part of the NELYTECH product catalogue for display programs that need stable supply, configurable integration, and application-specific engineering support.",
+                "order": 0
+              },
+              {
+                "id": "description-2",
+                "text": "Graphic monochrome panel for compact text and simple UI layouts.",
+                "order": 1
+              },
+              {
+                "id": "description-3",
+                "text": "The configuration can be reviewed with the engineering team for dimensions, interface, optical mode, operating conditions, and production requirements.",
+                "order": 2
+              }
+            ],
+            "applications": [
+              {
+                "id": "application-1",
+                "text": "Graphic interfaces",
+                "order": 0
+              },
+              {
+                "id": "application-2",
+                "text": "Text displays",
+                "order": 1
+              }
+            ],
+            "optionGroups": [
+              {
+                "id": "option-group-1",
+                "label": "Available options",
+                "order": 0,
+                "values": [
+                  {
+                    "id": "option-1-1",
+                    "text": "Controller-ready",
+                    "order": 0
+                  },
+                  {
+                    "id": "option-1-2",
+                    "text": "Graphic",
+                    "order": 1
+                  }
+                ]
+              }
+            ],
+            "downloads": [
+              {
+                "id": "download-1",
+                "label": "Datasheet coming soon",
+                "order": 0
+              },
+              {
+                "id": "download-2",
+                "label": "Drawing coming soon",
+                "order": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": "prod_lcd_04",
+          "partNumber": "NLY-FSTN12864",
+          "name": "FSTN Monochrome Panel",
+          "description": "Film-compensated display for improved readability and contrast.",
+          "image": "https://images.unsplash.com/photo-1562408590-e32931084e23?auto=format&fit=crop&w=1200&q=90",
+          "imageAlt": "Precision electronic component under inspection",
+          "specs": [
+            "Resolution: 128x64",
+            "Polarizer: FSTN",
+            "Backlight: White LED"
+          ],
+          "filters": {
+            "application": [
+              "high-readability-displays"
+            ],
+            "interface": [
+              "controller-ready"
+            ],
+            "format": [
+              "graphic"
+            ]
+          },
+          "slug": "fstn-monochrome-panel",
+          "detail": {
+            "productTypeLabel": "LCD Panels",
+            "introduction": "Film-compensated display for improved readability and contrast.",
+            "suitableFor": "Suitable for high-readability displays.",
+            "specificationNote": "Catalogue product information for initial evaluation. Final specifications depend on the selected model and project requirements.",
+            "images": [
+              {
+                "id": "detail-image-1",
+                "src": "https://images.unsplash.com/photo-1562408590-e32931084e23?auto=format&fit=crop&w=1200&q=90",
+                "alt": "Precision electronic component under inspection",
+                "label": "Product",
+                "isPrimary": true,
+                "order": 0
+              }
+            ],
+            "summary": [
+              {
+                "id": "summary-1",
+                "label": "Part number",
+                "value": "NLY-FSTN12864",
+                "order": 0
+              },
+              {
+                "id": "summary-2",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 1
+              },
+              {
+                "id": "summary-3",
+                "label": "Format",
+                "value": "Graphic",
+                "order": 2
+              }
+            ],
+            "specifications": [
+              {
+                "id": "specification-1",
+                "label": "Product name",
+                "value": "FSTN Monochrome Panel",
+                "order": 0
+              },
+              {
+                "id": "specification-2",
+                "label": "Part number",
+                "value": "NLY-FSTN12864",
+                "order": 1
+              },
+              {
+                "id": "specification-3",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 2
+              },
+              {
+                "id": "specification-4",
+                "label": "Resolution",
+                "value": "128x64",
+                "order": 3
+              },
+              {
+                "id": "specification-5",
+                "label": "Polarizer",
+                "value": "FSTN",
+                "order": 4
+              },
+              {
+                "id": "specification-6",
+                "label": "Backlight",
+                "value": "White LED",
+                "order": 5
+              },
+              {
+                "id": "specification-7",
+                "label": "Application",
+                "value": "High-readability displays",
+                "order": 6
+              },
+              {
+                "id": "specification-8",
+                "label": "Interface",
+                "value": "Controller-ready",
+                "order": 7
+              },
+              {
+                "id": "specification-9",
+                "label": "Format",
+                "value": "Graphic",
+                "order": 8
+              }
+            ],
+            "descriptionParagraphs": [
+              {
+                "id": "description-1",
+                "text": "FSTN Monochrome Panel is part of the NELYTECH product catalogue for display programs that need stable supply, configurable integration, and application-specific engineering support.",
+                "order": 0
+              },
+              {
+                "id": "description-2",
+                "text": "Film-compensated display for improved readability and contrast.",
+                "order": 1
+              },
+              {
+                "id": "description-3",
+                "text": "The configuration can be reviewed with the engineering team for dimensions, interface, optical mode, operating conditions, and production requirements.",
+                "order": 2
+              }
+            ],
+            "applications": [
+              {
+                "id": "application-1",
+                "text": "High-readability displays",
+                "order": 0
+              }
+            ],
+            "optionGroups": [
+              {
+                "id": "option-group-1",
+                "label": "Available options",
+                "order": 0,
+                "values": [
+                  {
+                    "id": "option-1-1",
+                    "text": "Controller-ready",
+                    "order": 0
+                  },
+                  {
+                    "id": "option-1-2",
+                    "text": "Graphic",
+                    "order": 1
+                  }
+                ]
+              }
+            ],
+            "downloads": [
+              {
+                "id": "download-1",
+                "label": "Datasheet coming soon",
+                "order": 0
+              },
+              {
+                "id": "download-2",
+                "label": "Drawing coming soon",
+                "order": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": "prod_lcd_05",
+          "partNumber": "NLY-VA1888",
+          "name": "VA High Contrast Panel",
+          "description": "High-contrast segment display for premium dark-face interfaces.",
+          "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=90",
+          "imageAlt": "Technical workstation with electronic assemblies",
+          "specs": [
+            "Type: VA Segment",
+            "Contrast: High",
+            "Interface: Pin / FPC"
+          ],
+          "filters": {
+            "application": [
+              "dark-face-interfaces",
+              "premium-controls"
+            ],
+            "interface": [
+              "fpc",
+              "pin"
+            ],
+            "format": [
+              "segment"
+            ]
+          },
+          "slug": "va-high-contrast-panel",
+          "detail": {
+            "productTypeLabel": "LCD Panels",
+            "introduction": "High-contrast segment display for premium dark-face interfaces.",
+            "suitableFor": "Suitable for dark-face interfaces, premium controls.",
+            "specificationNote": "Catalogue product information for initial evaluation. Final specifications depend on the selected model and project requirements.",
+            "images": [
+              {
+                "id": "detail-image-1",
+                "src": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=90",
+                "alt": "Technical workstation with electronic assemblies",
+                "label": "Product",
+                "isPrimary": true,
+                "order": 0
+              }
+            ],
+            "summary": [
+              {
+                "id": "summary-1",
+                "label": "Part number",
+                "value": "NLY-VA1888",
+                "order": 0
+              },
+              {
+                "id": "summary-2",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 1
+              },
+              {
+                "id": "summary-3",
+                "label": "Format",
+                "value": "Segment",
+                "order": 2
+              }
+            ],
+            "specifications": [
+              {
+                "id": "specification-1",
+                "label": "Product name",
+                "value": "VA High Contrast Panel",
+                "order": 0
+              },
+              {
+                "id": "specification-2",
+                "label": "Part number",
+                "value": "NLY-VA1888",
+                "order": 1
+              },
+              {
+                "id": "specification-3",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 2
+              },
+              {
+                "id": "specification-4",
+                "label": "Type",
+                "value": "VA Segment",
+                "order": 3
+              },
+              {
+                "id": "specification-5",
+                "label": "Contrast",
+                "value": "High",
+                "order": 4
+              },
+              {
+                "id": "specification-6",
+                "label": "Interface",
+                "value": "Pin / FPC",
+                "order": 5
+              },
+              {
+                "id": "specification-7",
+                "label": "Application",
+                "value": "Dark-face interfaces, Premium controls",
+                "order": 6
+              },
+              {
+                "id": "specification-8",
+                "label": "Interface",
+                "value": "FPC, Pin",
+                "order": 7
+              },
+              {
+                "id": "specification-9",
+                "label": "Format",
+                "value": "Segment",
+                "order": 8
+              }
+            ],
+            "descriptionParagraphs": [
+              {
+                "id": "description-1",
+                "text": "VA High Contrast Panel is part of the NELYTECH product catalogue for display programs that need stable supply, configurable integration, and application-specific engineering support.",
+                "order": 0
+              },
+              {
+                "id": "description-2",
+                "text": "High-contrast segment display for premium dark-face interfaces.",
+                "order": 1
+              },
+              {
+                "id": "description-3",
+                "text": "The configuration can be reviewed with the engineering team for dimensions, interface, optical mode, operating conditions, and production requirements.",
+                "order": 2
+              }
+            ],
+            "applications": [
+              {
+                "id": "application-1",
+                "text": "Dark-face interfaces",
+                "order": 0
+              },
+              {
+                "id": "application-2",
+                "text": "Premium controls",
+                "order": 1
+              }
+            ],
+            "optionGroups": [
+              {
+                "id": "option-group-1",
+                "label": "Available options",
+                "order": 0,
+                "values": [
+                  {
+                    "id": "option-1-1",
+                    "text": "FPC",
+                    "order": 0
+                  },
+                  {
+                    "id": "option-1-2",
+                    "text": "Pin",
+                    "order": 1
+                  },
+                  {
+                    "id": "option-1-3",
+                    "text": "Segment",
+                    "order": 2
+                  }
+                ]
+              }
+            ],
+            "downloads": [
+              {
+                "id": "download-1",
+                "label": "Datasheet coming soon",
+                "order": 0
+              },
+              {
+                "id": "download-2",
+                "label": "Drawing coming soon",
+                "order": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": "prod_lcd_06",
+          "partNumber": "NLY-CUSTOM01",
+          "name": "Custom LCD Glass Program",
+          "description": "Application-specific LCD glass for custom icons and layouts.",
+          "image": "https://images.unsplash.com/photo-1581092921461-39b9d08a9b21?auto=format&fit=crop&w=1200&q=90",
+          "imageAlt": "Industrial electronics manufacturing detail",
+          "specs": [
+            "Tooling: Custom",
+            "LCD Mode: TN / STN / VA",
+            "Lead Time: Fast sample"
+          ],
+          "filters": {
+            "application": [
+              "application-specific-layouts",
+              "custom-icons"
+            ],
+            "interface": [
+              "custom"
+            ],
+            "format": [
+              "graphic",
+              "segment"
+            ]
+          },
+          "slug": "custom-lcd-glass-program",
+          "detail": {
+            "productTypeLabel": "LCD Panels",
+            "introduction": "Application-specific LCD glass for custom icons and layouts.",
+            "suitableFor": "Suitable for application-specific layouts, custom icons.",
+            "specificationNote": "Catalogue product information for initial evaluation. Final specifications depend on the selected model and project requirements.",
+            "images": [
+              {
+                "id": "detail-image-1",
+                "src": "https://images.unsplash.com/photo-1581092921461-39b9d08a9b21?auto=format&fit=crop&w=1200&q=90",
+                "alt": "Industrial electronics manufacturing detail",
+                "label": "Product",
+                "isPrimary": true,
+                "order": 0
+              }
+            ],
+            "summary": [
+              {
+                "id": "summary-1",
+                "label": "Part number",
+                "value": "NLY-CUSTOM01",
+                "order": 0
+              },
+              {
+                "id": "summary-2",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 1
+              },
+              {
+                "id": "summary-3",
+                "label": "Format",
+                "value": "Graphic, Segment",
+                "order": 2
+              }
+            ],
+            "specifications": [
+              {
+                "id": "specification-1",
+                "label": "Product name",
+                "value": "Custom LCD Glass Program",
+                "order": 0
+              },
+              {
+                "id": "specification-2",
+                "label": "Part number",
+                "value": "NLY-CUSTOM01",
+                "order": 1
+              },
+              {
+                "id": "specification-3",
+                "label": "Category",
+                "value": "LCD Panels",
+                "order": 2
+              },
+              {
+                "id": "specification-4",
+                "label": "Tooling",
+                "value": "Custom",
+                "order": 3
+              },
+              {
+                "id": "specification-5",
+                "label": "LCD Mode",
+                "value": "TN / STN / VA",
+                "order": 4
+              },
+              {
+                "id": "specification-6",
+                "label": "Lead Time",
+                "value": "Fast sample",
+                "order": 5
+              },
+              {
+                "id": "specification-7",
+                "label": "Application",
+                "value": "Application-specific layouts, Custom icons",
+                "order": 6
+              },
+              {
+                "id": "specification-8",
+                "label": "Interface",
+                "value": "Custom",
+                "order": 7
+              },
+              {
+                "id": "specification-9",
+                "label": "Format",
+                "value": "Graphic, Segment",
+                "order": 8
+              }
+            ],
+            "descriptionParagraphs": [
+              {
+                "id": "description-1",
+                "text": "Custom LCD Glass Program is part of the NELYTECH product catalogue for display programs that need stable supply, configurable integration, and application-specific engineering support.",
+                "order": 0
+              },
+              {
+                "id": "description-2",
+                "text": "Application-specific LCD glass for custom icons and layouts.",
+                "order": 1
+              },
+              {
+                "id": "description-3",
+                "text": "The configuration can be reviewed with the engineering team for dimensions, interface, optical mode, operating conditions, and production requirements.",
+                "order": 2
+              }
+            ],
+            "applications": [
+              {
+                "id": "application-1",
+                "text": "Application-specific layouts",
+                "order": 0
+              },
+              {
+                "id": "application-2",
+                "text": "Custom icons",
+                "order": 1
+              }
+            ],
+            "optionGroups": [
+              {
+                "id": "option-group-1",
+                "label": "Available options",
+                "order": 0,
+                "values": [
+                  {
+                    "id": "option-1-1",
+                    "text": "Custom",
+                    "order": 0
+                  },
+                  {
+                    "id": "option-1-2",
+                    "text": "Graphic",
+                    "order": 1
+                  },
+                  {
+                    "id": "option-1-3",
+                    "text": "Segment",
+                    "order": 2
+                  }
+                ]
+              }
+            ],
+            "downloads": [
+              {
+                "id": "download-1",
+                "label": "Datasheet coming soon",
+                "order": 0
+              },
+              {
+                "id": "download-2",
+                "label": "Drawing coming soon",
+                "order": 1
+              }
+            ]
+          }
+        }
+      ],
+      "subcategories": [
+        {
+          "id": "subcategory-tn",
+          "slug": "tn",
+          "name": "TN (Twisted Nematic)",
+          "shortName": "TN",
+          "description": "The most cost-effective and widely adopted liquid crystal technology. Ideal for basic numeric, character, and custom segment displays where extreme viewing angles are not the primary requirement.",
+          "parentCategoryId": "category-lcd-panels",
+          "products": [
+            {
+              "id": "prod_tn_01",
+              "partNumber": "NLY-TN-7SEG-04",
+              "href": "/products/4-digit-7-segment-display",
+              "name": "4-Digit 7-Segment Display",
+              "description": "Fixed numeric display for meters, counters, and low-power controls.",
+              "image": "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=800&auto=format&fit=crop",
+              "imageAlt": "LCD glass and circuit detail for a TN segment display",
+              "specs": [
+                "Display Mode: Reflective, Positive",
+                "Multiplex: 1/4 Duty, 1/3 Bias",
+                "Op. Temp: -10°C to +60°C"
+              ],
+              "filters": {
+                "application": [
+                  "counters",
+                  "low-power-controls",
+                  "meters"
+                ],
+                "interface": [
+                  "glass-only"
+                ],
+                "format": [
+                  "7-segment",
+                  "numeric"
+                ]
+              },
+              "slug": "4-digit-7-segment-display",
+              "detail": {
+                "productTypeLabel": "TN numeric display",
+                "introduction": "A compact four-digit seven-segment LED display designed for clear numeric output in clocks, timers, counters, measurement devices, and embedded electronic systems.",
+                "suitableFor": "Suitable for digital clocks, industrial counters, measuring instruments, control panels, and microcontroller-based projects.",
+                "specificationNote": "Example product data for layout and content structure. Final specifications depend on the selected model and project requirements.",
+                "images": [
+                  {
+                    "id": "detail-image-1",
+                    "src": "/images/products/4-digit-7-segment-display/front.svg",
+                    "alt": "Front view of the 4-Digit 7-Segment Display",
+                    "label": "Front",
+                    "isPrimary": true,
+                    "order": 0
+                  },
+                  {
+                    "id": "detail-image-2",
+                    "src": "/images/products/4-digit-7-segment-display/angled.svg",
+                    "alt": "Angled view of the 4-Digit 7-Segment Display",
+                    "label": "Angled",
+                    "isPrimary": false,
+                    "order": 1
+                  },
+                  {
+                    "id": "detail-image-3",
+                    "src": "/images/products/4-digit-7-segment-display/rear-pin-layout.svg",
+                    "alt": "Rear pin layout view of the 4-Digit 7-Segment Display",
+                    "label": "Pin layout",
+                    "isPrimary": false,
+                    "order": 2
+                  },
+                  {
+                    "id": "detail-image-4",
+                    "src": "/images/products/4-digit-7-segment-display/pcb-installed.svg",
+                    "alt": "4-Digit 7-Segment Display installed on a printed circuit board",
+                    "label": "PCB",
+                    "isPrimary": false,
+                    "order": 3
+                  },
+                  {
+                    "id": "detail-image-5",
+                    "src": "/images/products/4-digit-7-segment-display/example-device.svg",
+                    "alt": "4-Digit 7-Segment Display used in an example control device",
+                    "label": "Device",
+                    "isPrimary": false,
+                    "order": 4
+                  }
+                ],
+                "summary": [
+                  {
+                    "id": "summary-1",
+                    "label": "Part number",
+                    "value": "NLY-TN-7SEG-04",
+                    "order": 0
+                  },
+                  {
+                    "id": "summary-2",
+                    "label": "Product type",
+                    "value": "Seven-segment numeric display",
+                    "order": 1
+                  },
+                  {
+                    "id": "summary-3",
+                    "label": "Digits",
+                    "value": "4",
+                    "order": 2
+                  },
+                  {
+                    "id": "summary-4",
+                    "label": "Display content",
+                    "value": "Numeric characters",
+                    "order": 3
+                  }
+                ],
+                "specifications": [
+                  {
+                    "id": "specification-1",
+                    "label": "Product name",
+                    "value": "4-Digit 7-Segment Display",
+                    "order": 0
+                  },
+                  {
+                    "id": "specification-2",
+                    "label": "Part number",
+                    "value": "NLY-TN-7SEG-04",
+                    "order": 1
+                  },
+                  {
+                    "id": "specification-3",
+                    "label": "Display type",
+                    "value": "Seven-segment LED display",
+                    "order": 2
+                  },
+                  {
+                    "id": "specification-4",
+                    "label": "Number of digits",
+                    "value": "4",
+                    "order": 3
+                  },
+                  {
+                    "id": "specification-5",
+                    "label": "Display content",
+                    "value": "Numeric characters",
+                    "order": 4
+                  },
+                  {
+                    "id": "specification-6",
+                    "label": "Available colours",
+                    "value": "Red, green, blue, amber, or white",
+                    "order": 5
+                  },
+                  {
+                    "id": "specification-7",
+                    "label": "Connection type",
+                    "value": "Common anode or common cathode",
+                    "order": 6
+                  },
+                  {
+                    "id": "specification-8",
+                    "label": "Operating voltage",
+                    "value": "Based on the selected model",
+                    "order": 7
+                  },
+                  {
+                    "id": "specification-9",
+                    "label": "Mounting type",
+                    "value": "Through-hole or PCB mounting",
+                    "order": 8
+                  },
+                  {
+                    "id": "specification-10",
+                    "label": "Typical applications",
+                    "value": "Clocks, timers, counters, meters, and control panels",
+                    "order": 9
+                  },
+                  {
+                    "id": "specification-11",
+                    "label": "Customisation",
+                    "value": "Size, colour, brightness, pin layout, and electrical configuration",
+                    "order": 10
+                  }
+                ],
+                "descriptionParagraphs": [
+                  {
+                    "id": "description-1",
+                    "text": "The 4-Digit 7-Segment Display is designed to present numerical information in a compact and highly readable format. It contains four individual digit positions, with each digit formed by seven illuminated segments.",
+                    "order": 0
+                  },
+                  {
+                    "id": "description-2",
+                    "text": "Each digit can show numbers by turning selected segments on or off. This simple structure makes the display easy to read, efficient to drive, and practical for embedded products that need direct numeric output.",
+                    "order": 1
+                  },
+                  {
+                    "id": "description-3",
+                    "text": "It can be integrated into electronic products that need to display values such as time, temperature, quantity, speed, voltage, or measurement results.",
+                    "order": 2
+                  },
+                  {
+                    "id": "description-4",
+                    "text": "Different sizes, LED colours, brightness levels, common-anode or common-cathode configurations, and pin layouts may be available depending on the selected product model.",
+                    "order": 3
+                  }
+                ],
+                "applications": [
+                  {
+                    "id": "application-1",
+                    "text": "Digital clocks and timers",
+                    "order": 0
+                  },
+                  {
+                    "id": "application-2",
+                    "text": "Industrial counters and meters",
+                    "order": 1
+                  },
+                  {
+                    "id": "application-3",
+                    "text": "Measurement instruments",
+                    "order": 2
+                  },
+                  {
+                    "id": "application-4",
+                    "text": "Control panels",
+                    "order": 3
+                  },
+                  {
+                    "id": "application-5",
+                    "text": "Microcontroller-based projects",
+                    "order": 4
+                  }
+                ],
+                "optionGroups": [
+                  {
+                    "id": "option-group-1",
+                    "label": "Available options",
+                    "order": 0,
+                    "values": [
+                      {
+                        "id": "option-1-1",
+                        "text": "LED colour selection",
+                        "order": 0
+                      },
+                      {
+                        "id": "option-1-2",
+                        "text": "Display size selection",
+                        "order": 1
+                      },
+                      {
+                        "id": "option-1-3",
+                        "text": "Common anode or common cathode",
+                        "order": 2
+                      },
+                      {
+                        "id": "option-1-4",
+                        "text": "Brightness and pin layout customisation",
+                        "order": 3
+                      }
+                    ]
+                  }
+                ],
+                "downloads": [
+                  {
+                    "id": "download-1",
+                    "label": "Datasheet coming soon",
+                    "order": 0
+                  },
+                  {
+                    "id": "download-2",
+                    "label": "Drawing coming soon",
+                    "order": 1
+                  }
+                ]
+              }
+            },
+            {
+              "id": "prod_tn_02",
+              "partNumber": "NLY-1602A-TN-YG",
+              "name": "16x2 Character LCD Module",
+              "description": "Character module for compact status text in embedded equipment.",
+              "image": "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?q=80&w=800&auto=format&fit=crop",
+              "imageAlt": "Backlit electronics module representing a character LCD",
+              "specs": [
+                "Resolution: 16 Characters x 2 Lines",
+                "Backlight: Yellow-Green LED",
+                "Interface: 6800 Parallel 8-bit"
+              ],
+              "filters": {
+                "application": [
+                  "embedded-equipment",
+                  "status-text"
+                ],
+                "interface": [
+                  "6800-parallel"
+                ],
+                "format": [
+                  "16x2",
+                  "character-module"
+                ]
+              },
+              "slug": "16x2-character-lcd-module",
+              "detail": {
+                "productTypeLabel": "TN",
+                "introduction": "Character module for compact status text in embedded equipment.",
+                "suitableFor": "Suitable for embedded equipment, status text.",
+                "specificationNote": "Catalogue product information for initial evaluation. Final specifications depend on the selected model and project requirements.",
+                "images": [
+                  {
+                    "id": "detail-image-1",
+                    "src": "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?q=80&w=800&auto=format&fit=crop",
+                    "alt": "Backlit electronics module representing a character LCD",
+                    "label": "Product",
+                    "isPrimary": true,
+                    "order": 0
+                  }
+                ],
+                "summary": [
+                  {
+                    "id": "summary-1",
+                    "label": "Part number",
+                    "value": "NLY-1602A-TN-YG",
+                    "order": 0
+                  },
+                  {
+                    "id": "summary-2",
+                    "label": "Category",
+                    "value": "TN",
+                    "order": 1
+                  },
+                  {
+                    "id": "summary-3",
+                    "label": "Format",
+                    "value": "16x2, Character module",
+                    "order": 2
+                  }
+                ],
+                "specifications": [
+                  {
+                    "id": "specification-1",
+                    "label": "Product name",
+                    "value": "16x2 Character LCD Module",
+                    "order": 0
+                  },
+                  {
+                    "id": "specification-2",
+                    "label": "Part number",
+                    "value": "NLY-1602A-TN-YG",
+                    "order": 1
+                  },
+                  {
+                    "id": "specification-3",
+                    "label": "Category",
+                    "value": "TN",
+                    "order": 2
+                  },
+                  {
+                    "id": "specification-4",
+                    "label": "Resolution",
+                    "value": "16 Characters x 2 Lines",
+                    "order": 3
+                  },
+                  {
+                    "id": "specification-5",
+                    "label": "Backlight",
+                    "value": "Yellow-Green LED",
+                    "order": 4
+                  },
+                  {
+                    "id": "specification-6",
+                    "label": "Interface",
+                    "value": "6800 Parallel 8-bit",
+                    "order": 5
+                  },
+                  {
+                    "id": "specification-7",
+                    "label": "Application",
+                    "value": "Embedded equipment, Status text",
+                    "order": 6
+                  },
+                  {
+                    "id": "specification-8",
+                    "label": "Interface",
+                    "value": "6800 Parallel",
+                    "order": 7
+                  },
+                  {
+                    "id": "specification-9",
+                    "label": "Format",
+                    "value": "16x2, Character module",
+                    "order": 8
+                  }
+                ],
+                "descriptionParagraphs": [
+                  {
+                    "id": "description-1",
+                    "text": "16x2 Character LCD Module is part of the NELYTECH product catalogue for display programs that need stable supply, configurable integration, and application-specific engineering support.",
+                    "order": 0
+                  },
+                  {
+                    "id": "description-2",
+                    "text": "Character module for compact status text in embedded equipment.",
+                    "order": 1
+                  },
+                  {
+                    "id": "description-3",
+                    "text": "The configuration can be reviewed with the engineering team for dimensions, interface, optical mode, operating conditions, and production requirements.",
+                    "order": 2
+                  }
+                ],
+                "applications": [
+                  {
+                    "id": "application-1",
+                    "text": "Embedded equipment",
+                    "order": 0
+                  },
+                  {
+                    "id": "application-2",
+                    "text": "Status text",
+                    "order": 1
+                  }
+                ],
+                "optionGroups": [
+                  {
+                    "id": "option-group-1",
+                    "label": "Available options",
+                    "order": 0,
+                    "values": [
+                      {
+                        "id": "option-1-1",
+                        "text": "6800 Parallel",
+                        "order": 0
+                      },
+                      {
+                        "id": "option-1-2",
+                        "text": "16x2",
+                        "order": 1
+                      },
+                      {
+                        "id": "option-1-3",
+                        "text": "Character module",
+                        "order": 2
+                      }
+                    ]
+                  }
+                ],
+                "downloads": [
+                  {
+                    "id": "download-1",
+                    "label": "Datasheet coming soon",
+                    "order": 0
+                  },
+                  {
+                    "id": "download-2",
+                    "label": "Drawing coming soon",
+                    "order": 1
+                  }
+                ]
+              }
+            },
+            {
+              "id": "prod_tn_03",
+              "partNumber": "NLY-TN-CUST-HVAC",
+              "name": "Custom Thermostat Panel",
+              "description": "Custom segment panel for HVAC modes, icons, and temperature readouts.",
+              "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop",
+              "imageAlt": "Macro electronics detail representing a custom thermostat display",
+              "specs": [
+                "Application: HVAC Control Interface",
+                "Icons: Custom Segments",
+                "Connector: Heat Seal / FPC"
+              ],
+              "filters": {
+                "application": [
+                  "hvac-controls",
+                  "thermostats"
+                ],
+                "interface": [
+                  "fpc",
+                  "heat-seal"
+                ],
+                "format": [
+                  "custom-segment"
+                ]
+              },
+              "slug": "custom-thermostat-panel",
+              "detail": {
+                "productTypeLabel": "TN",
+                "introduction": "Custom segment panel for HVAC modes, icons, and temperature readouts.",
+                "suitableFor": "Suitable for hvac controls, thermostats.",
+                "specificationNote": "Catalogue product information for initial evaluation. Final specifications depend on the selected model and project requirements.",
+                "images": [
+                  {
+                    "id": "detail-image-1",
+                    "src": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop",
+                    "alt": "Macro electronics detail representing a custom thermostat display",
+                    "label": "Product",
+                    "isPrimary": true,
+                    "order": 0
+                  }
+                ],
+                "summary": [
+                  {
+                    "id": "summary-1",
+                    "label": "Part number",
+                    "value": "NLY-TN-CUST-HVAC",
+                    "order": 0
+                  },
+                  {
+                    "id": "summary-2",
+                    "label": "Category",
+                    "value": "TN",
+                    "order": 1
+                  },
+                  {
+                    "id": "summary-3",
+                    "label": "Format",
+                    "value": "Custom segment",
+                    "order": 2
+                  }
+                ],
+                "specifications": [
+                  {
+                    "id": "specification-1",
+                    "label": "Product name",
+                    "value": "Custom Thermostat Panel",
+                    "order": 0
+                  },
+                  {
+                    "id": "specification-2",
+                    "label": "Part number",
+                    "value": "NLY-TN-CUST-HVAC",
+                    "order": 1
+                  },
+                  {
+                    "id": "specification-3",
+                    "label": "Category",
+                    "value": "TN",
+                    "order": 2
+                  },
+                  {
+                    "id": "specification-4",
+                    "label": "Application",
+                    "value": "HVAC Control Interface",
+                    "order": 3
+                  },
+                  {
+                    "id": "specification-5",
+                    "label": "Icons",
+                    "value": "Custom Segments",
+                    "order": 4
+                  },
+                  {
+                    "id": "specification-6",
+                    "label": "Connector",
+                    "value": "Heat Seal / FPC",
+                    "order": 5
+                  },
+                  {
+                    "id": "specification-7",
+                    "label": "Application",
+                    "value": "HVAC controls, Thermostats",
+                    "order": 6
+                  },
+                  {
+                    "id": "specification-8",
+                    "label": "Interface",
+                    "value": "FPC, Heat seal",
+                    "order": 7
+                  },
+                  {
+                    "id": "specification-9",
+                    "label": "Format",
+                    "value": "Custom segment",
+                    "order": 8
+                  }
+                ],
+                "descriptionParagraphs": [
+                  {
+                    "id": "description-1",
+                    "text": "Custom Thermostat Panel is part of the NELYTECH product catalogue for display programs that need stable supply, configurable integration, and application-specific engineering support.",
+                    "order": 0
+                  },
+                  {
+                    "id": "description-2",
+                    "text": "Custom segment panel for HVAC modes, icons, and temperature readouts.",
+                    "order": 1
+                  },
+                  {
+                    "id": "description-3",
+                    "text": "The configuration can be reviewed with the engineering team for dimensions, interface, optical mode, operating conditions, and production requirements.",
+                    "order": 2
+                  }
+                ],
+                "applications": [
+                  {
+                    "id": "application-1",
+                    "text": "HVAC controls",
+                    "order": 0
+                  },
+                  {
+                    "id": "application-2",
+                    "text": "Thermostats",
+                    "order": 1
+                  }
+                ],
+                "optionGroups": [
+                  {
+                    "id": "option-group-1",
+                    "label": "Available options",
+                    "order": 0,
+                    "values": [
+                      {
+                        "id": "option-1-1",
+                        "text": "FPC",
+                        "order": 0
+                      },
+                      {
+                        "id": "option-1-2",
+                        "text": "Heat seal",
+                        "order": 1
+                      },
+                      {
+                        "id": "option-1-3",
+                        "text": "Custom segment",
+                        "order": 2
+                      }
+                    ]
+                  }
+                ],
+                "downloads": [
+                  {
+                    "id": "download-1",
+                    "label": "Datasheet coming soon",
+                    "order": 0
+                  },
+                  {
+                    "id": "download-2",
+                    "label": "Drawing coming soon",
+                    "order": 1
+                  }
+                ]
+              }
+            },
+            {
+              "id": "prod_tn_04",
+              "partNumber": "NLY-TN-METER-88",
+              "name": "Industrial Meter LCD Glass",
+              "description": "Durable TN glass for industrial meters and fixed-segment readings.",
+              "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
+              "imageAlt": "Industrial display circuitry representing meter LCD glass",
+              "specs": [
+                "Display Mode: Transflective, Positive",
+                "Viewing Direction: 6 o'clock",
+                "Op. Temp: -20°C to +70°C"
+              ],
+              "filters": {
+                "application": [
+                  "industrial-meters"
+                ],
+                "interface": [
+                  "glass-only"
+                ],
+                "format": [
+                  "custom-segment",
+                  "numeric"
+                ]
+              },
+              "slug": "industrial-meter-lcd-glass",
+              "detail": {
+                "productTypeLabel": "TN",
+                "introduction": "Durable TN glass for industrial meters and fixed-segment readings.",
+                "suitableFor": "Suitable for industrial meters.",
+                "specificationNote": "Catalogue product information for initial evaluation. Final specifications depend on the selected model and project requirements.",
+                "images": [
+                  {
+                    "id": "detail-image-1",
+                    "src": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
+                    "alt": "Industrial display circuitry representing meter LCD glass",
+                    "label": "Product",
+                    "isPrimary": true,
+                    "order": 0
+                  }
+                ],
+                "summary": [
+                  {
+                    "id": "summary-1",
+                    "label": "Part number",
+                    "value": "NLY-TN-METER-88",
+                    "order": 0
+                  },
+                  {
+                    "id": "summary-2",
+                    "label": "Category",
+                    "value": "TN",
+                    "order": 1
+                  },
+                  {
+                    "id": "summary-3",
+                    "label": "Format",
+                    "value": "Custom segment, Numeric",
+                    "order": 2
+                  }
+                ],
+                "specifications": [
+                  {
+                    "id": "specification-1",
+                    "label": "Product name",
+                    "value": "Industrial Meter LCD Glass",
+                    "order": 0
+                  },
+                  {
+                    "id": "specification-2",
+                    "label": "Part number",
+                    "value": "NLY-TN-METER-88",
+                    "order": 1
+                  },
+                  {
+                    "id": "specification-3",
+                    "label": "Category",
+                    "value": "TN",
+                    "order": 2
+                  },
+                  {
+                    "id": "specification-4",
+                    "label": "Display Mode",
+                    "value": "Transflective, Positive",
+                    "order": 3
+                  },
+                  {
+                    "id": "specification-5",
+                    "label": "Viewing Direction",
+                    "value": "6 o'clock",
+                    "order": 4
+                  },
+                  {
+                    "id": "specification-6",
+                    "label": "Op. Temp",
+                    "value": "-20°C to +70°C",
+                    "order": 5
+                  },
+                  {
+                    "id": "specification-7",
+                    "label": "Application",
+                    "value": "Industrial meters",
+                    "order": 6
+                  },
+                  {
+                    "id": "specification-8",
+                    "label": "Interface",
+                    "value": "Glass only",
+                    "order": 7
+                  },
+                  {
+                    "id": "specification-9",
+                    "label": "Format",
+                    "value": "Custom segment, Numeric",
+                    "order": 8
+                  }
+                ],
+                "descriptionParagraphs": [
+                  {
+                    "id": "description-1",
+                    "text": "Industrial Meter LCD Glass is part of the NELYTECH product catalogue for display programs that need stable supply, configurable integration, and application-specific engineering support.",
+                    "order": 0
+                  },
+                  {
+                    "id": "description-2",
+                    "text": "Durable TN glass for industrial meters and fixed-segment readings.",
+                    "order": 1
+                  },
+                  {
+                    "id": "description-3",
+                    "text": "The configuration can be reviewed with the engineering team for dimensions, interface, optical mode, operating conditions, and production requirements.",
+                    "order": 2
+                  }
+                ],
+                "applications": [
+                  {
+                    "id": "application-1",
+                    "text": "Industrial meters",
+                    "order": 0
+                  }
+                ],
+                "optionGroups": [
+                  {
+                    "id": "option-group-1",
+                    "label": "Available options",
+                    "order": 0,
+                    "values": [
+                      {
+                        "id": "option-1-1",
+                        "text": "Glass only",
+                        "order": 0
+                      },
+                      {
+                        "id": "option-1-2",
+                        "text": "Custom segment",
+                        "order": 1
+                      },
+                      {
+                        "id": "option-1-3",
+                        "text": "Numeric",
+                        "order": 2
+                      }
+                    ]
+                  }
+                ],
+                "downloads": [
+                  {
+                    "id": "download-1",
+                    "label": "Datasheet coming soon",
+                    "order": 0
+                  },
+                  {
+                    "id": "download-2",
+                    "label": "Drawing coming soon",
+                    "order": 1
+                  }
+                ]
+              }
+            },
+            {
+              "id": "prod_tn_05",
+              "partNumber": "NLY-TN-ICON-12",
+              "name": "Custom Icon Segment Panel",
+              "description": "Icon-based segment display for appliance and device status states.",
+              "image": "https://images.unsplash.com/photo-1562408590-e32931084e23?q=80&w=800&auto=format&fit=crop",
+              "imageAlt": "Precision electronic component representing a custom icon panel",
+              "specs": [
+                "Segment Type: Fixed Icons",
+                "Glass Thickness: 1.1 mm",
+                "Polarizer: Reflective"
+              ],
+              "filters": {
+                "application": [
+                  "appliances",
+                  "device-status"
+                ],
+                "interface": [
+                  "glass-only"
+                ],
+                "format": [
+                  "icon-segment"
+                ]
+              },
+              "slug": "custom-icon-segment-panel",
+              "detail": {
+                "productTypeLabel": "TN",
+                "introduction": "Icon-based segment display for appliance and device status states.",
+                "suitableFor": "Suitable for appliances, device status.",
+                "specificationNote": "Catalogue product information for initial evaluation. Final specifications depend on the selected model and project requirements.",
+                "images": [
+                  {
+                    "id": "detail-image-1",
+                    "src": "https://images.unsplash.com/photo-1562408590-e32931084e23?q=80&w=800&auto=format&fit=crop",
+                    "alt": "Precision electronic component representing a custom icon panel",
+                    "label": "Product",
+                    "isPrimary": true,
+                    "order": 0
+                  }
+                ],
+                "summary": [
+                  {
+                    "id": "summary-1",
+                    "label": "Part number",
+                    "value": "NLY-TN-ICON-12",
+                    "order": 0
+                  },
+                  {
+                    "id": "summary-2",
+                    "label": "Category",
+                    "value": "TN",
+                    "order": 1
+                  },
+                  {
+                    "id": "summary-3",
+                    "label": "Format",
+                    "value": "Icon segment",
+                    "order": 2
+                  }
+                ],
+                "specifications": [
+                  {
+                    "id": "specification-1",
+                    "label": "Product name",
+                    "value": "Custom Icon Segment Panel",
+                    "order": 0
+                  },
+                  {
+                    "id": "specification-2",
+                    "label": "Part number",
+                    "value": "NLY-TN-ICON-12",
+                    "order": 1
+                  },
+                  {
+                    "id": "specification-3",
+                    "label": "Category",
+                    "value": "TN",
+                    "order": 2
+                  },
+                  {
+                    "id": "specification-4",
+                    "label": "Segment Type",
+                    "value": "Fixed Icons",
+                    "order": 3
+                  },
+                  {
+                    "id": "specification-5",
+                    "label": "Glass Thickness",
+                    "value": "1.1 mm",
+                    "order": 4
+                  },
+                  {
+                    "id": "specification-6",
+                    "label": "Polarizer",
+                    "value": "Reflective",
+                    "order": 5
+                  },
+                  {
+                    "id": "specification-7",
+                    "label": "Application",
+                    "value": "Appliances, Device status",
+                    "order": 6
+                  },
+                  {
+                    "id": "specification-8",
+                    "label": "Interface",
+                    "value": "Glass only",
+                    "order": 7
+                  },
+                  {
+                    "id": "specification-9",
+                    "label": "Format",
+                    "value": "Icon segment",
+                    "order": 8
+                  }
+                ],
+                "descriptionParagraphs": [
+                  {
+                    "id": "description-1",
+                    "text": "Custom Icon Segment Panel is part of the NELYTECH product catalogue for display programs that need stable supply, configurable integration, and application-specific engineering support.",
+                    "order": 0
+                  },
+                  {
+                    "id": "description-2",
+                    "text": "Icon-based segment display for appliance and device status states.",
+                    "order": 1
+                  },
+                  {
+                    "id": "description-3",
+                    "text": "The configuration can be reviewed with the engineering team for dimensions, interface, optical mode, operating conditions, and production requirements.",
+                    "order": 2
+                  }
+                ],
+                "applications": [
+                  {
+                    "id": "application-1",
+                    "text": "Appliances",
+                    "order": 0
+                  },
+                  {
+                    "id": "application-2",
+                    "text": "Device status",
+                    "order": 1
+                  }
+                ],
+                "optionGroups": [
+                  {
+                    "id": "option-group-1",
+                    "label": "Available options",
+                    "order": 0,
+                    "values": [
+                      {
+                        "id": "option-1-1",
+                        "text": "Glass only",
+                        "order": 0
+                      },
+                      {
+                        "id": "option-1-2",
+                        "text": "Icon segment",
+                        "order": 1
+                      }
+                    ]
+                  }
+                ],
+                "downloads": [
+                  {
+                    "id": "download-1",
+                    "label": "Datasheet coming soon",
+                    "order": 0
+                  },
+                  {
+                    "id": "download-2",
+                    "label": "Drawing coming soon",
+                    "order": 1
+                  }
+                ]
+              }
+            },
+            {
+              "id": "prod_tn_06",
+              "partNumber": "NLY-TN-HH-096",
+              "name": "Handheld Instrument Display",
+              "description": "Low-power display for handheld instruments and portable controls.",
+              "image": "https://images.unsplash.com/photo-1581092921461-39b9d08a9b21?q=80&w=800&auto=format&fit=crop",
+              "imageAlt": "Industrial electronics detail representing a handheld instrument display",
+              "specs": [
+                "Display Area: 48.0 x 22.0 mm",
+                "Drive Voltage: 3.0 V",
+                "Connector: Elastomer / Pin"
+              ],
+              "filters": {
+                "application": [
+                  "handheld-instruments",
+                  "portable-controls"
+                ],
+                "interface": [
+                  "elastomer",
+                  "pin"
+                ],
+                "format": [
+                  "custom-segment"
+                ]
+              },
+              "slug": "handheld-instrument-display",
+              "detail": {
+                "productTypeLabel": "TN",
+                "introduction": "Low-power display for handheld instruments and portable controls.",
+                "suitableFor": "Suitable for handheld instruments, portable controls.",
+                "specificationNote": "Catalogue product information for initial evaluation. Final specifications depend on the selected model and project requirements.",
+                "images": [
+                  {
+                    "id": "detail-image-1",
+                    "src": "https://images.unsplash.com/photo-1581092921461-39b9d08a9b21?q=80&w=800&auto=format&fit=crop",
+                    "alt": "Industrial electronics detail representing a handheld instrument display",
+                    "label": "Product",
+                    "isPrimary": true,
+                    "order": 0
+                  }
+                ],
+                "summary": [
+                  {
+                    "id": "summary-1",
+                    "label": "Part number",
+                    "value": "NLY-TN-HH-096",
+                    "order": 0
+                  },
+                  {
+                    "id": "summary-2",
+                    "label": "Category",
+                    "value": "TN",
+                    "order": 1
+                  },
+                  {
+                    "id": "summary-3",
+                    "label": "Format",
+                    "value": "Custom segment",
+                    "order": 2
+                  }
+                ],
+                "specifications": [
+                  {
+                    "id": "specification-1",
+                    "label": "Product name",
+                    "value": "Handheld Instrument Display",
+                    "order": 0
+                  },
+                  {
+                    "id": "specification-2",
+                    "label": "Part number",
+                    "value": "NLY-TN-HH-096",
+                    "order": 1
+                  },
+                  {
+                    "id": "specification-3",
+                    "label": "Category",
+                    "value": "TN",
+                    "order": 2
+                  },
+                  {
+                    "id": "specification-4",
+                    "label": "Display Area",
+                    "value": "48.0 x 22.0 mm",
+                    "order": 3
+                  },
+                  {
+                    "id": "specification-5",
+                    "label": "Drive Voltage",
+                    "value": "3.0 V",
+                    "order": 4
+                  },
+                  {
+                    "id": "specification-6",
+                    "label": "Connector",
+                    "value": "Elastomer / Pin",
+                    "order": 5
+                  },
+                  {
+                    "id": "specification-7",
+                    "label": "Application",
+                    "value": "Handheld instruments, Portable controls",
+                    "order": 6
+                  },
+                  {
+                    "id": "specification-8",
+                    "label": "Interface",
+                    "value": "Elastomer, Pin",
+                    "order": 7
+                  },
+                  {
+                    "id": "specification-9",
+                    "label": "Format",
+                    "value": "Custom segment",
+                    "order": 8
+                  }
+                ],
+                "descriptionParagraphs": [
+                  {
+                    "id": "description-1",
+                    "text": "Handheld Instrument Display is part of the NELYTECH product catalogue for display programs that need stable supply, configurable integration, and application-specific engineering support.",
+                    "order": 0
+                  },
+                  {
+                    "id": "description-2",
+                    "text": "Low-power display for handheld instruments and portable controls.",
+                    "order": 1
+                  },
+                  {
+                    "id": "description-3",
+                    "text": "The configuration can be reviewed with the engineering team for dimensions, interface, optical mode, operating conditions, and production requirements.",
+                    "order": 2
+                  }
+                ],
+                "applications": [
+                  {
+                    "id": "application-1",
+                    "text": "Handheld instruments",
+                    "order": 0
+                  },
+                  {
+                    "id": "application-2",
+                    "text": "Portable controls",
+                    "order": 1
+                  }
+                ],
+                "optionGroups": [
+                  {
+                    "id": "option-group-1",
+                    "label": "Available options",
+                    "order": 0,
+                    "values": [
+                      {
+                        "id": "option-1-1",
+                        "text": "Elastomer",
+                        "order": 0
+                      },
+                      {
+                        "id": "option-1-2",
+                        "text": "Pin",
+                        "order": 1
+                      },
+                      {
+                        "id": "option-1-3",
+                        "text": "Custom segment",
+                        "order": 2
+                      }
+                    ]
+                  }
+                ],
+                "downloads": [
+                  {
+                    "id": "download-1",
+                    "label": "Datasheet coming soon",
+                    "order": 0
+                  },
+                  {
+                    "id": "download-2",
+                    "label": "Drawing coming soon",
+                    "order": 1
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "subcategory-htn",
+          "slug": "htn",
+          "name": "HTN (High Twisted Nematic)",
+          "shortName": "HTN",
+          "description": "Higher-twist monochrome LCD panel options for applications that need improved contrast over standard TN displays.",
+          "parentCategoryId": "category-lcd-panels",
+          "products": []
+        },
+        {
+          "id": "subcategory-stn",
+          "slug": "stn",
+          "name": "STN (Super Twisted Nematic)",
+          "shortName": "STN",
+          "description": "Super-twisted monochrome LCD panel options for graphic and text-oriented embedded interfaces.",
+          "parentCategoryId": "category-lcd-panels",
+          "products": []
+        },
+        {
+          "id": "subcategory-fstn",
+          "slug": "fstn",
+          "name": "FSTN (Film Compensated STN)",
+          "shortName": "FSTN",
+          "description": "Film-compensated monochrome LCD panel options for improved readability and contrast.",
+          "parentCategoryId": "category-lcd-panels",
+          "products": []
+        },
+        {
+          "id": "subcategory-va",
+          "slug": "va",
+          "name": "VA (Vertical Alignment)",
+          "shortName": "VA",
+          "description": "Vertical-alignment LCD options for high-contrast dark-face interfaces.",
+          "parentCategoryId": "category-lcd-panels",
+          "products": []
+        }
+      ]
+    },
+    {
+      "id": "category-lcd-modules",
+      "slug": "lcd-modules",
+      "name": "LCD Modules",
+      "shortName": "LCD Modules",
+      "description": "Standard and custom LCD module formats for embedded product interfaces.",
+      "route": "/products/lcd-modules",
+      "products": [],
+      "subcategories": [
+        {
+          "id": "subcategory-character-modules",
+          "slug": "character-modules",
+          "name": "Character LCD Modules",
+          "shortName": "Character Modules",
+          "description": "Character LCD module formats for compact text and status interfaces.",
+          "parentCategoryId": "category-lcd-modules",
+          "products": []
+        },
+        {
+          "id": "subcategory-graphic-modules",
+          "slug": "graphic-modules",
+          "name": "Graphic LCD Modules",
+          "shortName": "Graphic Modules",
+          "description": "Graphic LCD module formats for simple visual layouts and embedded UI screens.",
+          "parentCategoryId": "category-lcd-modules",
+          "products": []
+        },
+        {
+          "id": "subcategory-custom-segment",
+          "slug": "custom-segment",
+          "name": "Custom Segment LCDs",
+          "shortName": "Custom Segment",
+          "description": "Custom segment LCD programmes for icon-driven and application-specific display layouts.",
+          "parentCategoryId": "category-lcd-modules",
+          "products": []
+        }
+      ]
+    },
+    {
+      "id": "category-assembly-technologies",
+      "slug": "assembly-technologies",
+      "name": "Assembly Technologies",
+      "shortName": "Assembly Technologies",
+      "description": "Packaging and bonding methods for LCD and LCM production.",
+      "route": "/products/assembly-technologies",
+      "products": [],
+      "subcategories": [
+        {
+          "id": "subcategory-cob",
+          "slug": "cob",
+          "name": "COB (Chip On Board)",
+          "shortName": "COB",
+          "description": "Chip-on-board assembly options for display module integration.",
+          "parentCategoryId": "category-assembly-technologies",
+          "products": []
+        },
+        {
+          "id": "subcategory-cog",
+          "slug": "cog",
+          "name": "COG (Chip On Glass)",
+          "shortName": "COG",
+          "description": "Chip-on-glass assembly options for compact display module construction.",
+          "parentCategoryId": "category-assembly-technologies",
+          "products": []
+        },
+        {
+          "id": "subcategory-tab",
+          "slug": "tab",
+          "name": "TAB (Tape Automated Bonding)",
+          "shortName": "TAB",
+          "description": "Tape automated bonding options for display interconnect assemblies.",
+          "parentCategoryId": "category-assembly-technologies",
+          "products": []
+        },
+        {
+          "id": "subcategory-cof",
+          "slug": "cof",
+          "name": "COF (Chip On Film)",
+          "shortName": "COF",
+          "description": "Chip-on-film assembly options for compact display packaging.",
+          "parentCategoryId": "category-assembly-technologies",
+          "products": []
+        }
+      ]
+    },
+    {
+      "id": "category-custom-solutions",
+      "slug": "custom-solutions",
+      "name": "Advanced & Custom Solutions",
+      "shortName": "Custom Solutions",
+      "description": "Engineering support for advanced display assemblies and custom product integration.",
+      "route": "/products/custom-solutions",
+      "products": [],
+      "subcategories": [
+        {
+          "id": "subcategory-tft-modules",
+          "slug": "tft-modules",
+          "name": "TFT LCD Modules",
+          "shortName": "TFT Modules",
+          "description": "TFT LCD module options for colour display applications.",
+          "parentCategoryId": "category-custom-solutions",
+          "products": []
+        },
+        {
+          "id": "subcategory-custom-pcba-mcu",
+          "slug": "custom-pcba-mcu",
+          "name": "Custom PCBA & MCU Development",
+          "shortName": "Custom PCBA & MCU",
+          "description": "Custom PCBA and MCU development support for integrated display products.",
+          "parentCategoryId": "category-custom-solutions",
+          "products": []
+        },
+        {
+          "id": "subcategory-touch-panels",
+          "slug": "touch-panels",
+          "name": "Touch Panels (CTP/RTP)",
+          "shortName": "Touch Panels",
+          "description": "Capacitive and resistive touch-panel integration options.",
+          "parentCategoryId": "category-custom-solutions",
+          "products": []
+        }
+      ]
+    }
+  ],
+  "filterSchemas": {
+    "all": {
+      "parentCategoryId": "all",
+      "groups": [
+        {
+          "id": "application",
+          "label": "Application",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "counters",
+              "label": "Counters"
+            },
+            {
+              "id": "low-power-controls",
+              "label": "Low-power controls"
+            },
+            {
+              "id": "meters",
+              "label": "Meters"
+            },
+            {
+              "id": "embedded-equipment",
+              "label": "Embedded equipment"
+            },
+            {
+              "id": "status-text",
+              "label": "Status text"
+            },
+            {
+              "id": "hvac-controls",
+              "label": "HVAC controls"
+            },
+            {
+              "id": "thermostats",
+              "label": "Thermostats"
+            },
+            {
+              "id": "industrial-meters",
+              "label": "Industrial meters"
+            },
+            {
+              "id": "appliances",
+              "label": "Appliances"
+            },
+            {
+              "id": "device-status",
+              "label": "Device status"
+            },
+            {
+              "id": "handheld-instruments",
+              "label": "Handheld instruments"
+            },
+            {
+              "id": "portable-controls",
+              "label": "Portable controls"
+            },
+            {
+              "id": "icon-displays",
+              "label": "Icon displays"
+            },
+            {
+              "id": "numeric-displays",
+              "label": "Numeric displays"
+            },
+            {
+              "id": "instrument-interfaces",
+              "label": "Instrument interfaces"
+            },
+            {
+              "id": "graphic-interfaces",
+              "label": "Graphic interfaces"
+            },
+            {
+              "id": "text-displays",
+              "label": "Text displays"
+            },
+            {
+              "id": "high-readability-displays",
+              "label": "High-readability displays"
+            },
+            {
+              "id": "dark-face-interfaces",
+              "label": "Dark-face interfaces"
+            },
+            {
+              "id": "premium-controls",
+              "label": "Premium controls"
+            },
+            {
+              "id": "application-specific-layouts",
+              "label": "Application-specific layouts"
+            },
+            {
+              "id": "custom-icons",
+              "label": "Custom icons"
+            }
+          ]
+        },
+        {
+          "id": "interface",
+          "label": "Interface / connection",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "glass-only",
+              "label": "Glass only"
+            },
+            {
+              "id": "6800-parallel",
+              "label": "6800 Parallel"
+            },
+            {
+              "id": "fpc",
+              "label": "FPC"
+            },
+            {
+              "id": "heat-seal",
+              "label": "Heat seal"
+            },
+            {
+              "id": "elastomer",
+              "label": "Elastomer"
+            },
+            {
+              "id": "pin",
+              "label": "Pin"
+            },
+            {
+              "id": "controller-ready",
+              "label": "Controller-ready"
+            },
+            {
+              "id": "custom",
+              "label": "Custom"
+            }
+          ]
+        },
+        {
+          "id": "format",
+          "label": "Format",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "7-segment",
+              "label": "7-segment"
+            },
+            {
+              "id": "numeric",
+              "label": "Numeric"
+            },
+            {
+              "id": "16x2",
+              "label": "16x2"
+            },
+            {
+              "id": "character-module",
+              "label": "Character module"
+            },
+            {
+              "id": "custom-segment",
+              "label": "Custom segment"
+            },
+            {
+              "id": "icon-segment",
+              "label": "Icon segment"
+            },
+            {
+              "id": "segment",
+              "label": "Segment"
+            },
+            {
+              "id": "graphic",
+              "label": "Graphic"
+            }
+          ]
+        }
+      ]
+    },
+    "lcd-panels": {
+      "parentCategoryId": "lcd-panels",
+      "groups": [
+        {
+          "id": "application",
+          "label": "Application",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "icon-displays",
+              "label": "Icon displays"
+            },
+            {
+              "id": "numeric-displays",
+              "label": "Numeric displays"
+            },
+            {
+              "id": "instrument-interfaces",
+              "label": "Instrument interfaces"
+            },
+            {
+              "id": "graphic-interfaces",
+              "label": "Graphic interfaces"
+            },
+            {
+              "id": "text-displays",
+              "label": "Text displays"
+            },
+            {
+              "id": "high-readability-displays",
+              "label": "High-readability displays"
+            },
+            {
+              "id": "dark-face-interfaces",
+              "label": "Dark-face interfaces"
+            },
+            {
+              "id": "premium-controls",
+              "label": "Premium controls"
+            },
+            {
+              "id": "application-specific-layouts",
+              "label": "Application-specific layouts"
+            },
+            {
+              "id": "custom-icons",
+              "label": "Custom icons"
+            },
+            {
+              "id": "counters",
+              "label": "Counters"
+            },
+            {
+              "id": "low-power-controls",
+              "label": "Low-power controls"
+            },
+            {
+              "id": "meters",
+              "label": "Meters"
+            },
+            {
+              "id": "embedded-equipment",
+              "label": "Embedded equipment"
+            },
+            {
+              "id": "status-text",
+              "label": "Status text"
+            },
+            {
+              "id": "hvac-controls",
+              "label": "HVAC controls"
+            },
+            {
+              "id": "thermostats",
+              "label": "Thermostats"
+            },
+            {
+              "id": "industrial-meters",
+              "label": "Industrial meters"
+            },
+            {
+              "id": "appliances",
+              "label": "Appliances"
+            },
+            {
+              "id": "device-status",
+              "label": "Device status"
+            },
+            {
+              "id": "handheld-instruments",
+              "label": "Handheld instruments"
+            },
+            {
+              "id": "portable-controls",
+              "label": "Portable controls"
+            }
+          ]
+        },
+        {
+          "id": "interface",
+          "label": "Interface / connection",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "glass-only",
+              "label": "Glass only"
+            },
+            {
+              "id": "controller-ready",
+              "label": "Controller-ready"
+            },
+            {
+              "id": "fpc",
+              "label": "FPC"
+            },
+            {
+              "id": "pin",
+              "label": "Pin"
+            },
+            {
+              "id": "custom",
+              "label": "Custom"
+            },
+            {
+              "id": "6800-parallel",
+              "label": "6800 Parallel"
+            },
+            {
+              "id": "heat-seal",
+              "label": "Heat seal"
+            },
+            {
+              "id": "elastomer",
+              "label": "Elastomer"
+            }
+          ]
+        },
+        {
+          "id": "format",
+          "label": "Format",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "segment",
+              "label": "Segment"
+            },
+            {
+              "id": "graphic",
+              "label": "Graphic"
+            },
+            {
+              "id": "7-segment",
+              "label": "7-segment"
+            },
+            {
+              "id": "numeric",
+              "label": "Numeric"
+            },
+            {
+              "id": "16x2",
+              "label": "16x2"
+            },
+            {
+              "id": "character-module",
+              "label": "Character module"
+            },
+            {
+              "id": "custom-segment",
+              "label": "Custom segment"
+            },
+            {
+              "id": "icon-segment",
+              "label": "Icon segment"
+            }
+          ]
+        }
+      ]
+    },
+    "lcd-modules": {
+      "parentCategoryId": "lcd-modules",
+      "groups": [
+        {
+          "id": "module-type",
+          "label": "Module Type",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "character-lcd-module",
+              "label": "Character LCD Module"
+            },
+            {
+              "id": "graphic-lcd-module",
+              "label": "Graphic LCD Module"
+            },
+            {
+              "id": "segment-lcd-module",
+              "label": "Segment LCD Module"
+            },
+            {
+              "id": "cog-module",
+              "label": "COG Module"
+            },
+            {
+              "id": "cob-module",
+              "label": "COB Module"
+            },
+            {
+              "id": "tab-module",
+              "label": "TAB Module"
+            }
+          ]
+        },
+        {
+          "id": "display-format",
+          "label": "Display Format",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "character",
+              "label": "Character"
+            },
+            {
+              "id": "graphic",
+              "label": "Graphic"
+            },
+            {
+              "id": "numeric-segment",
+              "label": "Numeric / Segment"
+            },
+            {
+              "id": "custom-format",
+              "label": "Custom Format"
+            }
+          ]
+        },
+        {
+          "id": "interface",
+          "label": "Interface",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "parallel",
+              "label": "Parallel"
+            },
+            {
+              "id": "spi",
+              "label": "SPI"
+            },
+            {
+              "id": "i2c",
+              "label": "I²C"
+            },
+            {
+              "id": "uart",
+              "label": "UART"
+            },
+            {
+              "id": "custom-interface",
+              "label": "Custom Interface"
+            }
+          ]
+        },
+        {
+          "id": "backlight",
+          "label": "Backlight",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "no-backlight",
+              "label": "No Backlight"
+            },
+            {
+              "id": "led-backlight",
+              "label": "LED Backlight"
+            },
+            {
+              "id": "el-backlight",
+              "label": "EL Backlight"
+            },
+            {
+              "id": "custom-backlight",
+              "label": "Custom Backlight"
+            }
+          ]
+        },
+        {
+          "id": "application",
+          "label": "Application",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "industrial-control",
+              "label": "Industrial Control"
+            },
+            {
+              "id": "instrumentation",
+              "label": "Instrumentation"
+            },
+            {
+              "id": "medical-equipment",
+              "label": "Medical Equipment"
+            },
+            {
+              "id": "consumer-electronics",
+              "label": "Consumer Electronics"
+            },
+            {
+              "id": "automotive",
+              "label": "Automotive"
+            },
+            {
+              "id": "custom-application",
+              "label": "Custom Application"
+            }
+          ]
+        }
+      ]
+    },
+    "assembly-technologies": {
+      "parentCategoryId": "assembly-technologies",
+      "groups": [
+        {
+          "id": "assembly-method",
+          "label": "Assembly Method",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "cob",
+              "label": "COB"
+            },
+            {
+              "id": "cog",
+              "label": "COG"
+            },
+            {
+              "id": "tab",
+              "label": "TAB"
+            },
+            {
+              "id": "smt",
+              "label": "SMT"
+            },
+            {
+              "id": "heat-seal",
+              "label": "Heat Seal"
+            },
+            {
+              "id": "elastomeric-connector",
+              "label": "Elastomeric Connector"
+            },
+            {
+              "id": "custom-assembly",
+              "label": "Custom Assembly"
+            }
+          ]
+        },
+        {
+          "id": "interconnection-type",
+          "label": "Interconnection Type",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "fpc",
+              "label": "FPC"
+            },
+            {
+              "id": "heat-seal-connector",
+              "label": "Heat Seal Connector"
+            },
+            {
+              "id": "zebra-connector",
+              "label": "Zebra Connector"
+            },
+            {
+              "id": "pin-header",
+              "label": "Pin Header"
+            },
+            {
+              "id": "wire-harness",
+              "label": "Wire Harness"
+            },
+            {
+              "id": "custom-connector",
+              "label": "Custom Connector"
+            }
+          ]
+        },
+        {
+          "id": "integration-scope",
+          "label": "Integration Scope",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "lcd-only",
+              "label": "LCD Only"
+            },
+            {
+              "id": "lcd-pcb",
+              "label": "LCD + PCB"
+            },
+            {
+              "id": "lcd-backlight",
+              "label": "LCD + Backlight"
+            },
+            {
+              "id": "lcd-touch",
+              "label": "LCD + Touch"
+            },
+            {
+              "id": "complete-display-module",
+              "label": "Complete Display Module"
+            }
+          ]
+        },
+        {
+          "id": "production-stage",
+          "label": "Production Stage",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "prototype",
+              "label": "Prototype"
+            },
+            {
+              "id": "pilot-run",
+              "label": "Pilot Run"
+            },
+            {
+              "id": "mass-production",
+              "label": "Mass Production"
+            }
+          ]
+        },
+        {
+          "id": "application",
+          "label": "Application",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "industrial-control",
+              "label": "Industrial Control"
+            },
+            {
+              "id": "instrumentation",
+              "label": "Instrumentation"
+            },
+            {
+              "id": "medical-equipment",
+              "label": "Medical Equipment"
+            },
+            {
+              "id": "consumer-electronics",
+              "label": "Consumer Electronics"
+            },
+            {
+              "id": "automotive",
+              "label": "Automotive"
+            },
+            {
+              "id": "custom-application",
+              "label": "Custom Application"
+            }
+          ]
+        }
+      ]
+    },
+    "custom-solutions": {
+      "parentCategoryId": "custom-solutions",
+      "groups": [
+        {
+          "id": "solution-type",
+          "label": "Solution Type",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "custom-lcd-panel",
+              "label": "Custom LCD Panel"
+            },
+            {
+              "id": "custom-lcd-module",
+              "label": "Custom LCD Module"
+            },
+            {
+              "id": "touch-integration",
+              "label": "Touch Integration"
+            },
+            {
+              "id": "optical-bonding",
+              "label": "Optical Bonding"
+            },
+            {
+              "id": "custom-backlight",
+              "label": "Custom Backlight"
+            },
+            {
+              "id": "complete-display-assembly",
+              "label": "Complete Display Assembly"
+            }
+          ]
+        },
+        {
+          "id": "customisation-area",
+          "label": "Customisation Area",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "size-and-shape",
+              "label": "Size and Shape"
+            },
+            {
+              "id": "segment-and-icon-design",
+              "label": "Segment and Icon Design"
+            },
+            {
+              "id": "interface",
+              "label": "Interface"
+            },
+            {
+              "id": "backlight",
+              "label": "Backlight"
+            },
+            {
+              "id": "connector-and-fpc",
+              "label": "Connector and FPC"
+            },
+            {
+              "id": "polariser-and-viewing-mode",
+              "label": "Polariser and Viewing Mode"
+            },
+            {
+              "id": "mechanical-integration",
+              "label": "Mechanical Integration"
+            }
+          ]
+        },
+        {
+          "id": "project-stage",
+          "label": "Project Stage",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "concept-development",
+              "label": "Concept Development"
+            },
+            {
+              "id": "engineering-prototype",
+              "label": "Engineering Prototype"
+            },
+            {
+              "id": "design-validation",
+              "label": "Design Validation"
+            },
+            {
+              "id": "mass-production",
+              "label": "Mass Production"
+            }
+          ]
+        },
+        {
+          "id": "production-volume",
+          "label": "Production Volume",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "prototype-quantity",
+              "label": "Prototype Quantity"
+            },
+            {
+              "id": "low-volume",
+              "label": "Low Volume"
+            },
+            {
+              "id": "medium-volume",
+              "label": "Medium Volume"
+            },
+            {
+              "id": "high-volume",
+              "label": "High Volume"
+            }
+          ]
+        },
+        {
+          "id": "application",
+          "label": "Application",
+          "selectionMode": "multiple",
+          "required": true,
+          "options": [
+            {
+              "id": "industrial-control",
+              "label": "Industrial Control"
+            },
+            {
+              "id": "instrumentation",
+              "label": "Instrumentation"
+            },
+            {
+              "id": "medical-equipment",
+              "label": "Medical Equipment"
+            },
+            {
+              "id": "consumer-electronics",
+              "label": "Consumer Electronics"
+            },
+            {
+              "id": "automotive",
+              "label": "Automotive"
+            },
+            {
+              "id": "custom-application",
+              "label": "Custom Application"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

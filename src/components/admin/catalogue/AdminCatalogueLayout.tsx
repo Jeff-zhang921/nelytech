@@ -4,6 +4,7 @@ import {
   AlertTriangle,
   CheckCircle2,
   LoaderCircle,
+  LogOut,
   RotateCcw,
   Save,
   ShieldCheck,
@@ -11,7 +12,7 @@ import {
 } from "lucide-react";
 import { useRef, useState, type ReactNode } from "react";
 
-import { developmentAdminSession } from "@/lib/adminCatalogueDraft";
+import { useAdminAuth } from "@/admin/auth/AdminAuthProvider";
 import {
   getSubmissionSuccessCopy,
   productAdminCopy as copy,
@@ -22,6 +23,7 @@ import { useAdminCatalogue } from "./AdminCatalogueProvider";
 import { AdminModal } from "./AdminModal";
 
 export function AdminCatalogueLayout({ children }: { children: ReactNode }) {
+  const { logout } = useAdminAuth();
   const {
     isDirty,
     saveStatus,
@@ -54,14 +56,6 @@ export function AdminCatalogueLayout({ children }: { children: ReactNode }) {
     if (saved) {
       setIsSubmitSuccessOpen(true);
     }
-  }
-
-  if (!developmentAdminSession.isAuthenticated) {
-    return (
-      <main className="mx-auto max-w-3xl px-6 py-24 text-center">
-        <h1 className="text-2xl font-light text-slate-950">Admin access required</h1>
-      </main>
-    );
   }
 
   return (
@@ -110,6 +104,14 @@ export function AdminCatalogueLayout({ children }: { children: ReactNode }) {
               <span className="hidden sm:inline">{copy.shared.resetPublished}</span>
               <span className="sm:hidden">{copy.shared.reset}</span>
             </button>
+            <button
+              type="button"
+              onClick={() => void logout()}
+              className="inline-flex h-9 items-center gap-2 rounded-full px-3 text-xs font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-950 focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:outline-none"
+            >
+              <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
+              <span className="hidden sm:inline">Log out</span>
+            </button>
           </div>
         </div>
       </div>
@@ -127,7 +129,7 @@ export function AdminCatalogueLayout({ children }: { children: ReactNode }) {
                 {validationErrors[0]}
               </p>
             ) : (
-              <p className="mt-1 text-xs text-slate-400">{copy.shared.localStorageOnly}</p>
+              <p className="mt-1 text-xs text-slate-400">{copy.shared.publishingEnabled}</p>
             )}
           </div>
           <button
@@ -228,7 +230,7 @@ export function AdminCatalogueLayout({ children }: { children: ReactNode }) {
           />
           <div>
             <p className="text-sm font-medium text-slate-950">
-              Saved to the local Product Panel Extension draft
+              Product Catalogue commit accepted
             </p>
             <p className="mt-1 text-sm leading-6 text-slate-600">
               {submissionSuccess.support}
@@ -272,8 +274,8 @@ export function AdminCatalogueLayout({ children }: { children: ReactNode }) {
         }
       >
         <p className="text-sm leading-6 text-slate-600">
-          This action affects only the local Admin prototype. It does not modify the public
-          Product Catalogue or any source files.
+          This restores the Product Catalogue data from the current published build and clears
+          the local working copy on this device.
         </p>
       </AdminModal>
     </div>

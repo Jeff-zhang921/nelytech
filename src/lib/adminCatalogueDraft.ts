@@ -1,9 +1,8 @@
 import {
   createProductSlug,
-  getCatalogueProductHref,
-  getProductCatalogueHierarchy,
   type CatalogueProduct,
 } from "@/data/productCatalogue";
+import { canonicalCatalogue } from "@/content/catalogue";
 
 import { validateProductFilterValues } from "@/components/products/productFiltering";
 import {
@@ -12,16 +11,6 @@ import {
 } from "@/data/categoryFilterSchemas";
 import { getProductDetailBySlug, type ProductDetail } from "@/data/productDetails";
 import { containsSubstantialChinese, productAdminCopy } from "@/lib/productAdminCopy";
-
-export type AdminSession = {
-  isAuthenticated: boolean;
-  role: "admin";
-};
-
-export const developmentAdminSession: AdminSession = {
-  isAuthenticated: true,
-  role: "admin",
-};
 
 export type EditableTextItem = {
   id: string;
@@ -32,6 +21,7 @@ export type EditableTextItem = {
 export type ProductImageDraft = {
   id: string;
   src?: string;
+  previewSrc?: string;
   alt?: string;
   label?: string;
   isPrimary?: boolean;
@@ -115,14 +105,17 @@ export interface CatalogueDraftRepository {
 }
 
 const storageKey = "nelytech.admin.catalogue-draft.v1";
+const publishedStorageKey = "nelytech.admin.catalogue-published.v1";
+const publishMetadataStorageKey = "nelytech.admin.catalogue-publish-metadata.v1";
 
-export const localCatalogueDraftRepository: CatalogueDraftRepository = {
+function createLocalCatalogueRepository(key: string): CatalogueDraftRepository {
+  return {
   loadDraft() {
     if (typeof window === "undefined") {
       return null;
     }
 
-    const savedDraft = window.localStorage.getItem(storageKey);
+    const savedDraft = window.localStorage.getItem(key);
 
     if (!savedDraft) {
       return null;
@@ -131,43 +124,43 @@ export const localCatalogueDraftRepository: CatalogueDraftRepository = {
     try {
       return normalizeCatalogueDraft(JSON.parse(savedDraft) as CatalogueDraft);
     } catch {
-      window.localStorage.removeItem(storageKey);
+      window.localStorage.removeItem(key);
       return null;
     }
   },
   async saveDraft(draft) {
-    window.localStorage.setItem(storageKey, JSON.stringify(draft));
+    window.localStorage.setItem(key, JSON.stringify(draft));
   },
   clearDraft() {
-    window.localStorage.removeItem(storageKey);
+    window.localStorage.removeItem(key);
+  },
+  };
+}
+
+export const localCatalogueDraftRepository = createLocalCatalogueRepository(storageKey);
+export const localPublishedCatalogueRepository = createLocalCatalogueRepository(
+  publishedStorageKey,
+);
+
+export const localCataloguePublishMetadata = {
+  loadCommitSha() {
+    if (typeof window === "undefined") return undefined;
+    const value = window.localStorage.getItem(publishMetadataStorageKey);
+    return value && /^[a-f0-9]{40,64}$/i.test(value) ? value : undefined;
+  },
+  saveCommitSha(commitSha: string) {
+    window.localStorage.setItem(publishMetadataStorageKey, commitSha);
+  },
+  clear() {
+    window.localStorage.removeItem(publishMetadataStorageKey);
   },
 };
 
 export function createPublishedCatalogueDraft(): CatalogueDraft {
-  return {
-    categories: getProductCatalogueHierarchy().map(({ category, subcategories }) => ({
-      id: `category-${category.slug}`,
-      slug: category.slug,
-      name: category.name,
-      shortName: category.shortName,
-      description: category.description,
-      route: `/products/${category.slug}`,
-      products: (category.directProducts ?? category.products).map((product) =>
-        clonePublishedProduct(product, category.slug),
-      ),
-      subcategories: subcategories.map((subcategory) => ({
-        id: `subcategory-${subcategory.slug}`,
-        slug: subcategory.slug,
-        name: subcategory.name,
-        shortName: subcategory.shortName,
-        description: subcategory.description,
-        parentCategoryId: `category-${category.slug}`,
-        products: subcategory.products.map((product) =>
-          clonePublishedProduct(product, category.slug),
-        ),
-      })),
-    })),
-  };
+  return normalizeCatalogueDraft({
+    categories: structuredClone(canonicalCatalogue.categories),
+    updatedAt: canonicalCatalogue.updatedAt,
+  });
 }
 
 export function cloneCatalogueDraft(draft: CatalogueDraft): CatalogueDraft {
@@ -293,7 +286,7 @@ export function createAdminProductDetailPreview(
           { label: product.name },
         ],
     images: orderedImages.map((image, index) => ({
-      src: image.src ?? "",
+      src: image.previewSrc ?? image.src ?? "",
       alt: image.alt?.trim() ?? "",
       label: image.label?.trim() || `View ${index + 1}`,
     })),
@@ -387,26 +380,6 @@ function validateProductCollection(
 
     validateProductDetailStructure(product.detail, product.name, errors);
   });
-}
-
-function clonePublishedProduct(
-  product: CatalogueProduct,
-  categoryId: string,
-): ProductDraft {
-  const slug =
-    getCatalogueProductHref(product).split("/").filter(Boolean).pop() ??
-    createProductSlug(product.name);
-
-  return {
-    ...product,
-    slug,
-    detail: createProductDetailDraft(getProductDetailBySlug(slug)),
-    specs: [...product.specs],
-    filters: normalizeFilterValues(
-      getFilterSchemaForCatalogueNode(categoryId),
-      product.filters,
-    ),
-  };
 }
 
 export function createEmptyProductDetailDraft(): ProductDetailDraft {

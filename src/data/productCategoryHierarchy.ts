@@ -1,16 +1,15 @@
-export const productCategoryChildren = {
-  "lcd-panels": ["tn", "htn", "stn", "fstn", "va"],
-  "lcd-modules": ["character-modules", "graphic-modules", "custom-segment"],
-  "assembly-technologies": ["cob", "cog", "tab", "cof"],
-  "custom-solutions": ["tft-modules", "custom-pcba-mcu", "touch-panels"],
-} as const satisfies Record<string, readonly string[]>;
+import { canonicalCatalogue } from "@/content/catalogue";
 
-export const topLevelCategorySlugs = [
-  "lcd-panels",
-  "lcd-modules",
-  "assembly-technologies",
-  "custom-solutions",
-] as const;
+export const productCategoryChildren = Object.fromEntries(
+  canonicalCatalogue.categories.map((category) => [
+    category.slug,
+    category.subcategories.map((subcategory) => subcategory.slug),
+  ]),
+) as Record<string, readonly string[]>;
+
+export const topLevelCategorySlugs = canonicalCatalogue.categories.map(
+  (category) => category.slug,
+);
 
 const parentSlugByCategory = Object.entries(productCategoryChildren).reduce<
   Record<string, string>

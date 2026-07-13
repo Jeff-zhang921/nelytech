@@ -1,0 +1,8 @@
+ADMIN_KEY=replace-with-a-development-admin-key
+SESSION_SECRET=replace-with-a-long-random-session-secret
+GITHUB_TOKEN=replace-with-a-fine-grained-github-token
+GITHUB_OWNER=Jeff-zhang921
+GITHUB_REPO=nelytech
+GITHUB_BRANCH=main
+PRODUCTS_FILE_PATH=src/content/products.json
+PRODUCT_IMAGES_PATH=public/uploads/products

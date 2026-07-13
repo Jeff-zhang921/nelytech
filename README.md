@@ -4,13 +4,13 @@ This repository contains the NELYTECH corporate website, built with the Next.js 
 
 ## Tech Stack
 
-- Next.js 16 App Router
+- Next.js 15 App Router
 - React 19
 - TypeScript 6
 - Tailwind CSS 4
 - ESLint
 
-The project currently has no backend service, database, or i18n routing. It is primarily a static frontend website with client-side UI interactions.
+The public catalogue is Git-backed. Secure Admin authentication and publishing run in Cloudflare's Edge runtime without a database or traditional application server.
 
 ## Pages
 
@@ -90,6 +90,12 @@ Create a production build:
 npm run build
 ```
 
+Create the Cloudflare Pages output in `.vercel/output/static`:
+
+```bash
+npm run pages:build
+```
+
 Start the production server:
 
 ```bash
@@ -102,6 +108,27 @@ Run lint checks:
 npm run lint
 ```
 
+## Product Catalogue Publishing
+
+`src/content/products.json` is the canonical source for Product Catalogue categories, products, Product Detail content, image paths, and Parent Category Filter Schemas. The custom Product Panel Extension at `/admin/catalogue` publishes this file and new product images through protected Edge API routes.
+
+For local development, create an uncommitted `.dev.vars` from `.dev.vars.example`. A developer may temporarily set `ADMIN_KEY` to the separately supplied development access key. Never put a real key or GitHub token in `.dev.vars.example`, frontend code, or any `NEXT_PUBLIC_*` variable.
+
+Configure these encrypted or server-side variables for both the Cloudflare Pages production and preview environments:
+
+```text
+ADMIN_KEY
+SESSION_SECRET
+GITHUB_TOKEN
+GITHUB_OWNER
+GITHUB_REPO
+GITHUB_BRANCH
+PRODUCTS_FILE_PATH
+PRODUCT_IMAGES_PATH
+```
+
+Use a fine-grained GitHub token limited to the target repository with Contents read/write access. Workflow permission is not required. The expected Pages build command remains `npm run pages:build`, and the build output directory remains `.vercel/output/static`.
+
 ## Development Notes
 
 - Landing page sections used by the Scroll Spy need stable `id` values on their outer `<section>` wrappers. Keep `src/components/layout/LeftSideNav.tsx` in sync when adding or reordering sections.
@@ -112,10 +139,4 @@ npm run lint
 
 ## Current Scope
 
-This project is the frontend prototype and static presentation layer for the NELYTECH website. Good next steps include:
-
-- Product detail pages
-- Solutions / case study pages
-- Multilingual support
-- CMS or backend data integration
-- Form API and email service integration
+The Product Panel Extension supports one authenticated administrator session and Git-based catalogue publishing. Multiple users, roles, password reset, approval workflows, and deployment-progress polling are intentionally out of scope.

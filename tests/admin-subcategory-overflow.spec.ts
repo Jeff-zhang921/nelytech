@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { authenticateAdmin } from "./adminTestHelpers";
 
 const LCD_PANELS = "LCD Panels";
 
@@ -48,6 +49,10 @@ async function expectInsideViewport(locator: Locator, page: Page) {
 }
 
 test.describe("Product Panel Extension subcategory overflow", () => {
+  test.beforeEach(async ({ page }) => {
+    await authenticateAdmin(page);
+  });
+
   test("shows five direct items and supports hover, keyboard, and internal navigation", async ({
     page,
   }) => {

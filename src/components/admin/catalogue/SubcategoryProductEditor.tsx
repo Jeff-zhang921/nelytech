@@ -48,6 +48,7 @@ const supportedImageTypes = ["image/jpeg", "image/png", "image/webp"];
 
 type CoverImageDraft = {
   src: string;
+  displaySrc?: string;
   fileName: string;
 };
 
@@ -203,7 +204,11 @@ export function SubcategoryProductEditor({ subcategorySlug }: { subcategorySlug:
     setEditingProductId(product.id);
     setProductName(product.name);
     setShortDescription(product.description);
-    setCoverImage({ src: product.image, fileName: "Current cover image" });
+    setCoverImage({
+      src: product.image,
+      displaySrc: product.previewImage,
+      fileName: "Current cover image",
+    });
     setCoverImageAlt(product.imageAlt ?? `${product.name} product cover image`);
     setImageError("");
     setSelectedFilters(normalizeFilterValues(filterSchema, product.filters));
@@ -298,7 +303,7 @@ export function SubcategoryProductEditor({ subcategorySlug }: { subcategorySlug:
     const reader = new FileReader();
     reader.onload = () => {
       if (typeof reader.result === "string") {
-        setCoverImage({ src: reader.result, fileName: file.name });
+        setCoverImage({ src: reader.result, displaySrc: reader.result, fileName: file.name });
         setCoverImageAlt((current) =>
           current || `${productName.trim() || file.name.replace(/\.[^.]+$/, "")} product cover image`,
         );
@@ -320,6 +325,10 @@ export function SubcategoryProductEditor({ subcategorySlug }: { subcategorySlug:
       name,
       description: shortDescription.trim(),
       image: coverImage.src,
+      previewImage:
+        coverImage.displaySrc && coverImage.displaySrc !== coverImage.src
+          ? coverImage.displaySrc
+          : undefined,
       imageAlt: coverImageAlt.trim(),
       href: undefined,
       filters: Object.fromEntries(
@@ -552,7 +561,7 @@ export function SubcategoryProductEditor({ subcategorySlug }: { subcategorySlug:
             products.map((product) => (
               <div key={product.id} className="flex flex-wrap items-center gap-4 px-4 py-4">
                 <div className="relative h-14 w-16 shrink-0 overflow-hidden rounded-lg bg-slate-100">
-                  <Image src={product.image} alt="" fill sizes="64px" className="object-cover" />
+                  <Image src={product.previewImage ?? product.image} alt="" fill sizes="64px" className="object-cover" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-slate-900">{product.name}</p>
@@ -684,7 +693,7 @@ export function SubcategoryProductEditor({ subcategorySlug }: { subcategorySlug:
                 <div className="mt-3 overflow-hidden rounded-xl border border-slate-200">
                   <div className="relative aspect-[4/3] bg-slate-50">
                     <Image
-                      src={coverImage.src}
+                      src={coverImage.displaySrc ?? coverImage.src}
                       alt={`${productName || "New product"} cover preview`}
                       fill
                       sizes="400px"

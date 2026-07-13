@@ -3,7 +3,7 @@ export const productAdminCopy = {
     livePreview: "Live Preview",
     unsavedChanges: "Unsaved changes",
     submitChanges: "Submit Changes",
-    saving: "Saving...",
+    saving: "Submitting Changes...",
     discardDraft: "Discard Draft",
     resetPublished: "Reset to Published Data",
     reset: "Reset",
@@ -14,7 +14,7 @@ export const productAdminCopy = {
     edit: "Edit",
     delete: "Delete",
     loading: "Loading...",
-    localStorageOnly: "Local prototype storage only",
+    publishingEnabled: "Secure Git-based publishing enabled",
     englishHint:
       "Enter this content in English. It will appear directly on the public Product Catalogue.",
     optional: "optional",
@@ -24,9 +24,9 @@ export const productAdminCopy = {
     restored: "Local draft restored",
     publishedLoaded: "Published Product Catalogue loaded",
     unpublished: "The preview contains unsubmitted changes",
-    saving: "Saving the draft locally...",
-    saved: "Draft saved locally",
-    detailSaved: "Product Detail draft saved locally",
+    saving: "Submitting changes to GitHub...",
+    saved: "Changes committed to GitHub",
+    detailSaved: "Product Detail changes committed to GitHub",
     saveFailed:
       "Changes could not be submitted. Your draft has been preserved. Please try again.",
     discarded: "Unsubmitted changes discarded",
@@ -38,8 +38,8 @@ export const productAdminCopy = {
       "Your latest Product Catalogue changes have not been submitted. Leaving the Product Panel Extension now will discard these changes.",
     stay: "Stay in the editor",
     leave: "Leave without saving",
-    saveContinue: "Save and leave",
-    savingContinue: "Saving changes...",
+    saveContinue: "Submit and leave",
+    savingContinue: "Submitting changes...",
     choose: "Choose how to continue",
     detail:
       "Stay in the editor to keep the current draft, or leave without saving to restore the most recently submitted local draft.",
@@ -52,8 +52,8 @@ export const productAdminCopy = {
       "You can continue editing while the future publishing workflow is being prepared.",
     publishingTitle: "Changes submitted successfully",
     publishingMessage:
-      "Your Product Catalogue changes have been submitted. The public website may take approximately 2 minutes to update completely.",
-    publishingSupport: "You can continue editing while the update is being processed.",
+      "Your Product Catalogue changes have been committed. The public website may take approximately 2 minutes to update completely.",
+    publishingSupport: "You may continue editing while the new deployment is being processed.",
     continueEditing: "Continue Editing",
   },
   catalogue: {
@@ -215,7 +215,7 @@ export const productAdminCopy = {
 
 export type SubmissionMode = "local-draft" | "publishing";
 
-export const productAdminSubmissionMode: SubmissionMode = "local-draft";
+export const productAdminSubmissionMode: SubmissionMode = "publishing";
 
 export function getSubmissionSuccessCopy(mode: SubmissionMode) {
   return mode === "publishing"

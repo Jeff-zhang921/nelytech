@@ -11,6 +11,7 @@ build/
 
 # local environment
 .env*
+.dev.vars
 
 # logs
 npm-debug.log*
@@ -19,6 +20,7 @@ yarn-error.log*
 pnpm-debug.log*
 
 # tooling artifacts
+.wrangler/
 .playwright-mcp/
 output/
 test-results/

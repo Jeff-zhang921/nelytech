@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { authenticateAdmin, playwrightAdminKey } from "./adminTestHelpers";
 
 const testPng = {
   name: "english-product-cover.png",
@@ -53,8 +54,11 @@ test.describe("Product Panel Extension language boundary", () => {
 
     await page.locator('footer a[href="/admin/login"]').click();
     await expect(page).toHaveURL("/admin/login");
-    await expect(page.getByRole("heading", { name: "Product Panel Extension" })).toBeVisible();
-    await page.getByRole("link", { name: "Continue" }).click();
+    await expect(page.getByRole("heading", { name: "Admin Sign In" })).toBeVisible();
+    await page
+      .getByLabel("Administrator access key", { exact: true })
+      .fill(playwrightAdminKey);
+    await page.getByRole("button", { name: "Sign In", exact: true }).click();
 
     await expect(page).toHaveURL("/admin/catalogue");
     await expect(page.locator('[data-interface-context="product-admin"]')).toHaveAttribute(
@@ -80,7 +84,7 @@ test.describe("Product Panel Extension language boundary", () => {
     page,
   }) => {
     const browserErrors = collectBrowserErrors(page);
-    await page.goto("/admin/catalogue/tn");
+    await authenticateAdmin(page, "/admin/catalogue/tn");
 
     const dialog = await openAddProduct(page);
     const productName = dialog.getByLabel("Product name");
@@ -113,9 +117,9 @@ test.describe("Product Panel Extension language boundary", () => {
 
     const submit = page.getByRole("button", { name: "Submit Changes" });
     await submit.click();
-    const success = page.getByRole("dialog", { name: "Draft saved successfully" });
+    const success = page.getByRole("dialog", { name: "Changes submitted successfully" });
     await expect(success).toBeVisible();
-    await expect(success).toContainText("saved locally");
+    await expect(success).toContainText("committed");
     await expect(success).toContainText("approximately 2 minutes");
     await expect(success).not.toContainText("live website is currently updating");
     const continueEditing = success.getByRole("button", { name: "Continue Editing" });
@@ -139,13 +143,17 @@ test.describe("Product Panel Extension language boundary", () => {
       format: ["7-segment"],
     });
     expect(savedProduct.name).toBe("English Filter Prototype");
+    expect(savedProduct.image).toMatch(
+      /^\/uploads\/products\/english-filter-prototype\/cover-[a-f0-9]{12}\.png$/,
+    );
+    expect(savedProduct.image).not.toContain("data:");
     expect(browserErrors).toEqual([]);
   });
 
   test("does not show success or discard the dirty draft when local persistence fails", async ({
     page,
   }) => {
-    await page.goto("/admin/catalogue/tn");
+    await authenticateAdmin(page, "/admin/catalogue/tn");
     await addValidProduct(page, "Failed Save Prototype");
 
     await page.evaluate(() => {
@@ -159,7 +167,7 @@ test.describe("Product Panel Extension language boundary", () => {
     });
 
     await page.getByRole("button", { name: "Submit Changes" }).click();
-    await expect(page.getByRole("dialog", { name: "Draft saved successfully" })).toHaveCount(0);
+    await expect(page.getByRole("dialog", { name: "Changes submitted successfully" })).toHaveCount(0);
     await expect(page.getByRole("status")).toContainText("draft has been preserved");
     await expect(page.getByText("Unsaved changes", { exact: true })).toBeVisible();
     await expect(page.getByText("Failed Save Prototype", { exact: true })).toBeVisible();
@@ -179,7 +187,7 @@ test.describe("Product Panel Extension language boundary", () => {
   }) => {
     const browserErrors = collectBrowserErrors(page);
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/admin/catalogue/tn/4-digit-7-segment-display");
+    await authenticateAdmin(page, "/admin/catalogue/tn/4-digit-7-segment-display");
 
     await expect(page.getByText("Live Preview", { exact: true })).toBeVisible();
     await page.getByRole("button", { name: "Edit Product Summary" }).click();

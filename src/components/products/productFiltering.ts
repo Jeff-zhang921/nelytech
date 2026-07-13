@@ -20,6 +20,7 @@ export interface FilterableProduct {
   name: string;
   description: string;
   image: string;
+  previewImage?: string;
   imageAlt?: string;
   filters: ProductFilterValues;
 }

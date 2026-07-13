@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { authenticateAdmin } from "./adminTestHelpers";
 
 const testPng = {
   name: "internal-navigation-product.png",
@@ -47,6 +48,10 @@ async function addUnsavedProduct(page: Page) {
 }
 
 test.describe("Product Panel Extension unsaved exits", () => {
+  test.beforeEach(async ({ page }) => {
+    await authenticateAdmin(page);
+  });
+
   test("new products navigate internally without warnings and remain in the shared draft", async ({
     page,
   }) => {
@@ -100,7 +105,7 @@ test.describe("Product Panel Extension unsaved exits", () => {
     const contactLink = page.locator('header a[href="/contact"]').first();
     await contactLink.click();
     warning = page.getByRole("dialog", { name: "You have unsaved changes" });
-    await warning.getByRole("button", { name: "Save and leave" }).click();
+    await warning.getByRole("button", { name: "Submit and leave" }).click();
     await expect(page).toHaveURL("/contact");
 
     const savedDraft = await page.evaluate(() =>
