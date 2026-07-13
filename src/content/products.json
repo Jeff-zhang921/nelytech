@@ -1082,36 +1082,6 @@
               }
             ]
           }
-        },
-        {
-          "id": "draft-product-test",
-          "partNumber": "DRAFT-TEST",
-          "slug": "test",
-          "name": "test",
-          "description": "test1",
-          "image": "/uploads/products/test/cover-40928bc12748.jpg",
-          "imageAlt": "test product cover image",
-          "specs": [],
-          "filters": {
-            "application": [
-              "instrument-interfaces"
-            ],
-            "interface": [
-              "fpc"
-            ],
-            "format": [
-              "segment"
-            ]
-          },
-          "detail": {
-            "images": [],
-            "summary": [],
-            "specifications": [],
-            "descriptionParagraphs": [],
-            "applications": [],
-            "optionGroups": [],
-            "downloads": []
-          }
         }
       ],
       "subcategories": [
@@ -2329,6 +2299,46 @@
           "description": "Vertical-alignment LCD options for high-contrast dark-face interfaces.",
           "parentCategoryId": "category-lcd-panels",
           "products": []
+        },
+        {
+          "id": "subcategory-test-sub",
+          "slug": "test-sub",
+          "name": "TEST SUB",
+          "shortName": "TEST SUB",
+          "description": "Product options for TEST SUB are being prepared in this unpublished draft.",
+          "parentCategoryId": "category-lcd-panels",
+          "products": [
+            {
+              "id": "draft-product-test-sub",
+              "partNumber": "DRAFT-TESTSUB",
+              "slug": "test-sub",
+              "name": "TEST SUB",
+              "description": "123",
+              "image": "/uploads/products/test-sub/cover-63c8bdd20178.png",
+              "imageAlt": "TEST SUB product cover image",
+              "specs": [],
+              "filters": {
+                "application": [
+                  "icon-displays"
+                ],
+                "interface": [
+                  "glass-only"
+                ],
+                "format": [
+                  "16x2"
+                ]
+              },
+              "detail": {
+                "images": [],
+                "summary": [],
+                "specifications": [],
+                "descriptionParagraphs": [],
+                "applications": [],
+                "optionGroups": [],
+                "downloads": []
+              }
+            }
+          ]
         }
       ]
     },
@@ -2456,7 +2466,7 @@
       ]
     }
   ],
-  "updatedAt": "2026-07-13T15:08:04.866Z",
+  "updatedAt": "2026-07-13T15:13:39.172Z",
   "filterSchemas": {
     "all": {
       "parentCategoryId": "all",
