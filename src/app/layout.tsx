@@ -23,8 +23,8 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" data-scroll-behavior="smooth">
+      <body suppressHydrationWarning>
         <I18nProvider>
           <Navbar />
           {children}

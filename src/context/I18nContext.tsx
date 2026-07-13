@@ -77,7 +77,7 @@ const otherCountryLabels: Record<Language, string> = {
 interface I18nContextValue {
   language: Language;
   setLanguage: (language: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, languageOverride?: Language) => string;
 }
 
 const I18nContext = createContext<I18nContextValue | null>(null);
@@ -90,11 +90,12 @@ export function I18nProvider({ children }: I18nProviderProps) {
   const [language, setLanguage] = useState<Language>("en");
 
   const value = useMemo<I18nContextValue>(() => {
-    function t(key: string) {
-      const dictionary = getDictionary(language);
-      const pageDictionary = getPageDictionary(language);
-      const productContentDictionary = getProductContentDictionary(language);
-      const productGuideDetailDictionary = getProductGuideDetailDictionary(language);
+    function t(key: string, languageOverride?: Language) {
+      const resolvedLanguage = languageOverride ?? language;
+      const dictionary = getDictionary(resolvedLanguage);
+      const pageDictionary = getPageDictionary(resolvedLanguage);
+      const productContentDictionary = getProductContentDictionary(resolvedLanguage);
+      const productGuideDetailDictionary = getProductGuideDetailDictionary(resolvedLanguage);
       const translation =
         (productGuideDetailDictionary
           ? getTranslation(productGuideDetailDictionary, key)
@@ -103,7 +104,7 @@ export function I18nProvider({ children }: I18nProviderProps) {
           ? getTranslation(productContentDictionary, key)
           : undefined) ??
         (pageDictionary ? getTranslation(pageDictionary, key) : undefined) ??
-        getDynamicTranslation(language, key) ??
+        getDynamicTranslation(resolvedLanguage, key) ??
         getTranslation(dictionary, key) ??
         getTranslation(translations.en, key);
 

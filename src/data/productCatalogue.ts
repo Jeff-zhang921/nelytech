@@ -1,4 +1,10 @@
 import type { FilterableProduct } from "@/components/products/productFiltering";
+import { filterValuesFromLabels } from "@/data/categoryFilterSchemas";
+import {
+  getParentCategorySlug,
+  productCategoryChildren,
+  topLevelCategorySlugs,
+} from "@/data/productCategoryHierarchy";
 
 export type BreadcrumbItem = {
   label: string;
@@ -18,6 +24,7 @@ export type ProductCategoryPageConfig = {
   description: string;
   breadcrumbItems: BreadcrumbItem[];
   products: CatalogueProduct[];
+  directProducts?: CatalogueProduct[];
 };
 
 export type ProductCategoryNavigationItem = {
@@ -39,9 +46,14 @@ export type CatalogueProductEntry = {
   categorySlug: string;
 };
 
+export type ProductCatalogueHierarchyGroup = {
+  category: ProductCategoryPageConfig;
+  subcategories: ProductCategoryPageConfig[];
+};
+
 export const PRODUCT_CATALOGUE_RETURN_QUERY_PARAM = "returnQuery";
 
-const tnProducts = [
+const tnProductDefinitions = [
   {
     id: "prod_tn_01",
     partNumber: "NLY-TN-7SEG-04",
@@ -159,7 +171,12 @@ const tnProducts = [
   },
 ] satisfies CatalogueProduct[];
 
-const lcdPanelProducts = [
+const tnProducts = tnProductDefinitions.map((product) => ({
+  ...product,
+  filters: filterValuesFromLabels("tn", product.filters, "lcd-panels"),
+})) satisfies CatalogueProduct[];
+
+const lcdPanelProductDefinitions = [
   {
     id: "prod_lcd_01",
     partNumber: "NLY-TN0420",
@@ -260,12 +277,19 @@ const lcdPanelProducts = [
   },
 ] satisfies CatalogueProduct[];
 
+const lcdPanelProducts = lcdPanelProductDefinitions.map((product) => ({
+  ...product,
+  filters: filterValuesFromLabels("lcd-panels", product.filters),
+})) satisfies CatalogueProduct[];
+
+const lcdPanelsScopedProducts = uniqueProducts([...lcdPanelProducts, ...tnProducts]);
+
 const catalogueProductEntries = [
   ...lcdPanelProducts.map((product) => ({ product, categorySlug: "lcd-panels" })),
   ...tnProducts.map((product) => ({ product, categorySlug: "tn" })),
 ] satisfies CatalogueProductEntry[];
 
-export const allCatalogueProducts = uniqueProducts([...lcdPanelProducts, ...tnProducts]);
+export const allCatalogueProducts = uniqueProducts(lcdPanelsScopedProducts);
 
 export const allProductsPageConfig: ProductCategoryPageConfig = {
   slug: "all",
@@ -308,7 +332,8 @@ export const productCategoryConfigs: Record<string, ProductCategoryPageConfig> =
       { label: "Products", href: "/products" },
       { label: "LCD Panels" },
     ],
-    products: lcdPanelProducts,
+    products: lcdPanelsScopedProducts,
+    directProducts: lcdPanelProducts,
   },
   tn: {
     slug: "tn",
@@ -437,32 +462,28 @@ export const productCategoryConfigs: Record<string, ProductCategoryPageConfig> =
   ]),
 };
 
-const productCategoryChildren = {
-  "lcd-panels": ["tn", "htn", "stn", "fstn", "va"],
-  "lcd-modules": ["character-modules", "graphic-modules", "custom-segment"],
-  "assembly-technologies": ["cob", "cog", "tab", "cof"],
-  "custom-solutions": ["tft-modules", "custom-pcba-mcu", "touch-panels"],
-} as const satisfies Record<string, readonly string[]>;
+topLevelCategorySlugs.forEach((parentSlug) => {
+  const parentConfig = productCategoryConfigs[parentSlug];
+  const directProducts = parentConfig.directProducts ?? parentConfig.products;
+  const childProducts = productCategoryChildren[parentSlug].flatMap(
+    (childSlug) => productCategoryConfigs[childSlug].products,
+  );
 
-const topLevelCategorySlugs = [
-  "lcd-panels",
-  "lcd-modules",
-  "assembly-technologies",
-  "custom-solutions",
-] as const;
-
-const parentSlugByCategory = Object.entries(productCategoryChildren).reduce<
-  Record<string, string>
->((parents, [parentSlug, childSlugs]) => {
-  childSlugs.forEach((childSlug) => {
-    parents[childSlug] = parentSlug;
-  });
-
-  return parents;
-}, {});
+  parentConfig.directProducts = directProducts;
+  parentConfig.products = uniqueProducts([...directProducts, ...childProducts]);
+});
 
 export function getProductCategoryConfig(slug: string) {
   return productCategoryConfigs[slug];
+}
+
+export function getProductCatalogueHierarchy(): ProductCatalogueHierarchyGroup[] {
+  return topLevelCategorySlugs.map((categorySlug) => ({
+    category: productCategoryConfigs[categorySlug],
+    subcategories: productCategoryChildren[categorySlug].map(
+      (subcategorySlug) => productCategoryConfigs[subcategorySlug],
+    ),
+  }));
 }
 
 export function createProductSlug(name: string) {
@@ -516,7 +537,7 @@ export function getProductCategoryNavigationState(
     return { menuItems: [] };
   }
 
-  const parentSlug = parentSlugByCategory[slug];
+  const parentSlug = getParentCategorySlug(slug);
   const parentItem = parentSlug
     ? createCategoryNavigationItem(parentSlug)
     : {

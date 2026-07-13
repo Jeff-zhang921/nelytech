@@ -8,6 +8,7 @@ import { ProductListingCard } from "./ProductListingCard";
 
 interface ProductGridItem {
   id: string;
+  slug?: string;
   partNumber: string;
   name: string;
   description: string;
@@ -19,6 +20,9 @@ interface ProductGridItem {
 interface ProductGridProps {
   products: readonly ProductGridItem[];
   returnQuery?: string;
+  disableLinks?: boolean;
+  getProductHref?: (product: ProductGridItem) => string;
+  getProductAriaLabel?: (product: ProductGridItem) => string;
 }
 
 const gridVariants: Variants = {
@@ -43,7 +47,13 @@ const cardVariants: Variants = {
   },
 };
 
-export function ProductGrid({ products, returnQuery }: ProductGridProps) {
+export function ProductGrid({
+  products,
+  returnQuery,
+  disableLinks = false,
+  getProductHref,
+  getProductAriaLabel,
+}: ProductGridProps) {
   return (
     <motion.section
       id="products"
@@ -56,9 +66,14 @@ export function ProductGrid({ products, returnQuery }: ProductGridProps) {
       {products.map((product) => (
         <motion.article key={product.id} variants={cardVariants}>
           <ProductListingCard
-            href={createProductDetailHref(product, returnQuery)}
+            href={
+              disableLinks
+                ? undefined
+                : getProductHref?.(product) ?? createProductDetailHref(product, returnQuery)
+            }
             image={product.image}
             imageAlt={product.imageAlt ?? `${product.name} product image`}
+            ariaLabel={getProductAriaLabel?.(product)}
             name={product.name}
             description={product.description}
           />

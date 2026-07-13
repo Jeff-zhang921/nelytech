@@ -6,6 +6,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import type { ProductCategoryPageConfig } from "@/data/productCatalogue";
 import { getProductCategoryNavigationState } from "@/data/productCatalogue";
+import {
+  getFilterSchemaForCatalogueNode,
+  getFilterOptionLabel,
+} from "@/data/categoryFilterSchemas";
 
 import { ActiveFilters } from "./ActiveFilters";
 import { CatalogueAssistancePanel } from "./CatalogueAssistancePanel";
@@ -17,12 +21,11 @@ import { ProductSearch } from "./ProductSearch";
 import {
   buildFilterSections,
   countActiveFilters,
+  createEmptyFilterState,
   createFilterStateFromSearchParams,
   createSearchParamsFromFilterState,
-  emptyFilterState,
   filterProducts,
   hasActiveFilters,
-  productFilterSections,
   type ProductFilterKey,
   type ProductFilterState,
 } from "./productFiltering";
@@ -44,9 +47,14 @@ function ProductCataloguePageContent({ config }: ProductCataloguePageProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchParamString = searchParams.toString();
+  const filterSchema = getFilterSchemaForCatalogueNode(config.slug);
   const initialFilterState = useMemo(
-    () => createFilterStateFromSearchParams(new URLSearchParams(searchParamString)),
-    [searchParamString],
+    () =>
+      createFilterStateFromSearchParams(
+        new URLSearchParams(searchParamString),
+        filterSchema,
+      ),
+    [filterSchema, searchParamString],
   );
 
   return (
@@ -71,29 +79,34 @@ function ProductCatalogueStatefulContent({
   replaceUrl: (href: string) => void;
 }) {
   const [filterState, setFilterState] = useState<ProductFilterState>(initialFilterState);
+  const filterSchema = getFilterSchemaForCatalogueNode(config.slug);
   const visibleProducts = useMemo(
-    () => filterProducts(config.products, filterState),
-    [config.products, filterState],
+    () => filterProducts(config.products, filterState, filterSchema),
+    [config.products, filterSchema, filterState],
   );
   const filterSections = useMemo(
-    () => buildFilterSections(config.products, filterState),
-    [config.products, filterState],
+    () => buildFilterSections(config.products, filterState, filterSchema),
+    [config.products, filterSchema, filterState],
   );
-  const activeFilterCount = countActiveFilters(filterState);
+  const activeFilterCount = countActiveFilters(filterState, filterSchema);
   const resultLabel = `${visibleProducts.length} ${
     visibleProducts.length === 1 ? "product" : "products"
   }`;
   const isAllProductsPage = config.slug === "all";
   const isEmptyCategory = config.products.length === 0;
   const categoryNavigation = getProductCategoryNavigationState(config.slug);
+  const categoryFilterName =
+    categoryNavigation.backItem?.slug === "all"
+      ? config.name
+      : config.shortName ?? config.name;
   const filterHeading = isAllProductsPage
     ? "Filter all products"
-    : `Filter products under ${config.shortName ?? config.name}`;
+    : `Filter products under ${categoryFilterName}`;
 
   function commitFilterState(nextState: ProductFilterState) {
     setFilterState(nextState);
 
-    const nextParams = createSearchParamsFromFilterState(nextState);
+    const nextParams = createSearchParamsFromFilterState(nextState, filterSchema);
     const nextQuery = nextParams.toString();
 
     replaceUrl(nextQuery ? `${pathname}?${nextQuery}` : pathname);
@@ -108,10 +121,13 @@ function ProductCatalogueStatefulContent({
   }
 
   function toggleFilter(key: ProductFilterKey, value: string) {
-    const selectedValues = filterState.selected[key];
+    const selectedValues = filterState.selected[key] ?? [];
+    const group = filterSchema.groups.find((item) => item.id === key);
     const nextValues = selectedValues.includes(value)
       ? selectedValues.filter((selectedValue) => selectedValue !== value)
-      : [...selectedValues, value];
+      : group?.selectionMode === "single"
+        ? [value]
+        : [...selectedValues, value];
 
     commitFilterState({
       ...filterState,
@@ -127,7 +143,7 @@ function ProductCatalogueStatefulContent({
       ...filterState,
       selected: {
         ...filterState.selected,
-        [key]: filterState.selected[key].filter(
+        [key]: (filterState.selected[key] ?? []).filter(
           (selectedValue) => selectedValue !== value,
         ),
       },
@@ -135,10 +151,13 @@ function ProductCatalogueStatefulContent({
   }
 
   function resetFilters() {
-    commitFilterState(emptyFilterState);
+    commitFilterState(createEmptyFilterState(filterSchema));
   }
 
-  const catalogueReturnQuery = createSearchParamsFromFilterState(filterState).toString();
+  const catalogueReturnQuery = createSearchParamsFromFilterState(
+    filterState,
+    filterSchema,
+  ).toString();
 
   return (
     <main className="relative isolate overflow-hidden bg-transparent">
@@ -185,7 +204,7 @@ function ProductCatalogueStatefulContent({
             <ProductResultsHeader
               heading={isAllProductsPage ? "All products" : "Available Product"}
               resultLabel={resultLabel}
-              hasActiveFilters={hasActiveFilters(filterState)}
+              hasActiveFilters={hasActiveFilters(filterState, filterSchema)}
               searchValue={filterState.query}
               onSearchChange={updateSearchQuery}
               onSearchClear={clearSearchQuery}
@@ -195,10 +214,17 @@ function ProductCatalogueStatefulContent({
               <ActiveFilters
                 query={filterState.query}
                 selected={filterState.selected}
-                sections={productFilterSections}
+                sections={filterSchema.groups.map((group) => ({
+                  key: group.id,
+                  label: group.label,
+                  selectionMode: group.selectionMode,
+                }))}
                 onClearQuery={clearSearchQuery}
                 onRemoveFilter={removeFilter}
                 onClearAll={resetFilters}
+                valueLabel={(groupId, optionId) =>
+                  getFilterOptionLabel(filterSchema, groupId, optionId)
+                }
               />
             </div>
 
@@ -210,7 +236,7 @@ function ProductCatalogueStatefulContent({
                 />
               ) : (
                 <EmptyResults
-                  categoryName={config.shortName ?? config.name}
+                  categoryName={categoryFilterName}
                   isEmptyCategory={isEmptyCategory}
                   onReset={resetFilters}
                 />

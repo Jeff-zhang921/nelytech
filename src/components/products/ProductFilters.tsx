@@ -19,7 +19,34 @@ interface ProductFiltersProps {
   heading: string;
   onToggleFilter: (key: ProductFilterKey, value: string) => void;
   onClearAll: () => void;
+  copy?: ProductFiltersCopy;
 }
+
+interface ProductFiltersCopy {
+  filters: string;
+  reset: string;
+  done: string;
+  close: string;
+  active: (count: number) => string;
+  selected: (count: number) => string;
+  noFilters: string;
+  asideLabel: string;
+  matching: (count: number) => string;
+  optionLabel: (value: string) => string;
+}
+
+const defaultCopy: ProductFiltersCopy = {
+  filters: "Filters",
+  reset: "Reset",
+  done: "Done",
+  close: "Close filters",
+  active: (count) => `${count} active`,
+  selected: (count) => `${count} selected`,
+  noFilters: "No filters available for this category.",
+  asideLabel: "Product filters",
+  matching: (count) => `${count} matching products`,
+  optionLabel: (value) => value,
+};
 
 export function ProductFilters({
   sections,
@@ -27,6 +54,7 @@ export function ProductFilters({
   heading,
   onToggleFilter,
   onClearAll,
+  copy = defaultCopy,
 }: ProductFiltersProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -102,7 +130,7 @@ export function ProductFilters({
           className="inline-flex h-11 items-center gap-2 rounded-full border border-slate-200/70 bg-white px-4 text-sm font-medium text-slate-700 transition-colors hover:border-slate-300 hover:text-slate-950 focus-visible:ring-2 focus-visible:ring-slate-300 focus-visible:outline-none"
         >
           <SlidersHorizontal className="h-4 w-4" strokeWidth={1.7} aria-hidden="true" />
-          Filters
+          {copy.filters}
           {activeFilterCount > 0 ? (
             <span className="rounded-full bg-slate-900 px-2 py-0.5 text-xs text-white">
               {activeFilterCount}
@@ -111,7 +139,7 @@ export function ProductFilters({
         </button>
       </div>
 
-      <aside className="hidden lg:block" aria-label="Product filters">
+      <aside className="hidden lg:block" aria-label={copy.asideLabel}>
         <div className="sticky top-24 rounded-2xl border border-slate-200/60 bg-white p-5">
           <FilterPanelContent
             idPrefix="desktop"
@@ -120,6 +148,7 @@ export function ProductFilters({
             heading={heading}
             onToggleFilter={onToggleFilter}
             onClearAll={onClearAll}
+            copy={copy}
           />
         </div>
       </aside>
@@ -144,13 +173,13 @@ export function ProductFilters({
                 id="mobile-product-filters-title"
                 className="text-sm font-medium tracking-wide text-slate-950 uppercase"
               >
-                Filters
+                {copy.filters}
               </h2>
               <button
                 ref={closeRef}
                 type="button"
                 onClick={closeMobileFilters}
-                aria-label="Close filters"
+                aria-label={copy.close}
                 className="rounded-full p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-950 focus-visible:ring-2 focus-visible:ring-slate-300 focus-visible:outline-none"
               >
                 <X className="h-4 w-4" strokeWidth={1.8} aria-hidden="true" />
@@ -164,6 +193,7 @@ export function ProductFilters({
                 heading={heading}
                 onToggleFilter={onToggleFilter}
                 onClearAll={onClearAll}
+                copy={copy}
               />
             </div>
             <div className="border-t border-slate-200/70 px-5 py-4">
@@ -172,7 +202,7 @@ export function ProductFilters({
                 onClick={closeMobileFilters}
                 className="h-11 w-full rounded-full bg-slate-950 text-sm font-medium text-white transition-colors hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-slate-300 focus-visible:ring-offset-2 focus-visible:outline-none"
               >
-                Done
+                {copy.done}
               </button>
             </div>
           </div>
@@ -193,20 +223,21 @@ function FilterPanelContent({
   heading,
   onToggleFilter,
   onClearAll,
+  copy = defaultCopy,
 }: FilterPanelContentProps) {
   return (
     <form className="space-y-7">
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-xs font-medium tracking-widest text-slate-400 uppercase">
-            Filters
+            {copy.filters}
           </p>
           <p className="mt-1 text-sm text-slate-500">
             {heading}
           </p>
           {activeFilterCount > 0 ? (
             <p className="mt-1 text-xs font-medium text-slate-400">
-              {activeFilterCount} active
+              {copy.active(activeFilterCount)}
             </p>
           ) : null}
         </div>
@@ -216,7 +247,7 @@ function FilterPanelContent({
           disabled={activeFilterCount === 0}
           className="rounded-sm text-xs font-medium text-slate-500 underline-offset-4 transition-colors hover:text-slate-950 hover:underline disabled:cursor-not-allowed disabled:text-slate-300 disabled:no-underline focus-visible:ring-2 focus-visible:ring-slate-300 focus-visible:outline-none"
         >
-          Reset
+          {copy.reset}
         </button>
       </div>
 
@@ -228,11 +259,14 @@ function FilterPanelContent({
               idPrefix={idPrefix}
               section={section}
               onToggleFilter={onToggleFilter}
+              selectedLabel={copy.selected}
+              matchingLabel={copy.matching}
+              optionLabel={copy.optionLabel}
             />
           ))
         ) : (
           <p className="rounded-xl border border-dashed border-slate-200 bg-slate-50/60 px-4 py-4 text-sm leading-6 text-slate-500">
-            No filters available for this category.
+            {copy.noFilters}
           </p>
         )}
       </div>
@@ -244,10 +278,16 @@ export function FilterSection({
   idPrefix,
   section,
   onToggleFilter,
+  selectedLabel = (count) => `${count} selected`,
+  matchingLabel = (count) => `${count} matching products`,
+  optionLabel = (value) => value,
 }: {
   idPrefix: string;
   section: ProductFilterSectionWithOptions;
   onToggleFilter: (key: ProductFilterKey, value: string) => void;
+  selectedLabel?: (count: number) => string;
+  matchingLabel?: (count: number) => string;
+  optionLabel?: (value: string) => string;
 }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const selectedCount = section.options.filter((option) => option.selected).length;
@@ -258,6 +298,7 @@ export function FilterSection({
     <section>
       <button
         id={buttonId}
+        data-filter-group={section.key}
         type="button"
         aria-expanded={isExpanded}
         aria-controls={sectionId}
@@ -268,7 +309,7 @@ export function FilterSection({
         <span className="inline-flex items-center gap-2">
           {selectedCount > 0 ? (
             <span className="rounded-full bg-slate-900 px-2 py-0.5 text-xs font-medium text-white">
-              {selectedCount} selected
+              {selectedLabel(selectedCount)}
             </span>
           ) : null}
           <ChevronDown
@@ -300,19 +341,28 @@ export function FilterSection({
             >
               <input
                 id={inputId}
-                type="checkbox"
+                type={section.selectionMode === "single" ? "radio" : "checkbox"}
+                name={
+                  section.selectionMode === "single"
+                    ? `${idPrefix}-filter-${section.key}`
+                    : undefined
+                }
                 checked={option.selected}
                 disabled={option.disabled}
                 onChange={() => onToggleFilter(section.key, option.value)}
                 className="h-4 w-4 rounded border-slate-300 text-slate-950 accent-slate-950 focus-visible:ring-2 focus-visible:ring-slate-300 focus-visible:outline-none"
               />
-              <span className="min-w-0 flex-1">{option.value}</span>
+              <span className="min-w-0 flex-1">
+                {optionLabel(option.value) === option.value
+                  ? option.label
+                  : optionLabel(option.value)}
+              </span>
               <span
                 className={[
                   "text-xs",
                   option.disabled ? "text-slate-300" : "text-slate-400",
                 ].join(" ")}
-                aria-label={`${option.count} matching products`}
+                aria-label={matchingLabel(option.count)}
               >
                 {option.count}
               </span>

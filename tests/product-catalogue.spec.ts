@@ -184,7 +184,7 @@ test.describe("product catalogue", () => {
     await page.goto("/products/lcd-panels");
     await expect(page.getByRole("heading", { level: 1, name: "LCD Panels" })).toBeVisible();
     await expect(page.getByText("Filter products under LCD Panels")).toBeVisible();
-    await expect(productCards(page)).toHaveCount(6);
+    await expect(productCards(page)).toHaveCount(12);
 
     await page.goto("/products/tn");
     await expect(page.getByLabel("Breadcrumb")).toContainText(
@@ -221,7 +221,12 @@ test.describe("product catalogue", () => {
     await expect(page.getByText("0 products")).toBeVisible();
     await expect(page.getByText("No products available")).toBeVisible();
     await expect(page.getByText("There are currently no products listed under COG.")).toBeVisible();
-    await expect(page.getByText("No filters available for this category.")).toBeVisible();
+    await expect(
+      page
+        .getByRole("complementary", { name: "Product filters" })
+        .getByRole("button", { name: /^Assembly Method/ }),
+    ).toBeVisible();
+    await expect(page.getByText("No filters available for this category.")).toHaveCount(0);
     await expect(productCards(page)).toHaveCount(0);
     await page.getByRole("link", { name: /view all products/i }).click();
     await expect(page).toHaveURL("/products");

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import type { MegaMenuKey } from "@/constants/navigation";
@@ -23,9 +24,12 @@ const desktopMegaMenuKeys = ["products"] as const satisfies readonly MegaMenuKey
 
 export function Navbar() {
   const { t } = useI18n();
+  const pathname = usePathname();
   const [activeMenu, setActiveMenu] = useState<MegaMenuKey | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [openMobileMenu, setOpenMobileMenu] = useState<MegaMenuKey | null>(null);
+  const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
+  const text = (key: string) => t(key, isAdminRoute ? "en" : undefined);
 
   function closeMenus() {
     setActiveMenu(null);
@@ -39,6 +43,7 @@ export function Navbar() {
 
   return (
     <header
+      lang={isAdminRoute ? "en" : undefined}
       className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur"
       onMouseLeave={() => setActiveMenu(null)}
       onKeyDown={(event) => {
@@ -69,7 +74,7 @@ export function Navbar() {
                 onClick={closeActiveMenu}
                 className="rounded-sm text-slate-700 underline-offset-4 outline-none transition-colors hover:text-teal-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
               >
-                {t("nav.home")}
+                {text("nav.home")}
               </Link>
             </li>
             <li>
@@ -80,7 +85,7 @@ export function Navbar() {
                 onClick={closeActiveMenu}
                 className="rounded-sm text-slate-700 underline-offset-4 outline-none transition-colors hover:text-teal-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
               >
-                {t("nav.about")}
+                {text("nav.about")}
               </Link>
             </li>
             {desktopMegaMenuKeys.map((menuKey) => {
@@ -96,10 +101,10 @@ export function Navbar() {
                     aria-controls={panelId}
                     onMouseEnter={() => setActiveMenu(menuKey)}
                     onFocus={() => setActiveMenu(menuKey)}
-                    onClick={() => setActiveMenu(isOpen ? null : menuKey)}
+                    onClick={() => setActiveMenu(menuKey)}
                     className="rounded-sm text-slate-700 underline-offset-4 outline-none transition-colors hover:text-teal-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
                   >
-                    {t(`nav.${menuKey}`)}
+                    {text(`nav.${menuKey}`)}
                     <span aria-hidden="true" className="ml-1 text-xs">
                       v
                     </span>
@@ -122,11 +127,17 @@ export function Navbar() {
                 onClick={closeActiveMenu}
                 className="rounded-sm text-slate-700 underline-offset-4 outline-none transition-colors hover:text-teal-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
               >
-                {t("nav.contact")}
+                {text("nav.contact")}
               </Link>
             </li>
             <li onMouseEnter={closeActiveMenu} onFocus={closeActiveMenu}>
-              <LanguageToggle />
+              {isAdminRoute ? (
+                <span className="whitespace-nowrap text-sm font-medium text-slate-600">
+                  English Only
+                </span>
+              ) : (
+                <LanguageToggle />
+              )}
             </li>
           </ul>
         </nav>
@@ -135,7 +146,7 @@ export function Navbar() {
           type="button"
           aria-expanded={isMobileOpen}
           aria-controls="mobile-navigation"
-          aria-label={isMobileOpen ? t("nav.closeMenu") : t("nav.openMenu")}
+          aria-label={isMobileOpen ? text("nav.closeMenu") : text("nav.openMenu")}
           onClick={() => {
             setIsMobileOpen((current) => !current);
             setActiveMenu(null);
@@ -164,7 +175,7 @@ export function Navbar() {
                   onClick={closeMenus}
                   className="block py-4 text-base font-semibold text-slate-950 outline-none transition-colors hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
                 >
-                  {t(link.labelKey)}
+                  {text(link.labelKey)}
                 </Link>
               </li>
             ))}
@@ -189,12 +200,16 @@ export function Navbar() {
                   onClick={closeMenus}
                   className="block py-4 text-base font-semibold text-slate-950 outline-none transition-colors hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
                 >
-                  {t(link.labelKey)}
+                  {text(link.labelKey)}
                 </Link>
               </li>
             ))}
             <li className="border-t border-slate-200 py-4">
-              <LanguageToggle />
+              {isAdminRoute ? (
+                <span className="text-sm font-medium text-slate-600">English Only</span>
+              ) : (
+                <LanguageToggle />
+              )}
             </li>
           </ul>
         </nav>

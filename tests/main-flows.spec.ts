@@ -39,6 +39,44 @@ test.describe("NELYTECH critical user flows", () => {
     await expect(page).toHaveURL("/");
     await expect(page.getByRole("button", { name: /\u4ea7\u54c1/ })).toBeVisible();
     await expect(page.getByText(/\u6838\u5fc3\u4f18\u52bf/)).toBeVisible();
+
+    await page.getByRole("button", { name: /\u4ea7\u54c1/ }).hover();
+    const productsMenu = page.locator("#products-mega-menu");
+    await expect(productsMenu).toBeVisible();
+    await expect(
+      productsMenu.getByRole("heading", { name: "LCD Panels (Monochrome)" }),
+    ).toBeVisible();
+    await expect(productsMenu.getByText("Core monochrome LCD panel technologies.")).toBeVisible();
+    await expect(productsMenu.getByRole("link", { name: /TN \(Twisted Nematic\)/ })).toBeVisible();
+    await expect(
+      productsMenu.getByRole("link", { name: /Custom PCBA & MCU Development/ }),
+    ).toBeVisible();
+  });
+
+  test("mobile product panel remains English while the surrounding navigation is Chinese", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/");
+
+    await page.getByRole("button", { name: /open navigation menu/i }).click();
+    const mobileNavigation = page.locator("#mobile-navigation");
+    await mobileNavigation.getByRole("button", { name: /language/i }).click();
+    await mobileNavigation.getByRole("menuitemradio", { name: /\u4e2d\u6587/ }).click();
+
+    const productsTrigger = mobileNavigation.getByRole("button", { name: /\u4ea7\u54c1/ });
+    await expect(productsTrigger).toBeVisible();
+    await productsTrigger.click();
+
+    const productsPanel = page.locator("#mobile-products-panel");
+    await expect(productsPanel.getByText("Core monochrome LCD panel technologies.")).toBeVisible();
+    await expect(
+      productsPanel.getByRole("link", { name: /Graphic LCD Modules/ }),
+    ).toBeVisible();
+    await expect(
+      productsPanel.getByRole("link", { name: /Touch Panels \(CTP\/RTP\)/ }),
+    ).toBeVisible();
+    await expect(mobileNavigation.getByRole("link", { name: /\u9996\u9875/ })).toBeVisible();
   });
 
   test("process page scroll reveals the fourth framer-motion stage in the viewport", async ({

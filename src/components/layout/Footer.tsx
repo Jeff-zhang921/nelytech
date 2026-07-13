@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { useI18n } from "@/context/I18nContext";
 
@@ -31,9 +32,15 @@ const qrCells =
 
 export function Footer() {
   const { t } = useI18n();
+  const pathname = usePathname();
+  const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
+  const text = (key: string) => t(key, isAdminRoute ? "en" : undefined);
 
   return (
-    <footer className="border-t border-slate-200 bg-slate-50 px-6 py-14 text-slate-800 sm:px-8 lg:px-12 lg:py-16">
+    <footer
+      lang={isAdminRoute ? "en" : undefined}
+      className="border-t border-slate-200 bg-slate-50 px-6 py-14 text-slate-800 sm:px-8 lg:px-12 lg:py-16"
+    >
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           <section aria-label="NELYTECH brand">
@@ -44,7 +51,7 @@ export function Footer() {
               NELYTECH
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-6 text-slate-600">
-              {t("footer.brandDescription")}
+              {text("footer.brandDescription")}
             </p>
           </section>
 
@@ -53,19 +60,19 @@ export function Footer() {
               id="footer-china-office"
               className="text-sm font-semibold tracking-[0.16em] text-slate-950 uppercase"
             >
-              {t("footer.chinaOffice")}
+              {text("footer.chinaOffice")}
             </h2>
             <div className="mt-5 space-y-5 text-sm leading-6 text-slate-600">
               <div className="flex gap-3">
                 <MapPinIcon className="mt-1 h-5 w-5 shrink-0 text-teal-700" />
                 <address className="not-italic">
-                  {t("footer.address")}
+                  {text("footer.address")}
                 </address>
               </div>
               <div className="flex gap-3">
                 <PhoneIcon className="mt-1 h-5 w-5 shrink-0 text-teal-700" />
                 <div>
-                  <p className="font-semibold text-slate-950">{t("footer.telephone")}</p>
+                  <p className="font-semibold text-slate-950">{text("footer.telephone")}</p>
                   <ul className="mt-2 space-y-1">
                     {phoneNumbers.map((phoneNumber) => (
                       <li key={phoneNumber}>
@@ -88,7 +95,7 @@ export function Footer() {
               id="footer-company"
               className="text-sm font-semibold tracking-[0.16em] text-slate-950 uppercase"
             >
-              {t("footer.company")}
+              {text("footer.company")}
             </h2>
             <ul className="mt-5 space-y-3 text-sm text-slate-600">
               {companyLinks.map((link) => (
@@ -97,7 +104,7 @@ export function Footer() {
                     href={link.href}
                     className="rounded-sm outline-none transition-colors hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
                   >
-                    {t(link.labelKey)}
+                    {text(link.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -105,7 +112,7 @@ export function Footer() {
 
             <div className="mt-7">
               <p className="text-sm font-semibold text-slate-950">
-                {t("footer.salesInquiries")}
+                {text("footer.salesInquiries")}
               </p>
               <a
                 href="mailto:contact@nelytech.com"
@@ -118,9 +125,9 @@ export function Footer() {
 
             <div className="mt-7">
               <p className="text-sm font-semibold text-slate-950">
-                {t("footer.productCatalogue")}
+                {text("footer.productCatalogue")}
               </p>
-              <QrPlaceholder label={t("footer.qrLabel")} />
+              <QrPlaceholder label={text("footer.qrLabel")} />
             </div>
           </section>
 
@@ -129,7 +136,7 @@ export function Footer() {
               id="footer-products"
               className="text-sm font-semibold tracking-[0.16em] text-slate-950 uppercase"
             >
-              {t("footer.products")}
+              {text("footer.products")}
             </h2>
             <ul className="mt-5 space-y-3 text-sm text-slate-600">
               {productLinks.map((link) => (
@@ -138,7 +145,7 @@ export function Footer() {
                     href={link.href}
                     className="rounded-sm outline-none transition-colors hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
                   >
-                    {t(link.labelKey)}
+                    {text(link.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -148,7 +155,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-slate-200 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            Copyright &copy; {new Date().getFullYear()} NELYTECH. {t("footer.copyright")}
+            Copyright &copy; {new Date().getFullYear()} NELYTECH. {text("footer.copyright")}
           </p>
           <Link
             href="/admin/login"

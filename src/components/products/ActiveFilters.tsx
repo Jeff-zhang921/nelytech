@@ -11,6 +11,11 @@ interface ActiveFiltersProps {
   onClearQuery: () => void;
   onRemoveFilter: (key: ProductFilterKey, value: string) => void;
   onClearAll: () => void;
+  copy?: {
+    searchPrefix: string;
+    clearAll: string;
+  };
+  valueLabel?: (groupId: string, value: string) => string;
 }
 
 export function ActiveFilters({
@@ -20,6 +25,8 @@ export function ActiveFilters({
   onClearQuery,
   onRemoveFilter,
   onClearAll,
+  copy = { searchPrefix: "Search", clearAll: "Clear all" },
+  valueLabel = (_groupId, value) => value,
 }: ActiveFiltersProps) {
   const trimmedQuery = query.trim();
   const activeFilters = sections.flatMap((section) =>
@@ -37,12 +44,12 @@ export function ActiveFilters({
   return (
     <div className="flex flex-wrap items-center gap-2">
       {trimmedQuery ? (
-        <ActiveFilterButton label={`Search: ${trimmedQuery}`} onRemove={onClearQuery} />
+        <ActiveFilterButton label={`${copy.searchPrefix}: ${trimmedQuery}`} onRemove={onClearQuery} />
       ) : null}
       {activeFilters.map((filter) => (
         <ActiveFilterButton
           key={`${filter.key}-${filter.value}`}
-          label={`${filter.label}: ${filter.value}`}
+          label={`${filter.label}: ${valueLabel(filter.key, filter.value)}`}
           onRemove={() => onRemoveFilter(filter.key, filter.value)}
         />
       ))}
@@ -51,7 +58,7 @@ export function ActiveFilters({
         onClick={onClearAll}
         className="ml-1 rounded-sm text-xs font-medium text-slate-500 underline-offset-4 transition-colors hover:text-slate-900 hover:underline focus-visible:ring-2 focus-visible:ring-slate-300 focus-visible:outline-none"
       >
-        Clear all
+        {copy.clearAll}
       </button>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import {
   ArrowRight,
@@ -39,7 +40,7 @@ export function MegaMenu({
   onLinkClick,
   onMouseLeave,
 }: MegaMenuProps) {
-  const { t } = useI18n();
+  const text = useMenuText(menuKey === "products");
   const hasPointerEnteredPanel = useRef(false);
   const menu = megaMenus[menuKey];
   const isProductsMenu = menuKey === "products";
@@ -96,10 +97,10 @@ export function MegaMenu({
       <div className="relative z-10 mx-auto grid w-full gap-6 px-5 py-5 lg:grid-cols-[0.72fr_2fr] lg:px-6">
         <div>
           <p className="text-xs font-semibold tracking-[0.16em] text-teal-700 uppercase">
-            {translateWithFallback(t, `megaMenu.${menuKey}.label`, menu.label)}
+            {translateWithFallback(text, `megaMenu.${menuKey}.label`, menu.label)}
           </p>
           <p className="mt-3 max-w-xs text-sm leading-6 text-slate-600">
-            {translateWithFallback(t, `megaMenu.${menuKey}.description`, menu.description)}
+            {translateWithFallback(text, `megaMenu.${menuKey}.description`, menu.description)}
           </p>
         </div>
 
@@ -113,12 +114,12 @@ export function MegaMenu({
               ? productSectionRoutes[section.translationKey]
               : undefined;
             const translatedHeading = translateWithFallback(
-              t,
+              text,
               `${sectionKey}.heading`,
               section.heading,
             );
             const translatedSummary = section.summary
-              ? translateWithFallback(t, `${sectionKey}.summary`, section.summary)
+              ? translateWithFallback(text, `${sectionKey}.summary`, section.summary)
               : undefined;
 
             return (
@@ -136,7 +137,7 @@ export function MegaMenu({
                   {isFeaturedProductSection ? (
                     <span className="block font-mono text-[10px] leading-3.5 font-medium tracking-[0.2em] text-blue-500/80 uppercase">
                       {translateWithFallback(
-                        t,
+                        text,
                         `megaMenu.${menuKey}.coreExpertise`,
                         "Core Expertise",
                       )}
@@ -207,7 +208,7 @@ export function MegaMenu({
                   <ul className="mt-2 space-y-1">
                     {section.links.map((link) => {
                       const translatedLinkTitle = translateWithFallback(
-                        t,
+                        text,
                         `megaMenu.${menuKey}.links.${link.translationKey}`,
                         link.title,
                       );
@@ -281,7 +282,7 @@ export function MegaMenu({
               onClick={onLinkClick}
               className="group inline-flex items-center gap-2 rounded-sm text-sm font-semibold text-blue-600 underline-offset-4 outline-none transition-colors hover:text-blue-800 hover:underline focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
             >
-              {translateWithFallback(t, `megaMenu.${menuKey}.viewAll`, "View All Products")}
+              {translateWithFallback(text, `megaMenu.${menuKey}.viewAll`, "View All Products")}
               <svg
                 viewBox="0 0 24 24"
                 className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
@@ -321,7 +322,8 @@ export function MobileMegaMenu({
   onToggle,
   onLinkClick,
 }: MobileMegaMenuProps) {
-  const { t } = useI18n();
+  const text = useMenuText();
+  const panelText = useMenuText(menuKey === "products");
   const menu = megaMenus[menuKey];
 
   return (
@@ -334,7 +336,7 @@ export function MobileMegaMenu({
         onClick={onToggle}
         className="flex w-full items-center justify-between py-4 text-left text-base font-semibold text-slate-950 outline-none transition-colors hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
       >
-        <span>{translateWithFallback(t, `megaMenu.${menuKey}.label`, menu.label)}</span>
+        <span>{translateWithFallback(text, `megaMenu.${menuKey}.label`, menu.label)}</span>
         <span aria-hidden="true" className="text-xs">
           {isOpen ? "-" : "+"}
         </span>
@@ -343,7 +345,7 @@ export function MobileMegaMenu({
       {isOpen ? (
         <div id={panelId} role="region" aria-labelledby={buttonId} className="pb-5">
           <p className="text-sm leading-6 text-slate-600">
-            {translateWithFallback(t, `megaMenu.${menuKey}.description`, menu.description)}
+            {translateWithFallback(panelText, `megaMenu.${menuKey}.description`, menu.description)}
           </p>
           <div className="mt-5 space-y-6">
             {menu.sections.map((section) => {
@@ -351,12 +353,12 @@ export function MobileMegaMenu({
               const sectionId = `${panelId}-${slugify(section.heading)}`;
               const sectionHref = productSectionRoutes[section.translationKey];
               const translatedHeading = translateWithFallback(
-                t,
+                panelText,
                 `${sectionKey}.heading`,
                 section.heading,
               );
               const translatedSummary = section.summary
-                ? translateWithFallback(t, `${sectionKey}.summary`, section.summary)
+                ? translateWithFallback(panelText, `${sectionKey}.summary`, section.summary)
                 : undefined;
 
               return (
@@ -390,7 +392,7 @@ export function MobileMegaMenu({
                     <ul className="mt-2 space-y-2">
                       {section.links.map((link) => {
                         const translatedLinkTitle = translateWithFallback(
-                          t,
+                          panelText,
                           `megaMenu.${menuKey}.links.${link.translationKey}`,
                           link.title,
                         );
@@ -426,6 +428,14 @@ export function MobileMegaMenu({
 
 function slugify(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+function useMenuText(forceEnglish = false) {
+  const { t } = useI18n();
+  const pathname = usePathname();
+  const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
+
+  return (key: string) => t(key, forceEnglish || isAdminRoute ? "en" : undefined);
 }
 
 function translateWithFallback(

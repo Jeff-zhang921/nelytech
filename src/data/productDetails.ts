@@ -5,6 +5,10 @@ import {
   getProductCategoryConfig,
   type CatalogueProduct,
 } from "@/data/productCatalogue";
+import {
+  getFilterSchemaForCatalogueNode,
+  getFilterOptionLabel,
+} from "@/data/categoryFilterSchemas";
 
 export interface ProductDetailImage {
   src: string;
@@ -176,9 +180,14 @@ function createCatalogueProductDetail(
     slug: categorySlug,
     route: `/products/${categorySlug}`,
   };
-  const applications = product.filters.application ?? [];
-  const interfaces = product.filters.interface ?? [];
-  const formats = product.filters.format ?? [];
+  const filterSchema = getFilterSchemaForCatalogueNode(categorySlug);
+  const filterLabels = (groupId: string) =>
+    (product.filters[groupId] ?? []).map((optionId) =>
+      getFilterOptionLabel(filterSchema, groupId, optionId),
+    );
+  const applications = filterLabels("application");
+  const interfaces = filterLabels("interface");
+  const formats = filterLabels("format");
 
   return {
     slug: productSlug,

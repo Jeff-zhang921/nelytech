@@ -4,9 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export interface ProductListingCardProps {
-  href: string;
+  href?: string;
   image: string;
   imageAlt: string;
+  ariaLabel?: string;
   name: string;
   description: string;
 }
@@ -15,21 +16,40 @@ export function ProductListingCard({
   href,
   image,
   imageAlt,
+  ariaLabel,
   name,
   description,
 }: ProductListingCardProps) {
-  return (
-    <Link
-      href={href}
-      data-testid="product-card"
-      className="group block h-full overflow-hidden rounded-2xl border border-white/50 bg-white/60 shadow-[0_8px_30px_rgba(0,0,0,0.04)] backdrop-blur-2xl outline-none transition-all duration-500 ease-out hover:border-white/80 hover:bg-white/80 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] focus-visible:border-white/80 focus-visible:bg-white/80 focus-visible:ring-2 focus-visible:ring-slate-300/70 focus-visible:ring-offset-2"
-    >
+  const content = (
+    <>
       <ProductCardImage image={image} imageAlt={imageAlt} />
 
       <div className="p-5 sm:p-6">
         <h2 className="text-base font-light leading-6 text-slate-950">{name}</h2>
         <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
       </div>
+    </>
+  );
+
+  const className =
+    "group block h-full overflow-hidden rounded-2xl border border-white/50 bg-white/60 shadow-[0_8px_30px_rgba(0,0,0,0.04)] backdrop-blur-2xl outline-none transition-all duration-500 ease-out hover:border-white/80 hover:bg-white/80 hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] focus-visible:border-white/80 focus-visible:bg-white/80 focus-visible:ring-2 focus-visible:ring-slate-300/70 focus-visible:ring-offset-2";
+
+  if (!href) {
+    return (
+      <div data-testid="product-card" className={className}>
+        {content}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      aria-label={ariaLabel}
+      data-testid="product-card"
+      className={className}
+    >
+      {content}
     </Link>
   );
 }
