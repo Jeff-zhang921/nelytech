@@ -18,6 +18,7 @@
         {
           "id": "prod_lcd_01",
           "partNumber": "NLY-TN0420",
+          "slug": "tn-segment-lcd-panel",
           "name": "TN Segment LCD Panel",
           "description": "Cost-efficient segment glass for numeric and icon-based displays.",
           "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=90",
@@ -39,7 +40,6 @@
               "segment"
             ]
           },
-          "slug": "tn-segment-lcd-panel",
           "detail": {
             "productTypeLabel": "LCD Panels",
             "introduction": "Cost-efficient segment glass for numeric and icon-based displays.",
@@ -164,7 +164,6 @@
               {
                 "id": "option-group-1",
                 "label": "Available options",
-                "order": 0,
                 "values": [
                   {
                     "id": "option-1-1",
@@ -176,7 +175,8 @@
                     "text": "Segment",
                     "order": 1
                   }
-                ]
+                ],
+                "order": 0
               }
             ],
             "downloads": [
@@ -196,6 +196,7 @@
         {
           "id": "prod_lcd_02",
           "partNumber": "NLY-HTN5682",
+          "slug": "htn-instrument-panel",
           "name": "HTN Instrument Panel",
           "description": "Higher contrast monochrome panel for instrument interfaces.",
           "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=90",
@@ -216,7 +217,6 @@
               "segment"
             ]
           },
-          "slug": "htn-instrument-panel",
           "detail": {
             "productTypeLabel": "LCD Panels",
             "introduction": "Higher contrast monochrome panel for instrument interfaces.",
@@ -336,7 +336,6 @@
               {
                 "id": "option-group-1",
                 "label": "Available options",
-                "order": 0,
                 "values": [
                   {
                     "id": "option-1-1",
@@ -348,7 +347,8 @@
                     "text": "Segment",
                     "order": 1
                   }
-                ]
+                ],
+                "order": 0
               }
             ],
             "downloads": [
@@ -368,6 +368,7 @@
         {
           "id": "prod_lcd_03",
           "partNumber": "NLY-STN24064",
+          "slug": "stn-graphic-lcd-panel",
           "name": "STN Graphic LCD Panel",
           "description": "Graphic monochrome panel for compact text and simple UI layouts.",
           "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=90",
@@ -389,7 +390,6 @@
               "graphic"
             ]
           },
-          "slug": "stn-graphic-lcd-panel",
           "detail": {
             "productTypeLabel": "LCD Panels",
             "introduction": "Graphic monochrome panel for compact text and simple UI layouts.",
@@ -514,7 +514,6 @@
               {
                 "id": "option-group-1",
                 "label": "Available options",
-                "order": 0,
                 "values": [
                   {
                     "id": "option-1-1",
@@ -526,7 +525,8 @@
                     "text": "Graphic",
                     "order": 1
                   }
-                ]
+                ],
+                "order": 0
               }
             ],
             "downloads": [
@@ -546,6 +546,7 @@
         {
           "id": "prod_lcd_04",
           "partNumber": "NLY-FSTN12864",
+          "slug": "fstn-monochrome-panel",
           "name": "FSTN Monochrome Panel",
           "description": "Film-compensated display for improved readability and contrast.",
           "image": "https://images.unsplash.com/photo-1562408590-e32931084e23?auto=format&fit=crop&w=1200&q=90",
@@ -566,7 +567,6 @@
               "graphic"
             ]
           },
-          "slug": "fstn-monochrome-panel",
           "detail": {
             "productTypeLabel": "LCD Panels",
             "introduction": "Film-compensated display for improved readability and contrast.",
@@ -686,7 +686,6 @@
               {
                 "id": "option-group-1",
                 "label": "Available options",
-                "order": 0,
                 "values": [
                   {
                     "id": "option-1-1",
@@ -698,7 +697,8 @@
                     "text": "Graphic",
                     "order": 1
                   }
-                ]
+                ],
+                "order": 0
               }
             ],
             "downloads": [
@@ -718,6 +718,7 @@
         {
           "id": "prod_lcd_05",
           "partNumber": "NLY-VA1888",
+          "slug": "va-high-contrast-panel",
           "name": "VA High Contrast Panel",
           "description": "High-contrast segment display for premium dark-face interfaces.",
           "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=90",
@@ -740,7 +741,6 @@
               "segment"
             ]
           },
-          "slug": "va-high-contrast-panel",
           "detail": {
             "productTypeLabel": "LCD Panels",
             "introduction": "High-contrast segment display for premium dark-face interfaces.",
@@ -865,7 +865,6 @@
               {
                 "id": "option-group-1",
                 "label": "Available options",
-                "order": 0,
                 "values": [
                   {
                     "id": "option-1-1",
@@ -882,7 +881,8 @@
                     "text": "Segment",
                     "order": 2
                   }
-                ]
+                ],
+                "order": 0
               }
             ],
             "downloads": [
@@ -902,6 +902,7 @@
         {
           "id": "prod_lcd_06",
           "partNumber": "NLY-CUSTOM01",
+          "slug": "custom-lcd-glass-program",
           "name": "Custom LCD Glass Program",
           "description": "Application-specific LCD glass for custom icons and layouts.",
           "image": "https://images.unsplash.com/photo-1581092921461-39b9d08a9b21?auto=format&fit=crop&w=1200&q=90",
@@ -920,11 +921,10 @@
               "custom"
             ],
             "format": [
-              "graphic",
-              "segment"
+              "segment",
+              "graphic"
             ]
           },
-          "slug": "custom-lcd-glass-program",
           "detail": {
             "productTypeLabel": "LCD Panels",
             "introduction": "Application-specific LCD glass for custom icons and layouts.",
@@ -1049,7 +1049,6 @@
               {
                 "id": "option-group-1",
                 "label": "Available options",
-                "order": 0,
                 "values": [
                   {
                     "id": "option-1-1",
@@ -1066,7 +1065,8 @@
                     "text": "Segment",
                     "order": 2
                   }
-                ]
+                ],
+                "order": 0
               }
             ],
             "downloads": [
@@ -1097,6 +1097,7 @@
               "id": "prod_tn_01",
               "partNumber": "NLY-TN-7SEG-04",
               "href": "/products/4-digit-7-segment-display",
+              "slug": "4-digit-7-segment-display",
               "name": "4-Digit 7-Segment Display",
               "description": "Fixed numeric display for meters, counters, and low-power controls.",
               "image": "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=800&auto=format&fit=crop",
@@ -1120,7 +1121,6 @@
                   "numeric"
                 ]
               },
-              "slug": "4-digit-7-segment-display",
               "detail": {
                 "productTypeLabel": "TN numeric display",
                 "introduction": "A compact four-digit seven-segment LED display designed for clear numeric output in clocks, timers, counters, measurement devices, and embedded electronic systems.",
@@ -1315,7 +1315,6 @@
                   {
                     "id": "option-group-1",
                     "label": "Available options",
-                    "order": 0,
                     "values": [
                       {
                         "id": "option-1-1",
@@ -1337,7 +1336,8 @@
                         "text": "Brightness and pin layout customisation",
                         "order": 3
                       }
-                    ]
+                    ],
+                    "order": 0
                   }
                 ],
                 "downloads": [
@@ -1357,6 +1357,7 @@
             {
               "id": "prod_tn_02",
               "partNumber": "NLY-1602A-TN-YG",
+              "slug": "16x2-character-lcd-module",
               "name": "16x2 Character LCD Module",
               "description": "Character module for compact status text in embedded equipment.",
               "image": "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?q=80&w=800&auto=format&fit=crop",
@@ -1379,7 +1380,6 @@
                   "character-module"
                 ]
               },
-              "slug": "16x2-character-lcd-module",
               "detail": {
                 "productTypeLabel": "TN",
                 "introduction": "Character module for compact status text in embedded equipment.",
@@ -1504,7 +1504,6 @@
                   {
                     "id": "option-group-1",
                     "label": "Available options",
-                    "order": 0,
                     "values": [
                       {
                         "id": "option-1-1",
@@ -1521,7 +1520,8 @@
                         "text": "Character module",
                         "order": 2
                       }
-                    ]
+                    ],
+                    "order": 0
                   }
                 ],
                 "downloads": [
@@ -1541,6 +1541,7 @@
             {
               "id": "prod_tn_03",
               "partNumber": "NLY-TN-CUST-HVAC",
+              "slug": "custom-thermostat-panel",
               "name": "Custom Thermostat Panel",
               "description": "Custom segment panel for HVAC modes, icons, and temperature readouts.",
               "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop",
@@ -1563,7 +1564,6 @@
                   "custom-segment"
                 ]
               },
-              "slug": "custom-thermostat-panel",
               "detail": {
                 "productTypeLabel": "TN",
                 "introduction": "Custom segment panel for HVAC modes, icons, and temperature readouts.",
@@ -1688,7 +1688,6 @@
                   {
                     "id": "option-group-1",
                     "label": "Available options",
-                    "order": 0,
                     "values": [
                       {
                         "id": "option-1-1",
@@ -1705,7 +1704,8 @@
                         "text": "Custom segment",
                         "order": 2
                       }
-                    ]
+                    ],
+                    "order": 0
                   }
                 ],
                 "downloads": [
@@ -1725,6 +1725,7 @@
             {
               "id": "prod_tn_04",
               "partNumber": "NLY-TN-METER-88",
+              "slug": "industrial-meter-lcd-glass",
               "name": "Industrial Meter LCD Glass",
               "description": "Durable TN glass for industrial meters and fixed-segment readings.",
               "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
@@ -1742,11 +1743,10 @@
                   "glass-only"
                 ],
                 "format": [
-                  "custom-segment",
-                  "numeric"
+                  "numeric",
+                  "custom-segment"
                 ]
               },
-              "slug": "industrial-meter-lcd-glass",
               "detail": {
                 "productTypeLabel": "TN",
                 "introduction": "Durable TN glass for industrial meters and fixed-segment readings.",
@@ -1866,7 +1866,6 @@
                   {
                     "id": "option-group-1",
                     "label": "Available options",
-                    "order": 0,
                     "values": [
                       {
                         "id": "option-1-1",
@@ -1883,7 +1882,8 @@
                         "text": "Numeric",
                         "order": 2
                       }
-                    ]
+                    ],
+                    "order": 0
                   }
                 ],
                 "downloads": [
@@ -1903,6 +1903,7 @@
             {
               "id": "prod_tn_05",
               "partNumber": "NLY-TN-ICON-12",
+              "slug": "custom-icon-segment-panel",
               "name": "Custom Icon Segment Panel",
               "description": "Icon-based segment display for appliance and device status states.",
               "image": "https://images.unsplash.com/photo-1562408590-e32931084e23?q=80&w=800&auto=format&fit=crop",
@@ -1924,7 +1925,6 @@
                   "icon-segment"
                 ]
               },
-              "slug": "custom-icon-segment-panel",
               "detail": {
                 "productTypeLabel": "TN",
                 "introduction": "Icon-based segment display for appliance and device status states.",
@@ -2049,7 +2049,6 @@
                   {
                     "id": "option-group-1",
                     "label": "Available options",
-                    "order": 0,
                     "values": [
                       {
                         "id": "option-1-1",
@@ -2061,7 +2060,8 @@
                         "text": "Icon segment",
                         "order": 1
                       }
-                    ]
+                    ],
+                    "order": 0
                   }
                 ],
                 "downloads": [
@@ -2081,6 +2081,7 @@
             {
               "id": "prod_tn_06",
               "partNumber": "NLY-TN-HH-096",
+              "slug": "handheld-instrument-display",
               "name": "Handheld Instrument Display",
               "description": "Low-power display for handheld instruments and portable controls.",
               "image": "https://images.unsplash.com/photo-1581092921461-39b9d08a9b21?q=80&w=800&auto=format&fit=crop",
@@ -2096,14 +2097,13 @@
                   "portable-controls"
                 ],
                 "interface": [
-                  "elastomer",
-                  "pin"
+                  "pin",
+                  "elastomer"
                 ],
                 "format": [
                   "custom-segment"
                 ]
               },
-              "slug": "handheld-instrument-display",
               "detail": {
                 "productTypeLabel": "TN",
                 "introduction": "Low-power display for handheld instruments and portable controls.",
@@ -2228,7 +2228,6 @@
                   {
                     "id": "option-group-1",
                     "label": "Available options",
-                    "order": 0,
                     "values": [
                       {
                         "id": "option-1-1",
@@ -2245,7 +2244,8 @@
                         "text": "Custom segment",
                         "order": 2
                       }
-                    ]
+                    ],
+                    "order": 0
                   }
                 ],
                 "downloads": [
@@ -2299,6 +2299,46 @@
           "description": "Vertical-alignment LCD options for high-contrast dark-face interfaces.",
           "parentCategoryId": "category-lcd-panels",
           "products": []
+        },
+        {
+          "id": "subcategory-test-sub",
+          "slug": "test-sub",
+          "name": "TEST SUB",
+          "shortName": "TEST SUB",
+          "description": "Product options for TEST SUB are being prepared in this unpublished draft.",
+          "parentCategoryId": "category-lcd-panels",
+          "products": [
+            {
+              "id": "draft-product-test-sub",
+              "partNumber": "DRAFT-TESTSUB",
+              "slug": "test-sub",
+              "name": "TEST SUB",
+              "description": "123",
+              "image": "/uploads/products/test-sub/cover-63c8bdd20178.png",
+              "imageAlt": "TEST SUB product cover image",
+              "specs": [],
+              "filters": {
+                "application": [
+                  "icon-displays"
+                ],
+                "interface": [
+                  "glass-only"
+                ],
+                "format": [
+                  "16x2"
+                ]
+              },
+              "detail": {
+                "images": [],
+                "summary": [],
+                "specifications": [],
+                "descriptionParagraphs": [],
+                "applications": [],
+                "optionGroups": [],
+                "downloads": []
+              }
+            }
+          ]
         }
       ]
     },
@@ -2426,6 +2466,7 @@
       ]
     }
   ],
+  "updatedAt": "2026-07-13T15:13:39.172Z",
   "filterSchemas": {
     "all": {
       "parentCategoryId": "all",
