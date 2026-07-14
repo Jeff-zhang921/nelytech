@@ -6,7 +6,9 @@ import {
   useState,
   type KeyboardEvent,
 } from "react";
+import { createPortal } from "react-dom";
 import { ChevronDown, SlidersHorizontal, X } from "lucide-react";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 import type {
   ProductFilterKey,
@@ -62,23 +64,16 @@ export function ProductFilters({
   const dialogRef = useRef<HTMLDivElement>(null);
   const wasMobileOpenRef = useRef(false);
 
+  useBodyScrollLock(isMobileOpen);
+
   useEffect(() => {
-    if (!isMobileOpen) {
-      return;
-    }
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.requestAnimationFrame(() => closeRef.current?.focus());
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
+    if (!isMobileOpen) return;
+    window.requestAnimationFrame(() => closeRef.current?.focus({ preventScroll: true }));
   }, [isMobileOpen]);
 
   useEffect(() => {
     if (!isMobileOpen && wasMobileOpenRef.current) {
-      triggerRef.current?.focus();
+      triggerRef.current?.focus({ preventScroll: true });
     }
 
     wasMobileOpenRef.current = isMobileOpen;
@@ -153,8 +148,12 @@ export function ProductFilters({
         </div>
       </aside>
 
-      {isMobileOpen ? (
-        <div className="fixed inset-0 z-50 lg:hidden">
+      {isMobileOpen
+        ? createPortal(
+        <div
+          data-product-filter-drawer-root
+          className="fixed inset-0 z-[70] overflow-hidden overscroll-none lg:hidden"
+        >
           <div
             className="absolute inset-0 bg-slate-950/20 backdrop-blur-sm"
             onClick={closeMobileFilters}
@@ -162,13 +161,14 @@ export function ProductFilters({
           />
           <div
             ref={dialogRef}
+            data-product-filter-drawer-panel
             role="dialog"
             aria-modal="true"
             aria-labelledby="mobile-product-filters-title"
             onKeyDown={handleDialogKeyDown}
-            className="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-white shadow-2xl"
+            className="fixed inset-y-0 right-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-sm flex-col overflow-hidden overscroll-none bg-white shadow-2xl"
           >
-            <div className="flex items-center justify-between border-b border-slate-200/70 px-5 py-4">
+            <div className="flex shrink-0 items-center justify-between border-b border-slate-200/70 px-5 py-4">
               <h2
                 id="mobile-product-filters-title"
                 className="text-sm font-medium tracking-wide text-slate-950 uppercase"
@@ -185,7 +185,10 @@ export function ProductFilters({
                 <X className="h-4 w-4" strokeWidth={1.8} aria-hidden="true" />
               </button>
             </div>
-            <div className="min-h-0 flex-1 overflow-y-auto px-5 py-6">
+            <div
+              data-product-filter-drawer-body
+              className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain px-5 py-6 [scrollbar-gutter:stable] [touch-action:pan-y]"
+            >
               <FilterPanelContent
                 idPrefix="mobile"
                 sections={sections}
@@ -196,7 +199,7 @@ export function ProductFilters({
                 copy={copy}
               />
             </div>
-            <div className="border-t border-slate-200/70 px-5 py-4">
+            <div className="shrink-0 border-t border-slate-200/70 px-5 py-4">
               <button
                 type="button"
                 onClick={closeMobileFilters}
@@ -206,8 +209,10 @@ export function ProductFilters({
               </button>
             </div>
           </div>
-        </div>
-      ) : null}
+        </div>,
+          document.body,
+        )
+        : null}
     </>
   );
 }

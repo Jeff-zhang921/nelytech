@@ -3,30 +3,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import {
-  ArrowRight,
-  Cpu,
-  Layers,
-  Settings,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import {
-  megaMenus,
   productSectionRoutes,
+  type MegaMenuContent,
   type MegaMenuKey,
-  type ProductMenuLinkKey,
 } from "@/constants/navigation";
+import { PublicSubcategoryOverflowList } from "@/components/layout/PublicSubcategoryOverflowList";
 import { useI18n } from "@/context/I18nContext";
-
-const featuredProductLinkIcons: Partial<Record<ProductMenuLinkKey, LucideIcon>> = {
-  tftModules: Layers,
-  customPcbaMcu: Cpu,
-  touchPanels: Settings,
-};
 
 interface MegaMenuProps {
   menuKey: MegaMenuKey;
+  menu: MegaMenuContent;
   id: string;
   isOpen: boolean;
   onLinkClick?: () => void;
@@ -35,6 +24,7 @@ interface MegaMenuProps {
 
 export function MegaMenu({
   menuKey,
+  menu,
   id,
   isOpen,
   onLinkClick,
@@ -42,7 +32,6 @@ export function MegaMenu({
 }: MegaMenuProps) {
   const text = useMenuText(menuKey === "products");
   const hasPointerEnteredPanel = useRef(false);
-  const menu = megaMenus[menuKey];
   const isProductsMenu = menuKey === "products";
   const sectionGridClassName =
     menu.sections.length === 4
@@ -69,7 +58,7 @@ export function MegaMenu({
         }
       }}
       className={[
-        "absolute top-full right-0 left-0 overflow-hidden transition-all duration-200 ease-out",
+        "absolute top-full right-0 left-0 overflow-visible transition-all duration-200 ease-out",
         isProductsMenu
           ? "border border-slate-200 bg-white/95 shadow-xl shadow-slate-200/70 backdrop-blur-md"
           : "border border-slate-200 bg-white shadow-xl shadow-slate-900/15",
@@ -94,7 +83,7 @@ export function MegaMenu({
           />
         </>
       ) : null}
-      <div className="relative z-10 mx-auto grid w-full gap-6 px-5 py-5 lg:grid-cols-[0.72fr_2fr] lg:px-6">
+      <div className="relative z-20 mx-auto grid w-full gap-6 px-5 py-5 lg:grid-cols-[0.72fr_2fr] lg:px-6">
         <div>
           <p className="text-xs font-semibold tracking-[0.16em] text-teal-700 uppercase">
             {translateWithFallback(text, `megaMenu.${menuKey}.label`, menu.label)}
@@ -125,6 +114,7 @@ export function MegaMenu({
             return (
               <section
                 key={section.translationKey}
+                data-product-menu-section={section.translationKey}
                 aria-labelledby={sectionId}
                 className={[
                   "min-w-0",
@@ -205,68 +195,21 @@ export function MegaMenu({
                   </>
                 )}
                 {section.links.length > 0 ? (
-                  <ul className="mt-2 space-y-1">
-                    {section.links.map((link) => {
-                      const translatedLinkTitle = translateWithFallback(
+                  <PublicSubcategoryOverflowList
+                    categoryName={translatedHeading}
+                    links={section.links}
+                    isFeatured={isFeaturedProductSection}
+                    isParentOpen={isOpen}
+                    variant="desktop"
+                    onLinkClick={onLinkClick}
+                    translateLink={(link) =>
+                      translateWithFallback(
                         text,
                         `megaMenu.${menuKey}.links.${link.translationKey}`,
                         link.title,
-                      );
-                      const FeaturedIcon = isFeaturedProductSection
-                        ? featuredProductLinkIcons[link.translationKey]
-                        : undefined;
-
-                      return (
-                        <li key={link.translationKey}>
-                          {isFeaturedProductSection ? (
-                            <Link
-                              href={link.href}
-                              onClick={onLinkClick}
-                              className="group flex min-h-8 items-start gap-2 rounded-md border border-transparent px-2 py-1.5 text-sm outline-none transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50/80 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
-                            >
-                              {FeaturedIcon ? (
-                                <FeaturedIcon
-                                  className="mt-0.5 h-4 w-4 shrink-0 text-blue-300 transition-colors duration-200 ease-out group-hover:text-blue-600"
-                                  strokeWidth={1.4}
-                                  aria-hidden="true"
-                                />
-                              ) : null}
-                              <span className="leading-5 font-semibold text-slate-700 transition-colors duration-200 ease-out group-hover:text-blue-700">
-                                {translatedLinkTitle}
-                              </span>
-                              <ArrowRight
-                                className="mt-0.5 ml-auto h-3.5 w-3.5 shrink-0 -translate-x-1 text-blue-600 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
-                                strokeWidth={1.5}
-                                aria-hidden="true"
-                              />
-                            </Link>
-                          ) : (
-                            <Link
-                              href={link.href}
-                              onClick={onLinkClick}
-                              className="group flex items-start justify-between gap-2 rounded-md border border-transparent px-2 py-1.5 outline-none transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-teal-200 hover:bg-teal-50/80 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
-                            >
-                              <span>
-                                <span className="block text-sm font-semibold text-slate-900 transition duration-200 group-hover:text-teal-700">
-                                  {translatedLinkTitle}
-                                </span>
-                                {link.description ? (
-                                  <span className="mt-1 block text-sm leading-5 text-slate-500">
-                                    {link.description}
-                                  </span>
-                                ) : null}
-                              </span>
-                              <ArrowRight
-                                className="mt-0.5 h-3.5 w-3.5 shrink-0 -translate-x-1 text-teal-700 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
-                                strokeWidth={1.5}
-                                aria-hidden="true"
-                              />
-                            </Link>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
+                      )
+                    }
+                  />
                 ) : null}
               </section>
             );
@@ -307,6 +250,7 @@ export function MegaMenu({
 
 interface MobileMegaMenuProps {
   menuKey: MegaMenuKey;
+  menu: MegaMenuContent;
   isOpen: boolean;
   buttonId: string;
   panelId: string;
@@ -316,6 +260,7 @@ interface MobileMegaMenuProps {
 
 export function MobileMegaMenu({
   menuKey,
+  menu,
   isOpen,
   buttonId,
   panelId,
@@ -324,7 +269,6 @@ export function MobileMegaMenu({
 }: MobileMegaMenuProps) {
   const text = useMenuText();
   const panelText = useMenuText(menuKey === "products");
-  const menu = megaMenus[menuKey];
 
   return (
     <div className="border-t border-slate-200">
@@ -364,6 +308,7 @@ export function MobileMegaMenu({
               return (
                 <section
                   key={section.translationKey}
+                  data-product-menu-section={section.translationKey}
                   aria-labelledby={sectionId}
                 >
                   <Link
@@ -389,32 +334,20 @@ export function MobileMegaMenu({
                     ) : null}
                   </Link>
                   {section.links.length > 0 ? (
-                    <ul className="mt-2 space-y-2">
-                      {section.links.map((link) => {
-                        const translatedLinkTitle = translateWithFallback(
+                    <PublicSubcategoryOverflowList
+                      categoryName={translatedHeading}
+                      links={section.links}
+                      isParentOpen={isOpen}
+                      variant="mobile"
+                      onLinkClick={onLinkClick}
+                      translateLink={(link) =>
+                        translateWithFallback(
                           panelText,
                           `megaMenu.${menuKey}.links.${link.translationKey}`,
                           link.title,
-                        );
-
-                        return (
-                          <li key={link.translationKey}>
-                            <Link
-                              href={link.href}
-                              onClick={onLinkClick}
-                              className="group flex items-center justify-between gap-3 rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-slate-800 outline-none transition-all duration-200 ease-out hover:border-teal-200 hover:bg-teal-50/80 hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
-                            >
-                              <span>{translatedLinkTitle}</span>
-                              <ArrowRight
-                                className="h-3.5 w-3.5 shrink-0 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
-                                strokeWidth={1.5}
-                                aria-hidden="true"
-                              />
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
+                        )
+                      }
+                    />
                   ) : null}
                 </section>
               );

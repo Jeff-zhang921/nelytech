@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-import type { MegaMenuKey } from "@/constants/navigation";
+import type { MegaMenuContent, MegaMenuKey } from "@/constants/navigation";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { useI18n } from "@/context/I18nContext";
 import { MegaMenu, MobileMegaMenu } from "@/components/layout/MegaMenu";
@@ -22,7 +22,7 @@ const navLinks = [
 
 const desktopMegaMenuKeys = ["products"] as const satisfies readonly MegaMenuKey[];
 
-export function Navbar() {
+export function Navbar({ productMenu }: { productMenu: MegaMenuContent }) {
   const { t } = useI18n();
   const pathname = usePathname();
   const [activeMenu, setActiveMenu] = useState<MegaMenuKey | null>(null);
@@ -112,6 +112,7 @@ export function Navbar() {
                   <MegaMenu
                     id={panelId}
                     menuKey={menuKey}
+                    menu={productMenu}
                     isOpen={isOpen}
                     onLinkClick={() => setActiveMenu(null)}
                     onMouseLeave={() => setActiveMenu(null)}
@@ -183,6 +184,7 @@ export function Navbar() {
               <li key={menuKey}>
                 <MobileMegaMenu
                   menuKey={menuKey}
+                  menu={productMenu}
                   isOpen={openMobileMenu === menuKey}
                   buttonId={`mobile-${menuKey}-button`}
                   panelId={`mobile-${menuKey}-panel`}

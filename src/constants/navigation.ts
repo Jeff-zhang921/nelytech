@@ -22,7 +22,7 @@ export type ProductMenuLinkKey =
   | "touchPanels";
 
 export interface MegaMenuLink {
-  translationKey: ProductMenuLinkKey;
+  translationKey: string;
   title: string;
   description?: string;
   href: string;

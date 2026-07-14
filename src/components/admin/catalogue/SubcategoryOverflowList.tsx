@@ -14,20 +14,7 @@ import { createPortal } from "react-dom";
 
 import type { SubcategoryDraft } from "@/lib/adminCatalogueDraft";
 import { productAdminCopy as copy } from "@/lib/productAdminCopy";
-
-export const MAX_VISIBLE_SUBCATEGORIES = 5;
-
-export function splitVisibleSubcategories<T>(
-  subcategories: readonly T[],
-  maxVisible = MAX_VISIBLE_SUBCATEGORIES,
-) {
-  const visibleLimit = Math.max(0, maxVisible);
-
-  return {
-    visible: subcategories.slice(0, visibleLimit),
-    overflow: subcategories.slice(visibleLimit),
-  };
-}
+import { splitSubcategories } from "@/lib/subcategoryOverflow";
 
 type SubcategoryOverflowListProps = {
   categoryName: string;
@@ -49,7 +36,7 @@ export function SubcategoryOverflowList({
   subcategories,
   onDelete,
 }: SubcategoryOverflowListProps) {
-  const { visible, overflow } = splitVisibleSubcategories(subcategories);
+  const { visible, overflow } = splitSubcategories(subcategories);
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState<PanelPosition | null>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);

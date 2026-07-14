@@ -10,6 +10,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 interface AdminModalProps {
   isOpen: boolean;
@@ -41,6 +42,8 @@ export function AdminModal({
   const descriptionId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
 
+  useBodyScrollLock(isOpen);
+
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -48,19 +51,16 @@ export function AdminModal({
 
     const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const returnFocusTarget = returnFocusRef?.current ?? previousFocus;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
 
     window.requestAnimationFrame(() => {
       const initialFocus =
         initialFocusRef?.current ??
         dialogRef.current?.querySelector<HTMLElement>(focusableSelector);
-      initialFocus?.focus();
+      initialFocus?.focus({ preventScroll: true });
     });
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      window.requestAnimationFrame(() => returnFocusTarget?.focus());
+      window.requestAnimationFrame(() => returnFocusTarget?.focus({ preventScroll: true }));
     };
   }, [initialFocusRef, isOpen, returnFocusRef]);
 
@@ -99,7 +99,8 @@ export function AdminModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto bg-slate-950/25 p-4 backdrop-blur-sm sm:p-6"
+      data-admin-modal-root
+      className="fixed inset-0 z-[80] flex items-center justify-center overflow-hidden overscroll-none bg-slate-950/25 p-4 backdrop-blur-sm sm:p-6"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           onClose();
@@ -108,17 +109,21 @@ export function AdminModal({
     >
       <div
         ref={dialogRef}
+        data-admin-modal-panel
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
         onKeyDown={handleKeyDown}
         className={[
-          "flex max-h-[min(88vh,900px)] w-full flex-col overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.18)]",
+          "flex min-h-0 max-h-[min(900px,calc(100dvh-2rem))] w-full flex-col overflow-hidden overscroll-none rounded-2xl border border-white/70 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.18)]",
           size === "large" ? "max-w-4xl" : "max-w-2xl",
         ].join(" ")}
       >
-        <div className="flex items-start justify-between gap-6 border-b border-slate-200/70 px-6 py-5 sm:px-7">
+        <div
+          data-admin-modal-header
+          className="flex shrink-0 items-start justify-between gap-6 border-b border-slate-200/70 px-6 py-5 sm:px-7"
+        >
           <div>
             <h2 id={titleId} className="text-xl font-medium text-slate-950">
               {title}
@@ -139,10 +144,18 @@ export function AdminModal({
           </button>
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6 sm:px-7">{children}</div>
+        <div
+          data-admin-modal-body
+          className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain px-6 py-6 [scrollbar-gutter:stable] [touch-action:pan-y] sm:px-7"
+        >
+          {children}
+        </div>
 
         {footer ? (
-          <div className="flex flex-wrap items-center justify-end gap-3 border-t border-slate-200/70 bg-slate-50/70 px-6 py-4 sm:px-7">
+          <div
+            data-admin-modal-footer
+            className="flex shrink-0 flex-wrap items-center justify-end gap-3 border-t border-slate-200/70 bg-slate-50/70 px-6 py-4 sm:px-7"
+          >
             {footer}
           </div>
         ) : null}

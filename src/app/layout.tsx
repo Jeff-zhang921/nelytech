@@ -5,6 +5,7 @@ import { I18nProvider } from "@/context/I18nContext";
 import { BackToTop } from "@/components/BackToTop";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { getPublishedProductMegaMenu } from "@/data/productNavigation";
 
 import "./globals.css";
 
@@ -22,11 +23,13 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
+  const productMenu = getPublishedProductMegaMenu();
+
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body suppressHydrationWarning>
         <I18nProvider>
-          <Navbar />
+          <Navbar productMenu={productMenu} />
           {children}
           <div className="relative z-20">
             <Footer />

@@ -129,6 +129,10 @@ PRODUCT_IMAGES_PATH
 
 Use a fine-grained GitHub token limited to the target repository with Contents read/write access. Workflow permission is not required. The expected Pages build command remains `npm run pages:build`, and the build output directory remains `.vercel/output/static`.
 
+## Product Catalogue CMS
+
+See [Product Catalogue CMS Documentation](docs/product-catalogue-cms.md) for the Admin editor, GitHub publishing workflow, Cloudflare configuration, and maintenance guide.
+
 ## Development Notes
 
 - Landing page sections used by the Scroll Spy need stable `id` values on their outer `<section>` wrappers. Keep `src/components/layout/LeftSideNav.tsx` in sync when adding or reordering sections.

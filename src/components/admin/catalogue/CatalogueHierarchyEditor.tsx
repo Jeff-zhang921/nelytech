@@ -302,7 +302,7 @@ export function CatalogueHierarchyEditor() {
             <h3 id="current-subcategories-heading" className="text-sm font-medium text-slate-950">
               {copy.subcategory.current}
             </h3>
-            <div className="mt-3 max-h-80 space-y-4 overflow-y-auto rounded-xl border border-slate-200 p-3">
+            <div className="mt-3 space-y-4 rounded-xl border border-slate-200 p-3">
               {draft.categories
                 .filter((category) => !parentCategoryId || category.id === parentCategoryId)
                 .map((category) => (
