@@ -2261,36 +2261,6 @@
                   }
                 ]
               }
-            },
-            {
-              "id": "draft-product-abc",
-              "partNumber": "DRAFT-ABC",
-              "slug": "abc",
-              "name": "ABC",
-              "description": "TEST",
-              "image": "/uploads/products/abc/cover-8ba4503d79ba.png",
-              "imageAlt": "ABC product cover image",
-              "specs": [],
-              "filters": {
-                "application": [
-                  "icon-displays"
-                ],
-                "interface": [
-                  "glass-only"
-                ],
-                "format": [
-                  "7-segment"
-                ]
-              },
-              "detail": {
-                "images": [],
-                "summary": [],
-                "specifications": [],
-                "descriptionParagraphs": [],
-                "applications": [],
-                "optionGroups": [],
-                "downloads": []
-              }
             }
           ]
         },
@@ -2329,46 +2299,6 @@
           "description": "Vertical-alignment LCD options for high-contrast dark-face interfaces.",
           "parentCategoryId": "category-lcd-panels",
           "products": []
-        },
-        {
-          "id": "subcategory-test-sub",
-          "slug": "test-sub",
-          "name": "TEST SUB",
-          "shortName": "TEST SUB",
-          "description": "Product options for TEST SUB are being prepared in this unpublished draft.",
-          "parentCategoryId": "category-lcd-panels",
-          "products": [
-            {
-              "id": "draft-product-test-sub",
-              "partNumber": "DRAFT-TESTSUB",
-              "slug": "test-sub",
-              "name": "TEST SUB",
-              "description": "123",
-              "image": "/uploads/products/test-sub/cover-63c8bdd20178.png",
-              "imageAlt": "TEST SUB product cover image",
-              "specs": [],
-              "filters": {
-                "application": [
-                  "icon-displays"
-                ],
-                "interface": [
-                  "glass-only"
-                ],
-                "format": [
-                  "16x2"
-                ]
-              },
-              "detail": {
-                "images": [],
-                "summary": [],
-                "specifications": [],
-                "descriptionParagraphs": [],
-                "applications": [],
-                "optionGroups": [],
-                "downloads": []
-              }
-            }
-          ]
         }
       ]
     },
@@ -2496,7 +2426,7 @@
       ]
     }
   ],
-  "updatedAt": "2026-07-14T08:05:26.445Z",
+  "updatedAt": "2026-07-14T08:16:21.029Z",
   "filterSchemas": {
     "all": {
       "parentCategoryId": "all",
