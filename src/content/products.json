@@ -2261,6 +2261,36 @@
                   }
                 ]
               }
+            },
+            {
+              "id": "draft-product-abc",
+              "partNumber": "DRAFT-ABC",
+              "slug": "abc",
+              "name": "ABC",
+              "description": "TEST",
+              "image": "/uploads/products/abc/cover-8ba4503d79ba.png",
+              "imageAlt": "ABC product cover image",
+              "specs": [],
+              "filters": {
+                "application": [
+                  "icon-displays"
+                ],
+                "interface": [
+                  "glass-only"
+                ],
+                "format": [
+                  "7-segment"
+                ]
+              },
+              "detail": {
+                "images": [],
+                "summary": [],
+                "specifications": [],
+                "descriptionParagraphs": [],
+                "applications": [],
+                "optionGroups": [],
+                "downloads": []
+              }
             }
           ]
         },
@@ -2466,7 +2496,7 @@
       ]
     }
   ],
-  "updatedAt": "2026-07-13T15:13:39.172Z",
+  "updatedAt": "2026-07-14T08:05:26.445Z",
   "filterSchemas": {
     "all": {
       "parentCategoryId": "all",
