@@ -1,4 +1,25 @@
 import { expect, test, type Page } from "@playwright/test";
+import { canonicalCatalogue } from "@/content/catalogue";
+
+const allProductCount = canonicalCatalogue.categories.reduce(
+  (total, category) =>
+    total +
+    category.products.length +
+    category.subcategories.reduce(
+      (subcategoryTotal, subcategory) => subcategoryTotal + subcategory.products.length,
+      0,
+    ),
+  0,
+);
+const lcdPanels = canonicalCatalogue.categories.find(
+  (category) => category.slug === "lcd-panels",
+)!;
+const lcdPanelProductCount =
+  lcdPanels.products.length +
+  lcdPanels.subcategories.reduce(
+    (total, subcategory) => total + subcategory.products.length,
+    0,
+  );
 
 function productCards(page: Page) {
   return page.locator('section[aria-label="Product results"] [data-testid="product-card"]');
@@ -160,13 +181,13 @@ test.describe("product catalogue", () => {
     await expect(page).toHaveURL("/products");
     await expect(page.getByText("Filter all products")).toBeVisible();
     await expect(page.getByText("Display technology")).toHaveCount(0);
-    await expect(productCards(page)).toHaveCount(12);
+    await expect(productCards(page)).toHaveCount(allProductCount);
 
     await page.getByLabel("Search products").fill("thermostat");
     await expect(productCards(page)).toHaveCount(1);
     await expect(productCards(page).first()).toContainText("Custom Thermostat Panel");
     await page.getByRole("button", { name: /clear product search/i }).click();
-    await expect(productCards(page)).toHaveCount(12);
+    await expect(productCards(page)).toHaveCount(allProductCount);
 
     const filterSidebar = page.locator('aside[aria-label="Product filters"]');
     const applicationSection = filterSidebar.getByRole("button", { name: /^Application/ });
@@ -179,12 +200,12 @@ test.describe("product catalogue", () => {
     await applicationSection.click();
     await expect(applicationSection).toHaveText(/1 selected/);
     await page.getByRole("button", { name: /clear all/i }).click();
-    await expect(productCards(page)).toHaveCount(12);
+    await expect(productCards(page)).toHaveCount(allProductCount);
 
     await page.goto("/products/lcd-panels");
     await expect(page.getByRole("heading", { level: 1, name: "LCD Panels" })).toBeVisible();
     await expect(page.getByText("Filter products under LCD Panels")).toBeVisible();
-    await expect(productCards(page)).toHaveCount(12);
+    await expect(productCards(page)).toHaveCount(lcdPanelProductCount);
 
     await page.goto("/products/tn");
     await expect(page.getByLabel("Breadcrumb")).toContainText(
@@ -284,7 +305,7 @@ test.describe("product catalogue", () => {
     await expect(dialog.getByText("1 active")).toHaveCount(0);
     await dialog.getByRole("button", { name: "Done" }).click();
     await expect(dialog).toHaveCount(0);
-    await expect(productCards(page)).toHaveCount(12);
+    await expect(productCards(page)).toHaveCount(allProductCount);
 
     await page.goto("/products/tn");
     await expect(page.getByLabel("Breadcrumb")).toContainText(

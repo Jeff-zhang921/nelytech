@@ -2,7 +2,6 @@ import { expect, test } from "@playwright/test";
 
 import { createAdminSession, verifyAdminSession } from "@/server/admin/adminSession";
 import {
-  GitHubConflictError,
   normalizeRepositoryPath,
   publishCatalogueCommit,
 } from "@/server/admin/githubClient";
@@ -19,6 +18,10 @@ test.describe("Admin authentication and publishing", () => {
   test("protects Admin routes and creates an HTTP-only session after valid login", async ({
     page,
   }) => {
+    const protectedCatalogue = await page.request.get("/api/admin/catalogue/latest");
+    expect(protectedCatalogue.status()).toBe(401);
+    expect(protectedCatalogue.headers()["cache-control"]).toContain("no-store");
+
     await page.goto("/admin/catalogue/tn");
     await expect(page).toHaveURL(/\/admin\/login\?returnTo=/);
     await expect(page.locator('[data-interface-context="product-admin"]')).toHaveCount(0);
@@ -37,6 +40,9 @@ test.describe("Admin authentication and publishing", () => {
     await expect(page).toHaveURL("/admin/catalogue/tn");
     await page.reload();
     await expect(page.getByText("Live Preview", { exact: true })).toBeVisible();
+    const latestCatalogue = await page.request.get("/api/admin/catalogue/latest");
+    expect(latestCatalogue.status()).toBe(200);
+    expect(latestCatalogue.headers()["cache-control"]).toContain("no-store");
 
     const sessionCookie = (await page.context().cookies()).find(
       (cookie) => cookie.name === "nelytech_admin_session",
@@ -95,9 +101,13 @@ test.describe("Admin authentication and publishing", () => {
       {
         status: 409,
         body: {
-          error: "GITHUB_CONFLICT",
+          error: "REPOSITORY_CONFLICT",
           message:
-            "The repository changed while you were editing. Your draft has been preserved. Reload the latest published data before submitting again.",
+            "The catalogue changed in GitHub while you were editing. Your draft has been preserved.",
+          latestVersion: {
+            commitSha: "c".repeat(40),
+            contentSha: "d".repeat(40),
+          },
         },
       },
     ]) {
@@ -188,6 +198,14 @@ test.describe("Admin security modules", () => {
       if (url.includes("/git/commits/") && (!init?.method || init.method === "GET")) {
         return Response.json({ tree: { sha: "b".repeat(40) } });
       }
+      if (url.includes("/contents/")) {
+        return Response.json({
+          type: "file",
+          encoding: "base64",
+          sha: "9".repeat(40),
+          content: btoa("{}\n"),
+        });
+      }
       if (url.endsWith("/git/blobs")) return Response.json({ sha: "c".repeat(40) });
       if (url.endsWith("/git/trees")) return Response.json({ sha: "d".repeat(40) });
       if (url.endsWith("/git/commits")) return Response.json({ sha: "e".repeat(40) });
@@ -214,6 +232,32 @@ test.describe("Admin security modules", () => {
     const update = requests.find((request) => request.init?.method === "PATCH");
     expect(JSON.parse(String(update?.init?.body))).toMatchObject({ force: false });
 
+    const unrelatedCommitFetch = (async (
+      input: RequestInfo | URL,
+      init?: RequestInit,
+    ) => {
+      const url = String(input);
+      if (url.includes("/git/ref/heads/")) {
+        return Response.json({ object: { sha: "f".repeat(40) } });
+      }
+      return mockedFetch(input, init);
+    }) as typeof fetch;
+    const unrelatedResult = await publishCatalogueCommit(
+      {
+        GITHUB_TOKEN: "test-token-not-a-real-secret",
+        GITHUB_OWNER: "example",
+        GITHUB_REPO: "catalogue",
+        GITHUB_BRANCH: "main",
+        PRODUCTS_FILE_PATH: "src/content/products.json",
+      },
+      "{}\n",
+      [],
+      "a".repeat(40),
+      unrelatedCommitFetch,
+      "9".repeat(40),
+    );
+    expect(unrelatedResult.previousCommitSha).toBe("f".repeat(40));
+
     let conflictRefReads = 0;
     const conflictFetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
       const url = String(input);
@@ -239,6 +283,11 @@ test.describe("Admin security modules", () => {
         "a".repeat(40),
         conflictFetch,
       ),
-    ).rejects.toBeInstanceOf(GitHubConflictError);
+    ).rejects.toMatchObject({
+      latestVersion: {
+        commitSha: "f".repeat(40),
+        contentSha: "9".repeat(40),
+      },
+    });
   });
 });

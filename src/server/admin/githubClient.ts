@@ -3,8 +3,19 @@ import type { RepositoryFile } from "./imagePreparation";
 
 export type GitHubPublishResult = {
   commitSha: string;
+  contentSha: string;
   previousCommitSha: string;
   commitUrl: string;
+};
+
+export type RepositoryVersion = {
+  commitSha: string;
+  contentSha: string;
+};
+
+export type PublishedCatalogueFile = {
+  content: string;
+  version: RepositoryVersion;
 };
 
 export class GitHubConfigurationError extends Error {
@@ -15,7 +26,7 @@ export class GitHubConfigurationError extends Error {
 }
 
 export class GitHubConflictError extends Error {
-  constructor() {
+  constructor(readonly latestVersion: RepositoryVersion) {
     super("The repository branch changed during publishing.");
     this.name = "GitHubConflictError";
   }
@@ -34,6 +45,7 @@ export async function publishCatalogueCommit(
   imageFiles: RepositoryFile[],
   expectedBaseSha?: string,
   fetchImplementation: typeof fetch = fetch,
+  expectedContentSha?: string,
 ): Promise<GitHubPublishResult> {
   const configuration = getGitHubConfiguration(environment);
   const repositoryFiles: RepositoryFile[] = [
@@ -50,14 +62,19 @@ export async function publishCatalogueCommit(
   const startingHead = await client.getBranchHead();
 
   if (expectedBaseSha && expectedBaseSha !== startingHead) {
-    throw new GitHubConflictError();
+    const latestVersion = await client.getRepositoryVersion(startingHead);
+    if (!expectedContentSha || expectedContentSha !== latestVersion.contentSha) {
+      throw new GitHubConflictError(latestVersion);
+    }
   }
 
   const baseTreeSha = await client.getCommitTree(startingHead);
   const treeEntries: Array<{ path: string; mode: "100644"; type: "blob"; sha: string }> = [];
+  let catalogueContentSha = "";
 
-  for (const file of repositoryFiles) {
+  for (const [index, file] of repositoryFiles.entries()) {
     const blobSha = await client.createBlob(file.content);
+    if (index === 0) catalogueContentSha = blobSha;
     treeEntries.push({ path: file.path, mode: "100644", type: "blob", sha: blobSha });
   }
 
@@ -66,22 +83,38 @@ export async function publishCatalogueCommit(
   const latestHead = await client.getBranchHead();
 
   if (latestHead !== startingHead) {
-    throw new GitHubConflictError();
+    throw new GitHubConflictError(await client.getRepositoryVersion(latestHead));
   }
 
   try {
     await client.updateBranch(commitSha);
   } catch (error) {
     if (error instanceof GitHubApiError && (error.status === 409 || error.status === 422)) {
-      throw new GitHubConflictError();
+      throw new GitHubConflictError(await client.getRepositoryVersion());
     }
     throw error;
   }
 
   return {
     commitSha,
+    contentSha: catalogueContentSha,
     previousCommitSha: startingHead,
     commitUrl: `https://github.com/${encodeURIComponent(configuration.owner)}/${encodeURIComponent(configuration.repo)}/commit/${commitSha}`,
+  };
+}
+
+export async function loadPublishedCatalogueFile(
+  environment: AdminEnvironment,
+  fetchImplementation: typeof fetch = fetch,
+): Promise<PublishedCatalogueFile> {
+  const configuration = getGitHubConfiguration(environment);
+  const client = createGitHubClient(configuration, fetchImplementation);
+  const commitSha = await client.getBranchHead();
+  const file = await client.getRepositoryFile(commitSha);
+
+  return {
+    content: file.content,
+    version: { commitSha, contentSha: file.contentSha },
   };
 }
 
@@ -105,7 +138,9 @@ function getGitHubConfiguration(environment: AdminEnvironment) {
   const repo = environment.GITHUB_REPO?.trim();
   const branch = environment.GITHUB_BRANCH?.trim() || "main";
   const token = environment.GITHUB_TOKEN;
-  const productsFilePath = environment.PRODUCTS_FILE_PATH?.trim() || "src/content/products.json";
+  const productsFilePath = normalizeRepositoryPath(
+    environment.PRODUCTS_FILE_PATH?.trim() || "src/content/products.json",
+  );
 
   if (
     !owner ||
@@ -169,6 +204,34 @@ function createGitHubClient(
       if (!isRecord(tree) || typeof tree.sha !== "string") throw new GitHubApiError(502);
       return tree.sha;
     },
+    async getRepositoryFile(commitSha: string) {
+      const filePath = configuration.productsFilePath
+        .split("/")
+        .map(encodeURIComponent)
+        .join("/");
+      const result = await request(
+        `/contents/${filePath}?ref=${encodeURIComponent(commitSha)}`,
+      );
+
+      if (
+        result.type !== "file" ||
+        result.encoding !== "base64" ||
+        typeof result.sha !== "string" ||
+        typeof result.content !== "string"
+      ) {
+        throw new GitHubApiError(502);
+      }
+
+      return {
+        content: decodeBase64Text(result.content),
+        contentSha: result.sha,
+      };
+    },
+    async getRepositoryVersion(commitSha?: string) {
+      const latestCommitSha = commitSha ?? (await this.getBranchHead());
+      const file = await this.getRepositoryFile(latestCommitSha);
+      return { commitSha: latestCommitSha, contentSha: file.contentSha };
+    },
     async createBlob(content: Uint8Array) {
       const result = await request("/git/blobs", {
         method: "POST",
@@ -207,6 +270,16 @@ function createGitHubClient(
       });
     },
   };
+}
+
+function decodeBase64Text(value: string) {
+  try {
+    const binary = atob(value.replace(/\s/g, ""));
+    const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  } catch {
+    throw new GitHubApiError(502);
+  }
 }
 
 function bytesToBase64(bytes: Uint8Array) {

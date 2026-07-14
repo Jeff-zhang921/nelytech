@@ -5,6 +5,7 @@ import {
   CheckCircle2,
   LoaderCircle,
   LogOut,
+  RefreshCw,
   RotateCcw,
   Save,
   ShieldCheck,
@@ -29,8 +30,16 @@ export function AdminCatalogueLayout({ children }: { children: ReactNode }) {
     saveStatus,
     statusMessage,
     validationErrors,
+    hasClientValidationErrors,
     pendingNavigation,
+    repositoryConflict,
+    isAuthenticationExpired,
     submitDraft,
+    closeRepositoryConflict,
+    loadLatestAndKeepDraft,
+    acceptDraftConflictValues,
+    dismissAuthenticationExpired,
+    continueToLogin,
     discardUnsavedChanges,
     resetToPublishedData,
     cancelPendingNavigation,
@@ -45,8 +54,11 @@ export function AdminCatalogueLayout({ children }: { children: ReactNode }) {
   const cancelConfirmationRef = useRef<HTMLButtonElement>(null);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const continueEditingRef = useRef<HTMLButtonElement>(null);
+  const conflictStayRef = useRef<HTMLButtonElement>(null);
+  const conflictPrimaryRef = useRef<HTMLButtonElement>(null);
+  const authStayRef = useRef<HTMLButtonElement>(null);
   const submissionSuccess = getSubmissionSuccessCopy(productAdminSubmissionMode);
-  const cannotSubmit = validationErrors.length > 0 || saveStatus === "saving" || !isDirty;
+  const cannotSubmit = hasClientValidationErrors || saveStatus === "saving" || !isDirty;
 
   async function handleSubmit() {
     if (cannotSubmit) return;
@@ -138,6 +150,7 @@ export function AdminCatalogueLayout({ children }: { children: ReactNode }) {
             onClick={handleSubmit}
             disabled={saveStatus === "saving"}
             aria-disabled={cannotSubmit}
+            aria-busy={saveStatus === "saving"}
             className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-slate-950 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 disabled:cursor-wait disabled:bg-slate-300 aria-disabled:cursor-not-allowed aria-disabled:bg-slate-300 aria-disabled:hover:bg-slate-300 focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             {saveStatus === "saving" ? (
@@ -151,7 +164,154 @@ export function AdminCatalogueLayout({ children }: { children: ReactNode }) {
       </div>
 
       <AdminModal
-        isOpen={Boolean(pendingNavigation)}
+        isOpen={Boolean(repositoryConflict?.isOpen && !isAuthenticationExpired)}
+        title="The catalogue changed in GitHub"
+        description="Another update was published after you started editing. Your current draft is still preserved. Load the latest published catalogue before submitting again."
+        onClose={closeRepositoryConflict}
+        initialFocusRef={conflictPrimaryRef}
+        returnFocusRef={submitButtonRef}
+        footer={
+          repositoryConflict?.phase === "merge-conflicts" ? (
+            <>
+              <button
+                ref={conflictStayRef}
+                type="button"
+                onClick={closeRepositoryConflict}
+                className="h-10 rounded-xl px-4 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:outline-none"
+              >
+                Stay in the Editor
+              </button>
+              <button
+                ref={conflictPrimaryRef}
+                type="button"
+                onClick={acceptDraftConflictValues}
+                className="h-10 rounded-xl bg-slate-950 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 focus-visible:outline-none"
+              >
+                Keep My Draft Values
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                ref={conflictStayRef}
+                type="button"
+                onClick={closeRepositoryConflict}
+                disabled={repositoryConflict?.phase === "loading"}
+                className="h-10 rounded-xl px-4 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 disabled:cursor-wait disabled:text-slate-400 focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:outline-none"
+              >
+                Stay in the Editor
+              </button>
+              <button
+                ref={conflictPrimaryRef}
+                type="button"
+                onClick={() => void loadLatestAndKeepDraft()}
+                disabled={repositoryConflict?.phase === "loading"}
+                className="inline-flex h-10 items-center gap-2 rounded-xl bg-slate-950 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 disabled:cursor-wait disabled:bg-slate-400 focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 focus-visible:outline-none"
+              >
+                <RefreshCw
+                  className={[
+                    "h-4 w-4",
+                    repositoryConflict?.phase === "loading" ? "animate-spin" : "",
+                  ].join(" ")}
+                  aria-hidden="true"
+                />
+                {repositoryConflict?.phase === "loading"
+                  ? "Loading Latest..."
+                  : "Load Latest and Keep My Draft"}
+              </button>
+            </>
+          )
+        }
+      >
+        <div className="space-y-4">
+          <div className="flex gap-4 rounded-xl border border-amber-200/80 bg-amber-50/60 p-4">
+            <AlertTriangle
+              className="mt-0.5 h-5 w-5 shrink-0 text-amber-700"
+              aria-hidden="true"
+            />
+            <div>
+              <p className="text-sm font-medium text-slate-950">
+                Your unpublished work has not been removed.
+              </p>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                {repositoryConflict?.message}
+              </p>
+              {repositoryConflict?.latestVersion ? (
+                <p className="mt-2 font-mono text-xs text-slate-500">
+                  Latest commit: {repositoryConflict.latestVersion.commitSha.slice(0, 12)}
+                </p>
+              ) : null}
+            </div>
+          </div>
+
+          {repositoryConflict?.refreshError ? (
+            <p
+              role="alert"
+              className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700"
+            >
+              {repositoryConflict.refreshError}
+            </p>
+          ) : null}
+
+          {repositoryConflict?.phase === "merge-conflicts" ? (
+            <div className="rounded-xl border border-slate-200 p-4">
+              <p className="text-sm font-semibold text-slate-950">
+                Overlapping changes need your decision
+              </p>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                The rebased draft currently keeps your values for these fields. Confirm that choice
+                before submitting again.
+              </p>
+              <ul className="mt-3 max-h-40 space-y-2 overflow-y-auto text-xs text-slate-600">
+                {repositoryConflict.mergeConflicts.slice(0, 20).map((conflict) => (
+                  <li key={`${conflict.path}:${conflict.message}`}>
+                    <code className="font-mono text-slate-800">{conflict.path}</code>
+                    <span className="ml-2">{conflict.message}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+        </div>
+      </AdminModal>
+
+      <AdminModal
+        isOpen={isAuthenticationExpired}
+        title="Admin session expired"
+        description="Sign in again to publish. Your current catalogue draft is preserved on this device."
+        onClose={dismissAuthenticationExpired}
+        initialFocusRef={authStayRef}
+        returnFocusRef={submitButtonRef}
+        footer={
+          <>
+            <button
+              ref={authStayRef}
+              type="button"
+              onClick={dismissAuthenticationExpired}
+              className="h-10 rounded-xl px-4 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:outline-none"
+            >
+              Stay in the Editor
+            </button>
+            <button
+              type="button"
+              onClick={continueToLogin}
+              className="h-10 rounded-xl bg-slate-950 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 focus-visible:outline-none"
+            >
+              Sign In Again
+            </button>
+          </>
+        }
+      >
+        <p className="text-sm leading-6 text-slate-600">
+          No edits have been discarded. After signing in, you will return to this editor and can
+          submit the preserved draft again.
+        </p>
+      </AdminModal>
+
+      <AdminModal
+        isOpen={Boolean(
+          pendingNavigation && !repositoryConflict?.isOpen && !isAuthenticationExpired,
+        )}
         title={copy.navigation.title}
         description={copy.navigation.message}
         onClose={cancelPendingNavigation}

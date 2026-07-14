@@ -1,11 +1,22 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import { authenticateAdmin } from "./adminTestHelpers";
+import { canonicalCatalogue } from "@/content/catalogue";
 
 import { validateProductFilterValues } from "@/components/products/productFiltering";
 import {
   getFilterSchemaForCatalogueNode,
   normalizeFilterValues,
 } from "@/data/categoryFilterSchemas";
+
+const lcdPanels = canonicalCatalogue.categories.find(
+  (category) => category.slug === "lcd-panels",
+)!;
+const lcdPanelProductCount =
+  lcdPanels.products.length +
+  lcdPanels.subcategories.reduce(
+    (total, subcategory) => total + subcategory.products.length,
+    0,
+  );
 
 const testPng = {
   name: "schema-product.png",
@@ -185,7 +196,7 @@ test.describe("predefined category filter schemas", () => {
     page,
   }) => {
     await page.goto("/products/lcd-panels");
-    await expect(page.getByTestId("product-card")).toHaveCount(12);
+    await expect(page.getByTestId("product-card")).toHaveCount(lcdPanelProductCount);
     let filters = page.getByRole("complementary", { name: "Product filters" });
     await expect(optionRow(filters, "Counters")).toContainText("1");
 
@@ -208,7 +219,9 @@ test.describe("predefined category filter schemas", () => {
     page,
   }) => {
     await page.goto("/admin/catalogue/lcd-panels");
-    await expect(page.getByText("12 products", { exact: true })).toBeVisible();
+    await expect(
+      page.getByText(`${lcdPanelProductCount} products`, { exact: true }),
+    ).toBeVisible();
     const filters = page.getByRole("complementary", { name: "Product filters" });
     await expect(optionRow(filters, "Counters")).toContainText("1");
 

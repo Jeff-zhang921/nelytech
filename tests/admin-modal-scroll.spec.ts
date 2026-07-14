@@ -206,6 +206,7 @@ test.describe("Product Panel Extension modal scrolling", () => {
   }) => {
     await page.setViewportSize({ width: 1100, height: 620 });
     await page.goto("/admin/catalogue");
+    await expect(page.getByRole("status")).toContainText("Published Product Catalogue loaded");
 
     let pageScroll = await scrollPagePartway(page);
     const editCatalogue = page.getByRole("button", { name: "Edit Catalogue" });
@@ -316,6 +317,7 @@ test.describe("Product Panel Extension mobile drawer scrolling", () => {
 
   test("keeps the filter drawer anchored during touch scrolling", async ({ page }) => {
     await authenticateAdmin(page, "/admin/catalogue/tn");
+    await expect(page.getByRole("status")).toContainText("Published Product Catalogue loaded");
     const pageScroll = await scrollPagePartway(page);
     const trigger = page.getByRole("button", { name: /^Filters/ });
     await clickWithoutChangingPageScroll(trigger);

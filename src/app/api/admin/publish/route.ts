@@ -85,6 +85,7 @@ export async function POST(request: Request) {
       serializedCatalogue,
       imageResult.files,
       submission.baseCommitSha,
+      submission.baseContentSha,
     );
 
     return jsonResponse({
@@ -101,9 +102,13 @@ export async function POST(request: Request) {
       return validationResponse([{ path: error.path, message: error.message }]);
     }
     if (error instanceof GitHubConflictError) {
-      return errorResponse(
-        "GITHUB_CONFLICT",
-        "The repository changed while you were editing. Your draft has been preserved. Reload the latest published data before submitting again.",
+      return jsonResponse(
+        {
+          error: "REPOSITORY_CONFLICT",
+          message:
+            "The repository changed while you were editing. Your draft has been preserved.",
+          latestVersion: error.latestVersion,
+        },
         409,
       );
     }
@@ -157,6 +162,7 @@ async function parsePublishSubmission(request: Request) {
     return {
       draft: body.draft,
       baseCommitSha: parseBaseCommitSha(body.baseCommitSha),
+      baseContentSha: parseBaseCommitSha(body.baseContentSha),
       manifest: [] as PublishImageManifestEntry[],
       formData: new FormData(),
     };
@@ -198,6 +204,7 @@ async function parsePublishSubmission(request: Request) {
   return {
     draft,
     baseCommitSha: parseBaseCommitSha(formData.get("baseCommitSha")),
+    baseContentSha: parseBaseCommitSha(formData.get("baseContentSha")),
     manifest: manifest as PublishImageManifestEntry[],
     formData,
   };
@@ -208,12 +215,19 @@ async function publishWithConfiguredProvider(
   catalogueJson: string,
   imageFiles: Parameters<typeof publishCatalogueCommit>[2],
   baseCommitSha?: string,
+  baseContentSha?: string,
 ) {
-  if (environment.E2E_GITHUB_MOCK_MODE === "conflict") throw new GitHubConflictError();
+  if (environment.E2E_GITHUB_MOCK_MODE === "conflict") {
+    throw new GitHubConflictError({
+      commitSha: "cccccccccccccccccccccccccccccccccccccccc",
+      contentSha: "dddddddddddddddddddddddddddddddddddddddd",
+    });
+  }
   if (environment.E2E_GITHUB_MOCK_MODE === "failure") throw new GitHubApiError(500);
   if (environment.E2E_GITHUB_MOCK_MODE === "success") {
     return {
       commitSha: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      contentSha: "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       previousCommitSha: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
       commitUrl: "https://github.com/example/example/commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     };
@@ -224,6 +238,8 @@ async function publishWithConfiguredProvider(
     catalogueJson,
     imageFiles,
     baseCommitSha,
+    fetch,
+    baseContentSha,
   );
 }
 

@@ -143,13 +143,32 @@ export const localPublishedCatalogueRepository = createLocalCatalogueRepository(
 );
 
 export const localCataloguePublishMetadata = {
-  loadCommitSha() {
+  loadVersion(): { commitSha: string; contentSha?: string } | undefined {
     if (typeof window === "undefined") return undefined;
     const value = window.localStorage.getItem(publishMetadataStorageKey);
-    return value && /^[a-f0-9]{40,64}$/i.test(value) ? value : undefined;
+    if (!value) return undefined;
+
+    if (/^[a-f0-9]{40,64}$/i.test(value)) {
+      return { commitSha: value };
+    }
+
+    try {
+      const parsed = JSON.parse(value) as { commitSha?: unknown; contentSha?: unknown };
+      if (typeof parsed.commitSha !== "string" || !/^[a-f0-9]{40,64}$/i.test(parsed.commitSha)) {
+        return undefined;
+      }
+      return {
+        commitSha: parsed.commitSha,
+        ...(typeof parsed.contentSha === "string" && /^[a-f0-9]{40,64}$/i.test(parsed.contentSha)
+          ? { contentSha: parsed.contentSha }
+          : {}),
+      };
+    } catch {
+      return undefined;
+    }
   },
-  saveCommitSha(commitSha: string) {
-    window.localStorage.setItem(publishMetadataStorageKey, commitSha);
+  saveVersion(version: { commitSha: string; contentSha?: string }) {
+    window.localStorage.setItem(publishMetadataStorageKey, JSON.stringify(version));
   },
   clear() {
     window.localStorage.removeItem(publishMetadataStorageKey);

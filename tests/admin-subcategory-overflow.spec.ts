@@ -1,7 +1,14 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { canonicalCatalogue } from "@/content/catalogue";
+import { MAX_VISIBLE_SUBCATEGORIES } from "@/lib/subcategoryOverflow";
 import { authenticateAdmin } from "./adminTestHelpers";
 
 const LCD_PANELS = "LCD Panels";
+const publishedLcdPanelSubcategories = canonicalCatalogue.categories.find(
+  (category) => category.slug === "lcd-panels",
+)!.subcategories.length;
+const seededOverflowCount =
+  publishedLcdPanelSubcategories + 2 - MAX_VISIBLE_SUBCATEGORIES;
 
 function catalogueCard(page: Page, categoryName = LCD_PANELS) {
   return page.locator("article").filter({
@@ -60,7 +67,7 @@ test.describe("Product Panel Extension subcategory overflow", () => {
 
     const card = catalogueCard(page);
     const trigger = card.getByRole("button", {
-      name: `View 2 more subcategories in ${LCD_PANELS}`,
+      name: `View ${seededOverflowCount} more subcategories in ${LCD_PANELS}`,
     });
 
     await expect(trigger).toBeVisible();
@@ -73,10 +80,9 @@ test.describe("Product Panel Extension subcategory overflow", () => {
     await expect(panel).toBeVisible();
     await panel.getByRole("link", { name: /Overflow Six/ }).hover();
     await expect(panel).toBeVisible();
-    await expect(panel.getByRole("link")).toHaveText([
-      /Overflow Six/,
-      /Overflow Seven/,
-    ]);
+    await expect(panel.getByRole("link")).toHaveCount(seededOverflowCount);
+    await expect(panel.getByRole("link", { name: /Overflow Six/ })).toBeVisible();
+    await expect(panel.getByRole("link", { name: /Overflow Seven/ })).toBeVisible();
     await expectInsideViewport(panel, page);
 
     await panel.getByRole("link", { name: /Overflow Six/ }).click();
@@ -86,7 +92,7 @@ test.describe("Product Panel Extension subcategory overflow", () => {
 
     await page.goBack();
     const restoredTrigger = catalogueCard(page).getByRole("button", {
-      name: `View 2 more subcategories in ${LCD_PANELS}`,
+      name: `View ${seededOverflowCount} more subcategories in ${LCD_PANELS}`,
     });
     await restoredTrigger.focus();
     await page.keyboard.press("Enter");
@@ -105,6 +111,7 @@ test.describe("Product Panel Extension subcategory overflow", () => {
   }) => {
     await seedOverflow(page);
     await deleteSubcategory(page, "HTN (High Twisted Nematic)");
+    await deleteSubcategory(page, "STN (Super Twisted Nematic)");
 
     const card = catalogueCard(page);
     await expect(card.getByRole("link", { name: /Overflow Six/ })).toBeVisible();
@@ -117,7 +124,7 @@ test.describe("Product Panel Extension subcategory overflow", () => {
     await expect(panel.getByRole("link", { name: /Overflow Six/ })).toHaveCount(0);
 
     await page.keyboard.press("Escape");
-    await deleteSubcategory(page, "STN (Super Twisted Nematic)");
+    await deleteSubcategory(page, "FSTN (Film Compensated STN)");
     await expect(
       catalogueCard(page).getByRole("button", { name: /more subcategories/i }),
     ).toHaveCount(0);
@@ -129,7 +136,7 @@ test.describe("Product Panel Extension subcategory overflow", () => {
     await seedOverflow(page);
 
     const trigger = catalogueCard(page).getByRole("button", {
-      name: `View 2 more subcategories in ${LCD_PANELS}`,
+      name: `View ${seededOverflowCount} more subcategories in ${LCD_PANELS}`,
     });
     await trigger.click();
 
