@@ -12,7 +12,6 @@ interface FooterLink {
 
 const companyLinks = [
   { labelKey: "footer.browseProducts", href: "/products" },
-  { labelKey: "footer.knowledgeCenter", href: "/contact#knowledge-center" },
   { labelKey: "footer.aboutUs", href: "/about" },
   { labelKey: "footer.contactUs", href: "/contact" },
 ] as const satisfies readonly FooterLink[];
@@ -21,14 +20,12 @@ const productLinks = [
   { labelKey: "footer.lcdPanels", href: "/products/lcd-panels" },
   { labelKey: "footer.lcdModules", href: "/products/lcd-modules" },
   { labelKey: "footer.assemblyTechnologies", href: "/products/assembly-technologies" },
-  { labelKey: "footer.customPcbaMcu", href: "/products/custom-pcba-mcu" },
-  { labelKey: "footer.touchPanels", href: "/products/touch-panels" },
+  { labelKey: "footer.advancedCustomSolutions", href: "/products/custom-solutions" },
 ] as const satisfies readonly FooterLink[];
 
 const phoneNumbers = ["86-755-29640281", "86-755-29640221", "86-755-29640231"] as const;
 
-const qrCells =
-  "1110111100100101011011101000111000101110101111000100101001111101011".split("");
+
 
 export function Footer() {
   const { t } = useI18n();
@@ -125,9 +122,8 @@ export function Footer() {
 
             <div className="mt-7">
               <p className="text-sm font-semibold text-slate-950">
-                {text("footer.productCatalogue")}
               </p>
-              <QrPlaceholder label={text("footer.qrLabel")} />
+
             </div>
           </section>
 
@@ -169,26 +165,7 @@ export function Footer() {
   );
 }
 
-interface QrPlaceholderProps {
-  label: string;
-}
 
-function QrPlaceholder({ label }: QrPlaceholderProps) {
-  return (
-    <div
-      role="img"
-      aria-label={label}
-      className="mt-3 grid h-24 w-24 grid-cols-7 gap-1 rounded-md border border-slate-200 bg-white p-2 shadow-sm"
-    >
-      {qrCells.map((cell, index) => (
-        <span
-          key={`${cell}-${index}`}
-          className={cell === "1" ? "rounded-[1px] bg-slate-950" : "rounded-[1px] bg-transparent"}
-        />
-      ))}
-    </div>
-  );
-}
 
 interface IconProps {
   className?: string;

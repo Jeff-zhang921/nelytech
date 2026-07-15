@@ -225,11 +225,16 @@ test.describe("predefined category filter schemas", () => {
     const filters = page.getByRole("complementary", { name: "Product filters" });
     await expect(optionRow(filters, "Counters")).toContainText("1");
 
-    await page
-      .getByTestId("product-card")
-      .filter({ hasText: "4-Digit 7-Segment Display" })
-      .click();
-    await expect(page).toHaveURL("/admin/catalogue/tn/4-digit-7-segment-display");
+    const productDetailLink = page.getByRole("link", {
+      name: "Edit Product Details for 4-Digit 7-Segment Display",
+    });
+    const productDetailPath = "/admin/catalogue/tn/4-digit-7-segment-display";
+
+    await expect(productDetailLink).toHaveAttribute("href", productDetailPath);
+    await Promise.all([
+      page.waitForURL(productDetailPath, { timeout: 15_000 }),
+      productDetailLink.click(),
+    ]);
   });
 
   test("Admin siblings and new subcategories inherit selectable parent filters", async ({

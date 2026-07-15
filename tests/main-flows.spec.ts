@@ -126,6 +126,10 @@ test.describe("NELYTECH critical user flows", () => {
     await page
       .getByLabel(/^Message/)
       .fill("Testing the custom LCD and PCBA inquiry flow from Playwright.");
+    await page
+      .getByRole("region", { name: /What are you interested in/i })
+      .getByText("I'm not sure - I need guidance", { exact: true })
+      .click();
 
     await page.getByRole("button", { name: /send inquiry/i }).click();
 

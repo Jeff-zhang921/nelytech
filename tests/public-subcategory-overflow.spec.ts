@@ -13,7 +13,7 @@ function productSection(panel: Locator, sectionKey: string) {
 }
 
 async function openDesktopProductsPanel(page: Page, pathname: string) {
-  await page.goto(pathname);
+  await page.goto(pathname, { waitUntil: "domcontentloaded" });
   await page.getByRole("button", { name: /^Products/i }).hover();
 
   const panel = page.locator("#products-mega-menu");

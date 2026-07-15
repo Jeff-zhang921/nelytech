@@ -6,8 +6,12 @@ import { useSearchParams } from "next/navigation";
 import { Toaster, toast } from "sonner";
 
 import { sendContactEmail } from "@/actions/sendEmail";
+import { ProductInterestSelector } from "@/components/contact/ProductInterestSelector";
 import { useI18n } from "@/context/I18nContext";
-import { getProductDetailBySlug } from "@/data/productDetails";
+import {
+  resolveProductBySlug,
+  type ProductInterestValue,
+} from "@/data/productInterest";
 
 const countryOptionKeys = [
   "unitedStates",
@@ -63,20 +67,11 @@ const countryOptionKeys = [
   "other",
 ] as const;
 
-const productOptionKeys = [
-  "generalInquiry",
-  "customTnStnDisplay",
-  "tftColorModule",
-  "bespokePcbaSolution",
-  "touchPanelIntegration",
-] as const;
-
 interface ContactFormState {
   name: string;
   workEmail: string;
   company: string;
   countryRegion: string;
-  productInterest: string;
   message: string;
 }
 
@@ -85,7 +80,6 @@ const initialFormState: ContactFormState = {
   workEmail: "",
   company: "",
   countryRegion: "",
-  productInterest: "",
   message: "",
 };
 
@@ -95,7 +89,7 @@ interface ContactFormProps {
 
 export function ContactForm({ variant = "section" }: ContactFormProps) {
   return (
-    <Suspense fallback={<ContactFormContent variant={variant} productInterestFromUrl="" />}>
+    <Suspense fallback={<ContactFormContent variant={variant} initialProductInterest={null} />}>
       <ContactFormWithSearchParams variant={variant} />
     </Suspense>
   );
@@ -104,43 +98,39 @@ export function ContactForm({ variant = "section" }: ContactFormProps) {
 function ContactFormWithSearchParams({ variant = "section" }: ContactFormProps) {
   const searchParams = useSearchParams();
   const productSlugFromUrl = searchParams.get("product")?.trim() ?? "";
-  const productInterestFromUrl = productSlugFromUrl
-    ? getProductDetailBySlug(productSlugFromUrl)?.name ?? productSlugFromUrl
-    : "";
+  const initialProductInterest = productSlugFromUrl
+    ? resolveProductBySlug(productSlugFromUrl)?.value ?? null
+    : null;
 
   return (
     <ContactFormContent
-      key={productInterestFromUrl}
+      key={productSlugFromUrl}
       variant={variant}
-      productInterestFromUrl={productInterestFromUrl}
+      initialProductInterest={initialProductInterest}
     />
   );
 }
 
 interface ContactFormContentProps extends ContactFormProps {
-  productInterestFromUrl: string;
+  initialProductInterest: ProductInterestValue | null;
 }
 
 function ContactFormContent({
   variant = "section",
-  productInterestFromUrl,
+  initialProductInterest,
 }: ContactFormContentProps) {
   const { t } = useI18n();
   const [isPending, startTransition] = useTransition();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState<ContactFormState>(() => ({
-    ...initialFormState,
-    productInterest: productInterestFromUrl,
-  }));
+  const [formData, setFormData] = useState<ContactFormState>(initialFormState);
+  const [productInterest, setProductInterest] = useState<ProductInterestValue | null>(
+    initialProductInterest,
+  );
+  const [productInterestError, setProductInterestError] = useState("");
   const isEmbedded = variant === "embedded";
-  const isProductInterestLocked = productInterestFromUrl.length > 0;
   const isSubmitDisabled = isPending || isSubmitting;
   const countryOptions = useMemo(
     () => countryOptionKeys.map((key) => t(`contactForm.countries.${key}`)),
-    [t],
-  );
-  const productOptions = useMemo(
-    () => productOptionKeys.map((key) => t(`contactForm.productOptions.${key}`)),
     [t],
   );
 
@@ -153,6 +143,20 @@ function ContactFormContent({
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (!productInterest) {
+      setProductInterestError(
+        t("contactForm.productInterestSelector.validation"),
+      );
+      requestAnimationFrame(() => {
+        document
+          .querySelector<HTMLElement>("[data-product-interest-focus='true']")
+          ?.focus();
+      });
+      return;
+    }
+
+    setProductInterestError("");
     const submissionData = new FormData(event.currentTarget);
 
     setIsSubmitting(true);
@@ -167,11 +171,9 @@ function ContactFormContent({
             return;
           }
 
-          toast.success("Inquiry sent successfully. Our engineering team will follow up shortly.");
-          setFormData({
-            ...initialFormState,
-            productInterest: productInterestFromUrl,
-          });
+          toast.success(t("contactForm.success"));
+          setFormData(initialFormState);
+          setProductInterest(initialProductInterest);
         } finally {
           setIsSubmitting(false);
         }
@@ -258,44 +260,14 @@ function ContactFormContent({
           onChange={(value) => updateField("countryRegion", value)}
         />
 
-        {isProductInterestLocked ? (
-          <FormField
-            label={t("contactForm.fields.productInterest.label")}
-            htmlFor="contact-product-interest"
-            className="md:col-span-2"
-          >
-            <div className="relative">
-              <input
-                id="contact-product-interest"
-                name="interest"
-                type="text"
-                readOnly
-                value={productInterestFromUrl}
-                className={`${lockedInputClassName} pr-12`}
-                aria-describedby="contact-product-interest-note"
-              />
-              <span className="absolute inset-y-0 right-4 flex items-center text-blue-700">
-                <LockIcon />
-              </span>
-            </div>
-            <p id="contact-product-interest-note" className="mt-2 text-xs text-slate-500">
-              {t("contactForm.lockedNote")}
-            </p>
-          </FormField>
-        ) : (
-          <SearchableDropdown
-            id="contact-product-interest"
-            name="interest"
-            label={t("contactForm.fields.productInterest.label")}
-            value={formData.productInterest}
-            options={productOptions}
-            placeholder={t("contactForm.fields.productInterest.placeholder")}
-            noMatchesLabel={t("contactForm.noMatches")}
-            openOptionsLabel={t("contactForm.openOptions")}
-            onChange={(value) => updateField("productInterest", value)}
-            className="md:col-span-2"
-          />
-        )}
+        <ProductInterestSelector
+          value={productInterest}
+          error={productInterestError}
+          onChange={(nextValue) => {
+            setProductInterest(nextValue);
+            setProductInterestError("");
+          }}
+        />
 
         <FormField
           label={t("contactForm.fields.message.label")}
@@ -326,7 +298,7 @@ function ContactFormContent({
                 : "hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/20",
             ].join(" ")}
           >
-            {isSubmitDisabled ? "Sending..." : t("contactForm.submit")}
+            {isSubmitDisabled ? t("contactForm.sending") : t("contactForm.submit")}
           </button>
         </div>
       </form>
@@ -540,22 +512,5 @@ function ChevronIcon() {
   );
 }
 
-function LockIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" aria-hidden="true">
-      <path
-        d="M6.5 8V6.4a3.5 3.5 0 0 1 7 0V8M5.5 8h9a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 const inputClassName =
   "h-14 w-full rounded-xl border border-transparent bg-slate-100 px-4 text-base text-slate-950 transition-all placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600";
-
-const lockedInputClassName =
-  "h-14 w-full cursor-default rounded-xl border border-blue-100 bg-blue-50 px-4 text-base font-medium text-slate-950 outline-none ring-1 ring-blue-100";

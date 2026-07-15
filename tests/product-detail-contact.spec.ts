@@ -149,10 +149,26 @@ test.describe("product detail contact CTA", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: /Contact NELYTECH/i }),
     ).toBeVisible();
-    await expect(page.getByLabel(/Product Interest/i)).toHaveValue(
-      "4-Digit 7-Segment Display",
+    const productInterest = page.getByRole("region", {
+      name: /What are you interested in/i,
+    });
+    await expect(
+      productInterest.getByRole("radio", { name: /LCD Panels \(Monochrome\)/i }),
+    ).toBeChecked();
+    await expect(
+      productInterest.getByRole("radio", { name: /TN \(Twisted Nematic\)/i }),
+    ).toBeChecked();
+    await expect(productInterest).toContainText(
+      /LCD Panels \(Monochrome\)[\s\S]*TN \(Twisted Nematic\)[\s\S]*4-Digit 7-Segment Display/,
     );
-    await expect(page.getByText(/Captured from the product page/i)).toBeVisible();
+    await expect(page.locator('input[name="parentCategoryId"]')).toHaveValue(
+      "category-lcd-panels",
+    );
+    await expect(page.locator('input[name="subcategoryId"]')).toHaveValue(
+      "subcategory-tn",
+    );
+    await expect(page.locator('input[name="productId"]')).toHaveValue("prod_tn_01");
+    await expect(productInterest.getByRole("button", { name: "Change" })).toBeVisible();
     await expect(page.getByText("English Only", { exact: true })).toHaveCount(0);
     await expect(page.getByRole("button", { name: /language/i })).toBeVisible();
 
@@ -206,9 +222,11 @@ test.describe("product detail contact CTA", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: /Contact NELYTECH/i }),
     ).toBeVisible();
-    await expect(page.getByLabel(/Product Interest/i)).toHaveValue(
-      "4-Digit 7-Segment Display",
-    );
+    const productInterest = page.getByRole("region", {
+      name: /What are you interested in/i,
+    });
+    await expect(productInterest).toContainText("4-Digit 7-Segment Display");
+    await expect(page.locator('input[name="productId"]')).toHaveValue("prod_tn_01");
 
     expect(browserErrors).toEqual([]);
   });

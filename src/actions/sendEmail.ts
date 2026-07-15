@@ -2,6 +2,12 @@
 
 import nodemailer from "nodemailer";
 
+import {
+  getCanonicalProductInterestSummary,
+  resolveProductInterest,
+  type ProductInterestValue,
+} from "@/data/productInterest";
+
 const CONTACT_EMAIL = "zjingxiang527@gmail.com";
 
 export type SendContactEmailResult =
@@ -45,6 +51,7 @@ function createEmailHtml(fields: {
   company: string;
   country: string;
   interest: string;
+  interestReference: string;
   message: string;
 }): string {
   return `
@@ -68,6 +75,7 @@ function createEmailHtml(fields: {
               ${renderTableRow("Company", fields.company)}
               ${renderTableRow("Country / Region", fields.country)}
               ${renderTableRow("Product Interest", fields.interest)}
+              ${renderTableRow("Catalogue Reference", fields.interestReference)}
             </table>
 
             <div style="padding: 26px 30px 32px;">
@@ -94,8 +102,8 @@ export async function sendContactEmail(formData: FormData): Promise<SendContactE
   const email = getStringField(formData, "email");
   const company = getStringField(formData, "company");
   const country = getStringField(formData, "country");
-  const interest = getStringField(formData, "interest");
   const message = getStringField(formData, "message");
+  const productInterest = parseProductInterest(formData);
 
   if (!name || !email || !message) {
     return { error: "Please complete your name, work email, and project details." };
@@ -104,6 +112,19 @@ export async function sendContactEmail(formData: FormData): Promise<SendContactE
   if (!isValidEmail(email)) {
     return { error: "Please enter a valid work email address." };
   }
+
+  if (!productInterest) {
+    return { error: "Select a valid product category or choose that you need guidance." };
+  }
+
+  const resolvedInterest = resolveProductInterest(productInterest);
+  const interest = getCanonicalProductInterestSummary(productInterest);
+
+  if (!resolvedInterest || !interest) {
+    return { error: "The selected product interest is no longer available. Please choose again." };
+  }
+
+  const interestReference = createProductInterestReference(productInterest);
 
   if (process.env.E2E_CONTACT_EMAIL_MOCK === "true") {
     const delayMs = Number(process.env.E2E_CONTACT_EMAIL_MOCK_DELAY_MS ?? "0");
@@ -151,6 +172,7 @@ export async function sendContactEmail(formData: FormData): Promise<SendContactE
         company,
         country,
         interest,
+        interestReference,
         message,
       }),
       text: [
@@ -161,6 +183,7 @@ export async function sendContactEmail(formData: FormData): Promise<SendContactE
         `Company: ${company || "-"}`,
         `Country / Region: ${country || "-"}`,
         `Product Interest: ${interest || "-"}`,
+        `Catalogue Reference: ${interestReference}`,
         "",
         "Project Details:",
         message,
@@ -172,4 +195,46 @@ export async function sendContactEmail(formData: FormData): Promise<SendContactE
     console.error("Failed to send contact email", error);
     return { error: "We could not send your inquiry right now. Please try again later." };
   }
+}
+
+function parseProductInterest(formData: FormData): ProductInterestValue | undefined {
+  const mode = getStringField(formData, "productInterestMode");
+
+  if (mode === "needs-guidance") {
+    return { mode };
+  }
+
+  if (mode !== "catalogue-selection") {
+    return undefined;
+  }
+
+  const parentCategoryId = getStringField(formData, "parentCategoryId");
+  const subcategoryId = getStringField(formData, "subcategoryId");
+  const productId = getStringField(formData, "productId");
+
+  if (!parentCategoryId) {
+    return undefined;
+  }
+
+  return {
+    mode,
+    parentCategoryId,
+    ...(subcategoryId ? { subcategoryId } : {}),
+    ...(productId ? { productId } : {}),
+  };
+}
+
+function createProductInterestReference(value: ProductInterestValue) {
+  if (value.mode === "needs-guidance") {
+    return "mode=needs-guidance";
+  }
+
+  return [
+    `mode=${value.mode}`,
+    `parentCategoryId=${value.parentCategoryId}`,
+    value.subcategoryId ? `subcategoryId=${value.subcategoryId}` : undefined,
+    value.productId ? `productId=${value.productId}` : undefined,
+  ]
+    .filter(Boolean)
+    .join("; ");
 }
