@@ -12,9 +12,7 @@ import {
   getSubcategoriesForParent,
   resolveProductInterest,
   type ProductInterestValue,
-  type PublicInterestParentCategory,
   type PublicInterestProduct,
-  type PublicInterestSubcategory,
 } from "@/data/productInterest";
 
 const visibleSubcategoryLimit = 5;
@@ -64,10 +62,10 @@ export function ProductInterestSelector({
       ? text(t, "needsGuidance")
       : [
           resolvedSelection?.parentCategory
-            ? getParentCategoryLabel(t, resolvedSelection.parentCategory)
+            ? resolvedSelection.parentCategory.name
             : undefined,
           resolvedSelection?.subcategory
-            ? getSubcategoryLabel(t, resolvedSelection.subcategory)
+            ? resolvedSelection.subcategory.displayName
             : undefined,
           resolvedSelection?.product?.name,
         ]
@@ -146,7 +144,7 @@ export function ProductInterestSelector({
           </legend>
           <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
             {categories.map((category, index) => {
-              const label = getParentCategoryLabel(t, category);
+              const label = category.name;
               const isSelected = selectedParent?.id === category.id;
               const inputId = `contact-product-interest-parent-${category.id}`;
 
@@ -173,7 +171,10 @@ export function ProductInterestSelector({
                     data-product-interest-focus={index === 0 ? "true" : undefined}
                   />
                   <RadioIndicator selected={isSelected} />
-                  <span className="min-w-0 flex-1 text-sm font-semibold leading-5">
+                  <span
+                    lang="en"
+                    className="min-w-0 flex-1 text-sm font-semibold leading-5"
+                  >
                     {label}
                   </span>
                   {isSelected ? (
@@ -225,7 +226,7 @@ export function ProductInterestSelector({
             ) : null}
             <div className="mt-3 flex flex-wrap gap-2">
               {visibleSubcategories.map((subcategory) => {
-                const label = getSubcategoryLabel(t, subcategory);
+                const label = subcategory.displayName;
                 const isSelected = selectedSubcategory?.id === subcategory.id;
                 const inputId = `contact-product-interest-subcategory-${subcategory.id}`;
 
@@ -250,7 +251,7 @@ export function ProductInterestSelector({
                       className="sr-only"
                     />
                     {isSelected ? <Check className="h-4 w-4" aria-hidden="true" /> : null}
-                    <span>{label}</span>
+                    <span lang="en">{label}</span>
                   </label>
                 );
               })}
@@ -309,7 +310,10 @@ export function ProductInterestSelector({
               <p className="text-xs font-semibold tracking-[0.12em] text-slate-500 uppercase">
                 {text(t, "selectedInterest")}
               </p>
-              <p className="mt-1 break-words text-sm font-semibold leading-6 text-slate-950">
+              <p
+                lang={value?.mode === "catalogue-selection" ? "en" : undefined}
+                className="mt-1 break-words text-sm font-semibold leading-6 text-slate-950"
+              >
                 {summary}
               </p>
             </div>
@@ -515,6 +519,7 @@ function ProductCombobox({ products, value, onChange }: ProductComboboxProps) {
                   type="button"
                   role="option"
                   aria-selected={product.id === value}
+                  lang="en"
                   onMouseDown={(event) => event.preventDefault()}
                   onMouseEnter={() => setActiveIndex(index)}
                   onClick={() => selectProduct(product)}
@@ -559,40 +564,6 @@ function RadioIndicator({ selected }: { selected: boolean }) {
   );
 }
 
-function getParentCategoryLabel(
-  t: (key: string) => string,
-  category: PublicInterestParentCategory,
-) {
-  const translationKey = category.translationKey
-    ? `megaMenu.products.sections.${category.translationKey}.heading`
-    : undefined;
-
-  return translationKey ? translateWithFallback(t, translationKey, category.name) : category.name;
-}
-
-function getSubcategoryLabel(
-  t: (key: string) => string,
-  subcategory: PublicInterestSubcategory,
-) {
-  const translationKey = subcategory.translationKey
-    ? `megaMenu.products.links.${subcategory.translationKey}`
-    : undefined;
-
-  return translationKey
-    ? translateWithFallback(t, translationKey, subcategory.name)
-    : subcategory.name;
-}
-
 function text(t: (key: string) => string, key: string) {
   return t(`contactForm.productInterestSelector.${key}`);
-}
-
-function translateWithFallback(
-  t: (key: string) => string,
-  key: string,
-  fallback: string,
-) {
-  const translated = t(key);
-
-  return translated === key ? fallback : translated;
 }

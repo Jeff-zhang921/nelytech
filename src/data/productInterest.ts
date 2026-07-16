@@ -1,5 +1,4 @@
 import { canonicalCatalogue } from "@/content/catalogue";
-import { megaMenus, productSectionRoutes } from "@/constants/navigation";
 
 export type ProductInterestValue =
   | {
@@ -23,8 +22,8 @@ export interface PublicInterestSubcategory {
   id: string;
   slug: string;
   name: string;
+  displayName: string;
   shortName?: string;
-  translationKey?: string;
   products: readonly PublicInterestProduct[];
 }
 
@@ -33,7 +32,6 @@ export interface PublicInterestParentCategory {
   slug: string;
   name: string;
   shortName?: string;
-  translationKey?: string;
   directProducts: readonly PublicInterestProduct[];
   subcategories: readonly PublicInterestSubcategory[];
 }
@@ -45,41 +43,37 @@ export interface ResolvedProductInterest {
   product?: PublicInterestProduct;
 }
 
-const categoryTranslationKeysBySlug = new Map<string, string>();
-const subcategoryTranslationKeysBySlug = new Map<string, string>();
-
-megaMenus.products.sections.forEach((section) => {
-  const categorySlug = productSectionRoutes[section.translationKey].split("/").at(-1);
-
-  if (categorySlug) {
-    categoryTranslationKeysBySlug.set(categorySlug, section.translationKey);
-  }
-
-  section.links.forEach((link) => {
-    const subcategorySlug = link.href.split("/").at(-1);
-
-    if (subcategorySlug) {
-      subcategoryTranslationKeysBySlug.set(subcategorySlug, link.translationKey);
-    }
-  });
-});
-
 const publicCatalogue: readonly PublicInterestParentCategory[] =
   canonicalCatalogue.categories.map((category) => ({
     id: category.id,
     slug: category.slug,
-    name: category.name,
+    name: getCanonicalEnglishName({
+      entityType: "parent category",
+      id: category.id,
+      slug: category.slug,
+      name: category.name,
+      fallbackName: category.shortName,
+    }),
     shortName: category.shortName,
-    translationKey: categoryTranslationKeysBySlug.get(category.slug),
     directProducts: category.products.map(toPublicProduct),
-    subcategories: category.subcategories.map((subcategory) => ({
-      id: subcategory.id,
-      slug: subcategory.slug,
-      name: subcategory.name,
-      shortName: subcategory.shortName,
-      translationKey: subcategoryTranslationKeysBySlug.get(subcategory.slug),
-      products: subcategory.products.map(toPublicProduct),
-    })),
+    subcategories: category.subcategories.map((subcategory) => {
+      const name = getCanonicalEnglishName({
+        entityType: "subcategory",
+        id: subcategory.id,
+        slug: subcategory.slug,
+        name: subcategory.name,
+        fallbackName: subcategory.shortName,
+      });
+
+      return {
+        id: subcategory.id,
+        slug: subcategory.slug,
+        name,
+        displayName: subcategory.shortName?.trim() || name,
+        shortName: subcategory.shortName,
+        products: subcategory.products.map(toPublicProduct),
+      };
+    }),
   }));
 
 export function getPublicParentCategories() {
@@ -205,7 +199,7 @@ export function getCanonicalProductInterestSummary(value: ProductInterestValue) 
 
   return [
     resolved.parentCategory.name,
-    resolved.subcategory?.name,
+    resolved.subcategory?.displayName,
     resolved.product?.name,
   ]
     .filter(Boolean)
@@ -216,12 +210,57 @@ function toPublicProduct(product: {
   id: string;
   slug: string;
   name: string;
+  partNumber?: string;
   description: string;
 }): PublicInterestProduct {
   return {
     id: product.id,
     slug: product.slug,
-    name: product.name,
+    name: getCanonicalEnglishName({
+      entityType: "product",
+      id: product.id,
+      slug: product.slug,
+      name: product.name,
+      fallbackName: product.partNumber,
+    }),
     description: product.description,
   };
+}
+
+interface CanonicalEnglishNameSource {
+  entityType: "parent category" | "subcategory" | "product";
+  id: string;
+  slug: string;
+  name?: string;
+  fallbackName?: string;
+}
+
+function getCanonicalEnglishName({
+  entityType,
+  id,
+  slug,
+  name,
+  fallbackName,
+}: CanonicalEnglishNameSource) {
+  const canonicalName = name?.trim();
+
+  if (canonicalName) {
+    return canonicalName;
+  }
+
+  if (process.env.NODE_ENV !== "production") {
+    console.warn(
+      `[Product Interest] Missing canonical English ${entityType} name for catalogue slug "${slug}".`,
+    );
+  }
+
+  return fallbackName?.trim() || humanizeSlug(slug) || id;
+}
+
+function humanizeSlug(slug: string) {
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`)
+    .join(" ");
 }

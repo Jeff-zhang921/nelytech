@@ -153,13 +153,13 @@ test.describe("product detail contact CTA", () => {
       name: /What are you interested in/i,
     });
     await expect(
-      productInterest.getByRole("radio", { name: /LCD Panels \(Monochrome\)/i }),
+      productInterest.getByRole("radio", { name: /^LCD Panels/ }),
     ).toBeChecked();
     await expect(
-      productInterest.getByRole("radio", { name: /TN \(Twisted Nematic\)/i }),
+      productInterest.getByRole("radio", { name: "TN", exact: true }),
     ).toBeChecked();
     await expect(productInterest).toContainText(
-      /LCD Panels \(Monochrome\)[\s\S]*TN \(Twisted Nematic\)[\s\S]*4-Digit 7-Segment Display/,
+      /LCD Panels[\s\S]*TN[\s\S]*4-Digit 7-Segment Display/,
     );
     await expect(page.locator('input[name="parentCategoryId"]')).toHaveValue(
       "category-lcd-panels",

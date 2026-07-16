@@ -1,7 +1,11 @@
 import { expect, test, type Page } from "@playwright/test";
 
 import { canonicalCatalogue } from "@/content/catalogue";
-import { resolveProductInterest } from "@/data/productInterest";
+import {
+  getCanonicalProductInterestSummary,
+  resolveProductBySlug,
+  resolveProductInterest,
+} from "@/data/productInterest";
 
 const lcdPanels = canonicalCatalogue.categories.find(
   (category) => category.slug === "lcd-panels",
@@ -9,7 +13,7 @@ const lcdPanels = canonicalCatalogue.categories.find(
 const tn = lcdPanels.subcategories.find((subcategory) => subcategory.slug === "tn")!;
 
 function productInterestSelector(page: Page) {
-  return page.getByRole("region", { name: /What are you interested in/i });
+  return page.locator('section[aria-labelledby="contact-product-interest-heading"]');
 }
 
 function collectBrowserErrors(page: Page) {
@@ -46,7 +50,7 @@ test.describe("Contact Product Interest selector", () => {
       canonicalCatalogue.categories.length + 1,
     );
 
-    await selectEnglishCategory(page, "LCD Panels (Monochrome)");
+    await selectEnglishCategory(page, "LCD Panels");
     await expect(page.locator('input[name="productInterestMode"]')).toHaveValue(
       "catalogue-selection",
     );
@@ -63,7 +67,7 @@ test.describe("Contact Product Interest selector", () => {
       ).toBeVisible();
     }
 
-    await selector.getByText("TN (Twisted Nematic)", { exact: true }).click();
+    await selector.getByText("TN", { exact: true }).click();
     await expect(page.locator('input[name="subcategoryId"]')).toHaveValue(tn.id);
 
     const productSearch = selector.getByRole("combobox", { name: "Optional product" });
@@ -74,7 +78,7 @@ test.describe("Contact Product Interest selector", () => {
 
     await expect(page.locator('input[name="productId"]')).toHaveValue("prod_tn_01");
     await expect(selector).toContainText(
-      /LCD Panels \(Monochrome\)[\s\S]*TN \(Twisted Nematic\)[\s\S]*4-Digit 7-Segment Display/,
+      /LCD Panels[\s\S]*TN[\s\S]*4-Digit 7-Segment Display/,
     );
 
     await productSearch.fill("16x2");
@@ -128,8 +132,8 @@ test.describe("Contact Product Interest selector", () => {
 
     await page.goto("/contact");
     const selector = productInterestSelector(page);
-    await selectEnglishCategory(page, "LCD Panels (Monochrome)");
-    await selector.getByText("HTN (High Twisted Nematic)", { exact: true }).click();
+    await selectEnglishCategory(page, "LCD Panels");
+    await selector.getByText("HTN", { exact: true }).click();
 
     await expect(selector.getByText(/No specific products are currently listed/i)).toBeVisible();
     await expect(selector.getByRole("combobox", { name: "Optional product" })).toHaveCount(0);
@@ -153,8 +157,8 @@ test.describe("Contact Product Interest selector", () => {
 
     await page.goto("/contact?product=4-digit-7-segment-display");
     const selector = productInterestSelector(page);
-    await expect(selector.getByRole("radio", { name: /LCD Panels \(Monochrome\)/ })).toBeChecked();
-    await expect(selector.getByRole("radio", { name: /TN \(Twisted Nematic\)/ })).toBeChecked();
+    await expect(selector.getByRole("radio", { name: /^LCD Panels/ })).toBeChecked();
+    await expect(selector.getByRole("radio", { name: "TN", exact: true })).toBeChecked();
     await expect(page.locator('input[name="productId"]')).toHaveValue("prod_tn_01");
 
     await selector.getByRole("button", { name: "Clear", exact: true }).click();
@@ -168,6 +172,43 @@ test.describe("Contact Product Interest selector", () => {
     await expect(page.locator('input[name="productInterestMode"]')).toHaveValue("");
     await expect(productInterestSelector(page).getByText("Selected interest")).toHaveCount(0);
 
+    const languageTrigger = page.locator("header button[aria-haspopup='menu']").last();
+    await languageTrigger.click();
+    await page.getByRole("menuitemradio", { name: /中文/ }).click();
+
+    await page.getByRole("button", { name: /产品/ }).hover();
+    const productsMenu = page.locator("#products-mega-menu");
+    await expect(productsMenu).toBeVisible();
+    await productsMenu.getByRole("link", { name: /TN \(Twisted Nematic\)/ }).click();
+    await expect(page).toHaveURL("/products/tn");
+    await page.getByRole("link", { name: /4-Digit 7-Segment Display/i }).click();
+    await expect(page).toHaveURL("/products/4-digit-7-segment-display");
+    await page
+      .locator('section[aria-labelledby="product-title"]')
+      .getByRole("link", { name: /Contact Us about 4-Digit 7-Segment Display/i })
+      .click();
+    await expect(page).toHaveURL("/contact?product=4-digit-7-segment-display");
+
+    const chineseSelector = productInterestSelector(page);
+    await expect(
+      page.getByRole("heading", { level: 3, name: "您对哪些产品感兴趣？" }),
+    ).toBeVisible();
+    await expect(
+      chineseSelector.getByRole("radio", { name: /^LCD Panels/ }),
+    ).toBeChecked();
+    await expect(
+      chineseSelector.getByRole("radio", { name: "TN", exact: true }),
+    ).toBeChecked();
+    await expect(
+      chineseSelector.getByText("LCD Panels / TN / 4-Digit 7-Segment Display", {
+        exact: true,
+      }),
+    ).toBeVisible();
+    await expect(
+      chineseSelector.locator("#contact-product-interest-product-search"),
+    ).toHaveValue("4-Digit 7-Segment Display");
+    await expect(chineseSelector.getByText("LCD 面板（单色）", { exact: true })).toHaveCount(0);
+
     expect(browserErrors).toEqual([]);
   });
 
@@ -177,62 +218,112 @@ test.describe("Contact Product Interest selector", () => {
     const browserErrors = collectBrowserErrors(page);
     const locales = [
       {
+        code: "zh",
         menu: /中文/,
         heading: "您对哪些产品感兴趣？",
-        category: "LCD 面板（单色）",
+        translatedCategory: "LCD 面板（单色）",
         selected: "已选产品方向",
+        guidance: "我不确定，需要专业建议",
       },
       {
+        code: "de",
         menu: /Deutsch/,
         heading: "Wofür interessieren Sie sich?",
-        category: "LCD-Panels (monochrom)",
+        translatedCategory: "LCD-Panels (monochrom)",
         selected: "Ausgewähltes Interesse",
+        guidance: "Ich bin nicht sicher - ich benötige Beratung",
       },
       {
+        code: "es",
         menu: /Español/,
         heading: "¿En qué producto está interesado?",
-        category: "Paneles LCD (monocromos)",
+        translatedCategory: "Paneles LCD (monocromos)",
         selected: "Interés seleccionado",
+        guidance: "No estoy seguro; necesito orientación",
       },
       {
+        code: "fr",
         menu: /Français/,
         heading: "Quel produit vous intéresse ?",
-        category: "Panneaux LCD (monochromes)",
+        translatedCategory: "Panneaux LCD (monochromes)",
         selected: "Intérêt sélectionné",
+        guidance: "Je ne sais pas encore - j'ai besoin de conseils",
       },
       {
+        code: "it",
         menu: /Italiano/,
         heading: "A quale prodotto siete interessati?",
-        category: "Pannelli LCD (monocromatici)",
+        translatedCategory: "Pannelli LCD (monocromatici)",
         selected: "Interesse selezionato",
+        guidance: "Non sono sicuro - ho bisogno di assistenza",
       },
       {
+        code: "ja",
         menu: /日本語/,
         heading: "ご関心のある製品を教えてください",
-        category: "LCD パネル（モノクロ）",
+        translatedCategory: "LCD パネル（モノクロ）",
         selected: "選択した内容",
+        guidance: "まだ分からないため、相談したい",
       },
       {
+        code: "ko",
         menu: /한국어/,
         heading: "어떤 제품에 관심이 있으신가요?",
-        category: "LCD 패널(단색)",
+        translatedCategory: "LCD 패널(단색)",
         selected: "선택한 관심 제품",
+        guidance: "잘 모르겠습니다 - 안내가 필요합니다",
       },
     ];
 
     await page.goto("/contact");
-    await selectEnglishCategory(page, "LCD Panels (Monochrome)");
+    const selector = productInterestSelector(page);
+    await selectEnglishCategory(page, "LCD Panels");
+    await selector.getByText("TN", { exact: true }).click();
+    await selector.locator("#contact-product-interest-product-search").fill("4-Digit");
+    await selector
+      .getByRole("option", { name: /4-Digit 7-Segment Display/i })
+      .click();
 
     for (const locale of locales) {
       const languageTrigger = page.locator("header button[aria-haspopup='menu']").last();
       await languageTrigger.click();
       await page.getByRole("menuitemradio", { name: locale.menu }).click();
 
+      const localizedSelector = productInterestSelector(page);
       await expect(page.getByRole("heading", { level: 3, name: locale.heading })).toBeVisible();
-      await expect(page.getByRole("radio", { name: locale.category })).toBeChecked();
+      await expect(
+        localizedSelector.getByRole("radio", { name: /^LCD Panels/ }),
+      ).toBeChecked();
+      await expect(
+        localizedSelector.getByRole("radio", { name: "TN", exact: true }),
+      ).toBeChecked();
       await expect(page.getByText(locale.selected, { exact: true })).toBeVisible();
+      await expect(page.getByText(locale.guidance, { exact: true })).toBeVisible();
+      await expect(
+        localizedSelector.getByText(locale.translatedCategory, { exact: true }),
+      ).toHaveCount(0);
+      await expect(localizedSelector.getByText(/^TN(?:\s*\(|（)/)).toHaveCount(0);
+      await expect(
+        localizedSelector.getByText(
+          "LCD Panels / TN / 4-Digit 7-Segment Display",
+          { exact: true },
+        ),
+      ).toBeVisible();
+      await expect(
+        localizedSelector.locator("#contact-product-interest-product-search"),
+      ).toHaveValue("4-Digit 7-Segment Display");
       await expect(page.locator('input[name="parentCategoryId"]')).toHaveValue(lcdPanels.id);
+      await expect(page.locator('input[name="subcategoryId"]')).toHaveValue(tn.id);
+      await expect(page.locator('input[name="productId"]')).toHaveValue("prod_tn_01");
       await expect(page.getByText("What are you interested in?", { exact: true })).toHaveCount(0);
+
+      if (locale.code === "zh") {
+        for (const subcategoryName of ["TN", "HTN", "STN", "FSTN", "VA"]) {
+          await expect(
+            localizedSelector.getByText(subcategoryName, { exact: true }),
+          ).toBeVisible();
+        }
+      }
     }
 
     expect(browserErrors).toEqual([]);
@@ -282,4 +373,18 @@ test("stable catalogue resolver rejects cross-category product identifiers", () 
       productId: "prod_tn_01",
     }),
   ).toBeUndefined();
+});
+
+test("canonical product context keeps stable IDs and an English enquiry summary", () => {
+  const context = resolveProductBySlug("4-digit-7-segment-display");
+
+  expect(context?.value).toEqual({
+    mode: "catalogue-selection",
+    parentCategoryId: "category-lcd-panels",
+    subcategoryId: "subcategory-tn",
+    productId: "prod_tn_01",
+  });
+  expect(context ? getCanonicalProductInterestSummary(context.value) : undefined).toBe(
+    "LCD Panels > TN > 4-Digit 7-Segment Display",
+  );
 });
