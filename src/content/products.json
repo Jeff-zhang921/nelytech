@@ -2299,15 +2299,6 @@
           "description": "Vertical-alignment LCD options for high-contrast dark-face interfaces.",
           "parentCategoryId": "category-lcd-panels",
           "products": []
-        },
-        {
-          "id": "subcategory-test-b",
-          "slug": "test-b",
-          "name": "TEST B",
-          "shortName": "TEST B",
-          "description": "Product options for TEST B are being prepared in this unpublished draft.",
-          "parentCategoryId": "category-lcd-panels",
-          "products": []
         }
       ]
     },
@@ -2435,7 +2426,7 @@
       ]
     }
   ],
-  "updatedAt": "2026-07-17T14:02:39.427Z",
+  "updatedAt": "2026-07-17T14:03:11.587Z",
   "filterSchemas": {
     "all": {
       "parentCategoryId": "all",
