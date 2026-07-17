@@ -2337,6 +2337,76 @@
           "description": "Custom segment LCD programmes for icon-driven and application-specific display layouts.",
           "parentCategoryId": "category-lcd-modules",
           "products": []
+        },
+        {
+          "id": "subcategory-test-sub",
+          "slug": "test-sub",
+          "name": "TEST SUB",
+          "shortName": "TEST SUB",
+          "description": "Product options for TEST SUB are being prepared in this unpublished draft.",
+          "parentCategoryId": "category-lcd-modules",
+          "products": [
+            {
+              "id": "draft-product-display",
+              "partNumber": "DRAFT-DISPLAY",
+              "slug": "display",
+              "name": "display",
+              "description": "testA",
+              "image": "/uploads/products/display/cover-f1c35d588b92.png",
+              "imageAlt": "display product cover image",
+              "specs": [],
+              "filters": {
+                "module-type": [
+                  "character-lcd-module"
+                ],
+                "display-format": [
+                  "character"
+                ],
+                "interface": [
+                  "spi"
+                ],
+                "backlight": [
+                  "no-backlight"
+                ],
+                "application": [
+                  "instrumentation"
+                ]
+              },
+              "detail": {
+                "images": [
+                  {
+                    "id": "detail-image-049419cf-8d79-48ef-b415-f028f00b0773",
+                    "src": "/uploads/products/display/detail-5b120cc6c1df.jpg",
+                    "alt": "123",
+                    "label": "View 1",
+                    "isPrimary": true,
+                    "order": 0
+                  },
+                  {
+                    "id": "detail-image-12310526-de0e-47bb-9d89-5274ca969d89",
+                    "src": "/uploads/products/display/detail-cc8a4334960f.png",
+                    "alt": "Screenshot 2025-10-20 220117 product image",
+                    "label": "View 2",
+                    "isPrimary": false,
+                    "order": 1
+                  }
+                ],
+                "summary": [],
+                "specifications": [
+                  {
+                    "id": "specification-5026288f-dfb8-4931-a167-6ae070fbbed2",
+                    "label": "123",
+                    "value": "123",
+                    "order": 0
+                  }
+                ],
+                "descriptionParagraphs": [],
+                "applications": [],
+                "optionGroups": [],
+                "downloads": []
+              }
+            }
+          ]
         }
       ]
     },
@@ -2426,7 +2496,7 @@
       ]
     }
   ],
-  "updatedAt": "2026-07-14T08:16:21.029Z",
+  "updatedAt": "2026-07-17T13:57:57.298Z",
   "filterSchemas": {
     "all": {
       "parentCategoryId": "all",
