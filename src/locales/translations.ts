@@ -2127,6 +2127,18 @@ export const translations = {
       closeMenu: "Close navigation menu",
       language: "Language",
     },
+    leftSideNav: {
+      ariaLabel: "Homepage section navigation",
+      items: {
+        intro: "Intro",
+        advantages: "Advantages",
+        industries: "Industries",
+        guide: "Guide",
+        custom: "Custom",
+        trusted: "Trusted",
+        contact: "Contact",
+      },
+    },
     hero: {
       eyebrow: "LCD & LCM Solutions",
       title: "NELYTECH",
@@ -2406,6 +2418,7 @@ export const translations = {
           "Choose a product category. You can add a subcategory or product if known.",
         parentLegend: "Product category",
         selected: "Selected",
+        generalQuestion: "General question",
         needsGuidance: "I'm not sure - I need guidance",
         subcategoryLegend: "Choose a subcategory (optional)",
         clearSubcategory: "Use category only",
@@ -2421,7 +2434,7 @@ export const translations = {
         selectedInterest: "Selected interest",
         change: "Change",
         clear: "Clear",
-        validation: "Select a product category or choose \"I'm not sure\".",
+        validation: "Select a product category, General question, or \"I'm not sure\".",
       },
       mailSubjectPrefix: "NELYTECH Inquiry",
       emailBody: {
@@ -2560,6 +2573,18 @@ export const translations = {
       openMenu: "打开导航菜单",
       closeMenu: "关闭导航菜单",
       language: "语言",
+    },
+    leftSideNav: {
+      ariaLabel: "首页章节导航",
+      items: {
+        intro: "简介",
+        advantages: "核心优势",
+        industries: "应用行业",
+        guide: "产品指南",
+        custom: "深度定制",
+        trusted: "客户信赖",
+        contact: "联系我们",
+      },
     },
     hero: {
       eyebrow: "LCD 与 LCM 解决方案",
@@ -2822,6 +2847,7 @@ export const translations = {
         instruction: "请选择一个产品类别。如已明确需求，还可选择子类别或具体产品。",
         parentLegend: "产品类别",
         selected: "已选择",
+        generalQuestion: "一般咨询",
         needsGuidance: "我不确定，需要专业建议",
         subcategoryLegend: "选择子类别（可选）",
         clearSubcategory: "仅保留产品类别",
@@ -2836,7 +2862,7 @@ export const translations = {
         selectedInterest: "已选产品方向",
         change: "更改",
         clear: "清除",
-        validation: "请选择一个产品类别，或选择“我不确定”。",
+        validation: "请选择产品类别、一般咨询或“我不确定”。",
       },
       mailSubjectPrefix: "NELYTECH 咨询",
       emailBody: {
@@ -2979,6 +3005,18 @@ export const translations = {
       openMenu: "Navigationsmenü öffnen",
       closeMenu: "Navigationsmenü schließen",
       language: "Sprache",
+    },
+    leftSideNav: {
+      ariaLabel: "Navigation der Startseitenabschnitte",
+      items: {
+        intro: "Einführung",
+        advantages: "Vorteile",
+        industries: "Branchen",
+        guide: "Leitfaden",
+        custom: "Anpassung",
+        trusted: "Vertrauen",
+        contact: "Kontakt",
+      },
     },
     advantage: {
       eyebrow: "Fertigungsvorteile",
@@ -3222,6 +3260,18 @@ export const translations = {
       closeMenu: "Cerrar menú de navegación",
       language: "Idioma",
     },
+    leftSideNav: {
+      ariaLabel: "Navegación por las secciones de inicio",
+      items: {
+        intro: "Introducción",
+        advantages: "Ventajas",
+        industries: "Industrias",
+        guide: "Guía",
+        custom: "Personalización",
+        trusted: "Confianza",
+        contact: "Contacto",
+      },
+    },
     advantage: {
       eyebrow: "Ventajas de fabricación",
       title: "Ventajas de NELYTECH",
@@ -3463,6 +3513,18 @@ export const translations = {
       openMenu: "Ouvrir le menu de navigation",
       closeMenu: "Fermer le menu de navigation",
       language: "Langue",
+    },
+    leftSideNav: {
+      ariaLabel: "Navigation des sections d'accueil",
+      items: {
+        intro: "Introduction",
+        advantages: "Avantages",
+        industries: "Secteurs",
+        guide: "Guide",
+        custom: "Sur mesure",
+        trusted: "Confiance",
+        contact: "Contact",
+      },
     },
     advantage: {
       eyebrow: "Avantages de fabrication",
@@ -3706,6 +3768,18 @@ export const translations = {
       closeMenu: "Chiudi menu di navigazione",
       language: "Lingua",
     },
+    leftSideNav: {
+      ariaLabel: "Navigazione delle sezioni della home page",
+      items: {
+        intro: "Introduzione",
+        advantages: "Vantaggi",
+        industries: "Settori",
+        guide: "Guida",
+        custom: "Personalizzazione",
+        trusted: "Affidabilità",
+        contact: "Contatti",
+      },
+    },
     advantage: {
       eyebrow: "Vantaggi produttivi",
       title: "Vantaggi di NELYTECH",
@@ -3948,6 +4022,18 @@ export const translations = {
       closeMenu: "ナビゲーションメニューを閉じる",
       language: "言語",
     },
+    leftSideNav: {
+      ariaLabel: "ホームページのセクションナビゲーション",
+      items: {
+        intro: "概要",
+        advantages: "強み",
+        industries: "業界",
+        guide: "ガイド",
+        custom: "カスタム",
+        trusted: "信頼",
+        contact: "お問い合わせ",
+      },
+    },
     advantage: {
       eyebrow: "製造上の強み",
       title: "NELYTECHの強み",
@@ -4189,6 +4275,18 @@ export const translations = {
       openMenu: "내비게이션 메뉴 열기",
       closeMenu: "내비게이션 메뉴 닫기",
       language: "언어",
+    },
+    leftSideNav: {
+      ariaLabel: "홈페이지 섹션 탐색",
+      items: {
+        intro: "소개",
+        advantages: "강점",
+        industries: "산업",
+        guide: "가이드",
+        custom: "맞춤 제작",
+        trusted: "신뢰",
+        contact: "문의",
+      },
     },
     advantage: {
       eyebrow: "제조 경쟁력",

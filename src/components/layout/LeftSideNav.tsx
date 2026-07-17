@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { useI18n } from "@/context/I18nContext";
+
 const SCROLL_SPY_ROOT_MARGIN = "-25% 0px -55% 0px";
 const SCROLL_SPY_THRESHOLD = 0.15;
 const FOCAL_ZONE_TOP_RATIO = 0.25;
@@ -9,24 +11,25 @@ const FOCAL_ZONE_BOTTOM_RATIO = 0.45;
 const FOCAL_LINE_RATIO = 0.35;
 
 const leftSideNavItems = [
-  { id: "about-us", label: "Intro" },
-  { id: "advantages", label: "Advantages" },
-  { id: "industries", label: "Industries" },
-  { id: "knowledge-hub", label: "Guide" },
-  { id: "deep-customization", label: "Custom" },
-  { id: "trusted", label: "Trusted" },
-  { id: "contact", label: "Contact" },
+  { id: "about-us", translationKey: "intro" },
+  { id: "advantages", translationKey: "advantages" },
+  { id: "industries", translationKey: "industries" },
+  { id: "knowledge-hub", translationKey: "guide" },
+  { id: "deep-customization", translationKey: "custom" },
+  { id: "trusted", translationKey: "trusted" },
+  { id: "contact", translationKey: "contact" },
 ] as const;
 
 type LeftSideNavItem = (typeof leftSideNavItems)[number];
 type SectionId = LeftSideNavItem["id"];
 
 export function LeftSideNav() {
+  const { t } = useI18n();
   const [activeSectionId, setActiveSectionId] = useScrollSpy();
 
   return (
     <nav
-      aria-label="Landing page sections"
+      aria-label={t("leftSideNav.ariaLabel")}
       className="fixed left-4 top-1/2 z-50 hidden -translate-y-1/2 lg:flex"
     >
       <ul className="flex flex-col items-start gap-4">
@@ -34,6 +37,7 @@ export function LeftSideNav() {
           <li key={item.id}>
             <SectionLink
               item={item}
+              label={t(`leftSideNav.items.${item.translationKey}`)}
               isActive={item.id === activeSectionId}
               onActivate={() => setActiveSectionId(item.id)}
             />
@@ -164,15 +168,16 @@ function getActiveSectionId(sectionElements: readonly HTMLElement[]): SectionId 
 
 interface SectionLinkProps {
   item: LeftSideNavItem;
+  label: string;
   isActive: boolean;
   onActivate: () => void;
 }
 
-function SectionLink({ item, isActive, onActivate }: SectionLinkProps) {
+function SectionLink({ item, label, isActive, onActivate }: SectionLinkProps) {
   return (
     <a
       href={`#${item.id}`}
-      aria-label={`Scroll to ${item.label}`}
+      aria-label={label}
       aria-current={isActive ? "location" : undefined}
       onClick={onActivate}
       className="group flex h-7 items-center gap-2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
@@ -194,7 +199,7 @@ function SectionLink({ item, isActive, onActivate }: SectionLinkProps) {
             : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100",
         ].join(" ")}
       >
-        {item.label}
+        {label}
       </span>
     </a>
   );

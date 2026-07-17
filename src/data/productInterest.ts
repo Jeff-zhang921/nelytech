@@ -9,6 +9,9 @@ export type ProductInterestValue =
     }
   | {
       mode: "needs-guidance";
+    }
+  | {
+      mode: "general-question";
     };
 
 export interface PublicInterestProduct {
@@ -151,7 +154,7 @@ export function resolveProductBySlug(productSlug: string): ResolvedProductIntere
 export function resolveProductInterest(
   value: ProductInterestValue,
 ): ResolvedProductInterest | undefined {
-  if (value.mode === "needs-guidance") {
+  if (value.mode === "needs-guidance" || value.mode === "general-question") {
     return { value };
   }
 
@@ -187,6 +190,10 @@ export function resolveProductInterest(
 }
 
 export function getCanonicalProductInterestSummary(value: ProductInterestValue) {
+  if (value.mode === "general-question") {
+    return "General question";
+  }
+
   if (value.mode === "needs-guidance") {
     return "I'm not sure - I need guidance";
   }

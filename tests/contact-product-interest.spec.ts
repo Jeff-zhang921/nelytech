@@ -47,7 +47,7 @@ test.describe("Contact Product Interest selector", () => {
 
     await expect(page.locator('select[name="interest"], input[name="interest"]')).toHaveCount(0);
     await expect(categoryGroup.getByRole("radio")).toHaveCount(
-      canonicalCatalogue.categories.length + 1,
+      canonicalCatalogue.categories.length + 2,
     );
 
     await selectEnglishCategory(page, "LCD Panels");
@@ -109,7 +109,9 @@ test.describe("Contact Product Interest selector", () => {
 
     const selector = productInterestSelector(page);
     await expect(
-      selector.getByText('Select a product category or choose "I\'m not sure".'),
+      selector.getByText(
+        'Select a product category, General question, or "I\'m not sure".',
+      ),
     ).toBeVisible();
     await expect(selector.getByRole("radio", { name: /LCD Panels/ })).toBeFocused();
 
@@ -122,6 +124,30 @@ test.describe("Contact Product Interest selector", () => {
 
     await page.getByRole("button", { name: "Send Inquiry" }).click();
     await expect(page.getByRole("button", { name: "Sending..." })).toBeDisabled();
+    await expect(page.getByText(/Inquiry sent successfully/i)).toBeVisible({ timeout: 10_000 });
+
+    expect(browserErrors).toEqual([]);
+  });
+
+  test("general question is a valid stable option without catalogue IDs", async ({ page }) => {
+    const browserErrors = collectBrowserErrors(page);
+
+    await page.goto("/contact");
+    const selector = productInterestSelector(page);
+    await selector.getByText("General question", { exact: true }).click();
+
+    await expect(page.locator('input[name="productInterestMode"]')).toHaveValue(
+      "general-question",
+    );
+    await expect(page.locator('input[name="parentCategoryId"]')).toHaveValue("");
+    await expect(page.locator('input[name="subcategoryId"]')).toHaveValue("");
+    await expect(page.locator('input[name="productId"]')).toHaveValue("");
+    await expect(selector).toContainText(/Selected interest\s*General question/);
+
+    await page.getByLabel(/^Name/).fill("General Question User");
+    await page.getByLabel(/Work Email/).fill("general-question@example.com");
+    await page.getByLabel(/^Message/).fill("I have a general question about your services.");
+    await page.getByRole("button", { name: "Send Inquiry" }).click();
     await expect(page.getByText(/Inquiry sent successfully/i)).toBeVisible({ timeout: 10_000 });
 
     expect(browserErrors).toEqual([]);
@@ -223,6 +249,7 @@ test.describe("Contact Product Interest selector", () => {
         heading: "您对哪些产品感兴趣？",
         translatedCategory: "LCD 面板（单色）",
         selected: "已选产品方向",
+        generalQuestion: "一般咨询",
         guidance: "我不确定，需要专业建议",
       },
       {
@@ -231,6 +258,7 @@ test.describe("Contact Product Interest selector", () => {
         heading: "Wofür interessieren Sie sich?",
         translatedCategory: "LCD-Panels (monochrom)",
         selected: "Ausgewähltes Interesse",
+        generalQuestion: "Allgemeine Anfrage",
         guidance: "Ich bin nicht sicher - ich benötige Beratung",
       },
       {
@@ -239,6 +267,7 @@ test.describe("Contact Product Interest selector", () => {
         heading: "¿En qué producto está interesado?",
         translatedCategory: "Paneles LCD (monocromos)",
         selected: "Interés seleccionado",
+        generalQuestion: "Consulta general",
         guidance: "No estoy seguro; necesito orientación",
       },
       {
@@ -247,6 +276,7 @@ test.describe("Contact Product Interest selector", () => {
         heading: "Quel produit vous intéresse ?",
         translatedCategory: "Panneaux LCD (monochromes)",
         selected: "Intérêt sélectionné",
+        generalQuestion: "Question générale",
         guidance: "Je ne sais pas encore - j'ai besoin de conseils",
       },
       {
@@ -255,6 +285,7 @@ test.describe("Contact Product Interest selector", () => {
         heading: "A quale prodotto siete interessati?",
         translatedCategory: "Pannelli LCD (monocromatici)",
         selected: "Interesse selezionato",
+        generalQuestion: "Domanda generale",
         guidance: "Non sono sicuro - ho bisogno di assistenza",
       },
       {
@@ -263,6 +294,7 @@ test.describe("Contact Product Interest selector", () => {
         heading: "ご関心のある製品を教えてください",
         translatedCategory: "LCD パネル（モノクロ）",
         selected: "選択した内容",
+        generalQuestion: "一般的なお問い合わせ",
         guidance: "まだ分からないため、相談したい",
       },
       {
@@ -271,6 +303,7 @@ test.describe("Contact Product Interest selector", () => {
         heading: "어떤 제품에 관심이 있으신가요?",
         translatedCategory: "LCD 패널(단색)",
         selected: "선택한 관심 제품",
+        generalQuestion: "일반 문의",
         guidance: "잘 모르겠습니다 - 안내가 필요합니다",
       },
     ];
@@ -298,6 +331,7 @@ test.describe("Contact Product Interest selector", () => {
         localizedSelector.getByRole("radio", { name: "TN", exact: true }),
       ).toBeChecked();
       await expect(page.getByText(locale.selected, { exact: true })).toBeVisible();
+      await expect(page.getByText(locale.generalQuestion, { exact: true })).toBeVisible();
       await expect(page.getByText(locale.guidance, { exact: true })).toBeVisible();
       await expect(
         localizedSelector.getByText(locale.translatedCategory, { exact: true }),

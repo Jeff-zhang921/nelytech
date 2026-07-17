@@ -58,9 +58,11 @@ export function ProductInterestSelector({
     : subcategories.slice(0, visibleSubcategoryLimit);
   const resolvedSelection = value ? resolveProductInterest(value) : undefined;
   const summary = value
-    ? value.mode === "needs-guidance"
-      ? text(t, "needsGuidance")
-      : [
+    ? value.mode === "general-question"
+      ? text(t, "generalQuestion")
+      : value.mode === "needs-guidance"
+        ? text(t, "needsGuidance")
+        : [
           resolvedSelection?.parentCategory
             ? resolvedSelection.parentCategory.name
             : undefined,
@@ -186,6 +188,28 @@ export function ProductInterestSelector({
               );
             })}
           </div>
+
+          <label
+            htmlFor="contact-product-interest-general-question"
+            className={[
+              "mt-3 flex min-h-12 cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 text-sm font-medium transition focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2",
+              value?.mode === "general-question"
+                ? "border-blue-500 bg-white text-slate-950"
+                : "border-slate-300 bg-white/70 text-slate-700 hover:border-slate-400 hover:bg-white",
+            ].join(" ")}
+          >
+            <input
+              id="contact-product-interest-general-question"
+              type="radio"
+              name="product-interest-choice"
+              value="general-question"
+              checked={value?.mode === "general-question"}
+              onChange={() => onChange({ mode: "general-question" })}
+              className="sr-only"
+            />
+            <RadioIndicator selected={value?.mode === "general-question"} />
+            <span>{text(t, "generalQuestion")}</span>
+          </label>
 
           <label
             htmlFor="contact-product-interest-guidance"

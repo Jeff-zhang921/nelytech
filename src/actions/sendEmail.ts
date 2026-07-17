@@ -114,7 +114,9 @@ export async function sendContactEmail(formData: FormData): Promise<SendContactE
   }
 
   if (!productInterest) {
-    return { error: "Select a valid product category or choose that you need guidance." };
+    return {
+      error: "Select a valid product category, general question, or guidance option.",
+    };
   }
 
   const resolvedInterest = resolveProductInterest(productInterest);
@@ -200,7 +202,7 @@ export async function sendContactEmail(formData: FormData): Promise<SendContactE
 function parseProductInterest(formData: FormData): ProductInterestValue | undefined {
   const mode = getStringField(formData, "productInterestMode");
 
-  if (mode === "needs-guidance") {
+  if (mode === "needs-guidance" || mode === "general-question") {
     return { mode };
   }
 
@@ -225,8 +227,8 @@ function parseProductInterest(formData: FormData): ProductInterestValue | undefi
 }
 
 function createProductInterestReference(value: ProductInterestValue) {
-  if (value.mode === "needs-guidance") {
-    return "mode=needs-guidance";
+  if (value.mode !== "catalogue-selection") {
+    return `mode=${value.mode}`;
   }
 
   return [

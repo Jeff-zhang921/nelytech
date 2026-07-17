@@ -38,7 +38,9 @@ test.describe("NELYTECH critical user flows", () => {
 
     await expect(page).toHaveURL("/");
     await expect(page.getByRole("button", { name: /\u4ea7\u54c1/ })).toBeVisible();
-    await expect(page.getByText(/\u6838\u5fc3\u4f18\u52bf/)).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /\u6838\u5fc3\u4f18\u52bf/ }),
+    ).toBeVisible();
 
     await page.getByRole("button", { name: /\u4ea7\u54c1/ }).hover();
     const productsMenu = page.locator("#products-mega-menu");
